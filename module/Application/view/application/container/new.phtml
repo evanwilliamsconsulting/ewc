@@ -1,0 +1,63 @@
+<div>
+	<h2>Content</h2>
+	<?php
+	    echo $this->form()->openTag($form);
+	    echo $this->formHidden($form->get('id'));
+	    echo $this->formHidden($form->get('username'));
+            echo $this->formRow($form->get('title'));
+			?>
+			<!--
+			<div style="float: left; width: 50%">
+      <div style="height: 400px; background-color: #efefef; padding: 10px; -webkit-border-radius: 12px; -moz-border-radius: 12px; margin-right: 10px">
+        <h3 style="text-align: center; background-color: white; -webkit-border-radius: 10px; -moz-border-radius: 10px; margin-top: 0px; margin-bottom: 20px; padding: 8px">
+          Embedded Calendar
+        </h3>
+        <div id="embeddedExample" style="">
+          <div id="embeddedCalendar" style="margin-left: auto; margin-right: auto">
+          </div>
+          <br />
+          <div id="embeddedDateField" class="dateField">
+            Select Date
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+    <div style="float: right; width: 50%">
+      <div style="height: 400px; background-color: #efefef; padding: 10px; -webkit-border-radius: 12px; -moz-border-radius: 12px; margin-left: 10px">
+        <h3 style="text-align: center; background-color: white; -webkit-border-radius: 10px; -moz-border-radius: 10px; margin-top: 0px; margin-bottom: 20px; padding: 8px">
+          Popup Calendar
+        </h3>
+        <div id="popupExample">
+          <div id="popupDateField" class="dateField" style="margin-top: 160px">
+            Show Calendar
+          </div>
+        </div>
+      </div>
+    </div>
+   -->
+    <?php
+            echo $this->formRow($form->get('original'));
+	    ?>
+	    <br/>
+	    <?php
+            echo $this->formRow($form->get('background'));
+			?>
+			<br/>
+			<?php
+            echo $this->formRow($form->get('backgroundwidth'));			
+			?>
+			<br/>
+			<?php
+            echo $this->formRow($form->get('backgroundheight'));			
+			?>
+			<br/>
+			<?php
+            echo $this->formRow($form->get('frame'));			
+			?>
+			<br/>
+			<?php
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+	?>
+</div>

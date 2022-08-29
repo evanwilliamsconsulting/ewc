@@ -1,0 +1,14 @@
+<div style="background-color:<?php echo $this->bcolor;?>" id="file-<?php echo $this->id;?>">
+    <h2>CodeSample - <?php echo $this->title; ?></h2>
+    <div>
+	<?php foreach($this->fileArray as $key => $line) { ?>
+	    <?php 
+		$styleArray = $this->styleArray;
+		$style = $styleArray[$key];
+	    ?>
+	    <span style="<?php echo $style ?>">
+	    <?php echo $line ?>
+	    </span>
+	<?php } ?>
+    </div>
+</div>

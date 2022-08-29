@@ -1,0 +1,36 @@
+<?php
+	$topic = "outline";
+?>
+<div class="outline-item" id="outline-<?php echo $this->id;?>">
+    <div class="lines">
+        <h2>Outline - <?php echo $this->title; ?></h2>
+	<div id="outline-username" class="small_letters"><?php echo $this->original; ?></div>
+	<div id="outline-timestamp" class="small_letters"><?php echo $this->username; ?></div>
+	<?php if ($this->loggedIn == true): ?>
+	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href='#' onclick="loadOutlineForm(<?php echo $id; ?>,'outline-target-<?php echo $this->id; ?>');">Edit</a></div>
+	    <div id='topic-toolbar-save' class='toolbar-tab'><a href='#' onclick="saveOutlineForm(<?php echo $id; ?>);">Save</a></div>
+	<?php endif; ?>
+        <div class="outline-item-title">
+	    <br />
+            <span><?php echo $this->original;?></span>
+        </div>
+        <div id="outline-target-<?php echo $this->id; ?>" class="outline-item-text" onclick="clickOutlineItemText('outline-<?php echo $this->id;?>')">
+		<span><?php echo $this->title; ?></span>
+		<div>
+			<span><?php echo $this->outline; ?></span>
+			</br>
+			<?php echo $this->entities; ?>
+			<?php foreach ($this->entities as $key => $item) { ?>
+			<div>
+				<?php echo $item["title"]; ?>
+				<?php echo $item["description"]; ?>
+				</br>
+			</div>
+			<?php } ?>
+		</div>
+	</div>
+        <div class="holes hole-top"></div>
+        <div class="holes hole-middle"></div>
+        <div class="holes hole-bottom"></div>
+    </div>
+</div>

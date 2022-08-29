@@ -1,0 +1,92 @@
+A Code Sample is like a Book.
+A Book is like a Code Sample.
+
+These are basic entities that reference other entities but are not "COMPOSITES" of these entites like Containers or perhaps Pages
+
+They are objects.
+
+In Python, if I create an object that has a specific purpose, it is in fact specifically coded for that purpose, just like in PHP.  What can be different is that in Python and Plone, the entire object can be serialized and stored as an object; it can even be stored as an object that has some commonalities with other objects and is not represented by a completely different table in the database.
+
+Later if that object changes you don't have to go back and recode the whole database (you just have to rebuild the entire database program due to upgrade bugs LOL) but all you have to do is use the object with some of the existing code.
+
+PHP must be used on the web on this project because it is far more granular and ready for use here in the U.S.  And Doctrine allows us to have multiple objects in the codebase that are nicely mapped back to the database with object calls and constructors just like in Python.  The question is, how should we handle our need to have so many new data object types as we build templates and lesson plans?
+
+Here I am in fact backing into the answer.
+
+It's like this.  Python or Plone or PHP, the whole thing hangs together because it has a purpose.  If we are using Evtechnote to share technical information and lesson plans and project plans, just like some of the other services but a little bit more focused on in class templates and paper printouts or rather device independent output of this information for peoples usage, then,
+
+we start with the top level objects:
+
+Templates, Lessons, Publications, Projects
+
+and drill down from there. 
+
+We already did this with Items and Containers and Wordage and so forth, so we shouldn't have to reinvent this completely.
+
+The point is that now I have several goals:
+
+One there is a new content type: Schematic that I have to have to provide some the lesson and project plans.
+Two I need finished outputs of Lessons and Projects
+Three I need a next issue of EvTechNote.  Marketing.
+
+
+I don't yet have a SCHEMATIC so I will create a Schematic object.  It's a shame but it's a lot like Containers that Contain Wordages.  The same but different.  Templates.
+The when I use my signature Arduino Schematic it will work.  Can it be ported to Frizing.  I don't know.  Is Fritzing open source
+j
+I can try to extend Schematic as Arduino Schematic.
+
+
+Then I need some more theme and function for the whole site.
+
+I need Sketches that are really Code Samples.
+
+The entire Lesson needs to go into a Project.
+
+These are not so much innovative as instructional.  But maybe both
+
+The Project must be a Document, in a way, it has a Blurb or Wordage describing (now we are coming full circle)
+what is happening, there are illustrations, there is a Schematic, there is Code there are Code Samples, these document types are stored with the Project, there are some formatting instructions for the Device Indepenent Markup (FEATURE THAT I LIKE) and the whole thing can be indexed somehow.
+
+
+SCHEMATIC
+ARDUINO SCHEMATIC
+
+DATA ENTRY SCREENS: HOW DO I TYPE IN THE WHOLE PROJECT?
+
+PROJECT
+DOCUMENT
+
+CONTAINER TEMPLATED OBJECTS
+
+because,
+
+Schematics contain wires.
+
+Then the whole site also must look better?
+
+What content is going to be on the front few pages?
+
+Are the documents ready for printout?
+
+Are the Edited Techical Articles available?
+
+What are next steps for the UX/UI user?  Do they enjoy the eXperience??
+
+Commentary: "A Revision Back" (I'll say!!)
+
+
+
+I would be much happier if each time we had a new Content Type such as Schematic (we observed above that we cannot avoid creating them almost onthefly (factory)) that required subobjects in the usual orthogonal way, that we utilized the existing data structures (Container and ContainerItem) without giving up our new names or creating some internal reference.
+
+This is a nice assignment for me because that is the stuff I like to work on.
+
+Just as necessary are the way the documents are going to be entered and if we have some documents ready. and that they are ready for print out.
+
+Then the theme of the whole thing.
+
+Then the front page of the site finally comes together.
+
+Then we upgrade the web technology we are using and talk about that process in print.
+
+
+Turns out that the Doctrine SINGLE TABLE object does object inheritance.

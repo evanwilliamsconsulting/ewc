@@ -1,0 +1,43 @@
+<div>
+	<h2>Content</h2>
+	<?php
+	    echo $this->form()->openTag($form);
+	    echo $this->formHidden($form->get('id'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('password'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('email'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('username'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('handle'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('picture'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('width'));
+        ?>
+	<br/>
+        <?php
+            echo $this->formRow($form->get('height'));
+        ?>
+	<br/>
+        <?php
+	    ?>
+		<label><span>Wordage</span><textarea id="wordarea" name="wordage" rows='8' cols='60'></textarea></label><label>
+	    <?php
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+	?>
+</div>

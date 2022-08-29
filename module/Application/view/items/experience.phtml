@@ -1,0 +1,17 @@
+<div style="background-color:<?php echo $this->bcolor;?>" class="experience-item" id="experience-<?php echo $this->id;?>">
+    <h2>Experience - <?php echo $this->title; ?></h2>
+	<?php echo $this->startDate ?>&nbsp;-&nbsp;<?php echo $this->endDate ?>
+	<?php echo $this->role; ?>
+	<?php echo $this->skills; ?>
+	<?php echo $this->company; ?>
+	<?php echo $this->description; ?>
+    <div class="experience-item-title">
+        <span><a href="/experience/view/<?php echo $this->id; ?>">Edit</a></span>
+        <span><a href="/experience/delete/<?php echo $this->id; ?>">Delete</a></span>
+	<br />
+        <span><?php echo $this->original;?></span>
+    </div>
+    <div class="experience-item-text" onclick="clickWordageItemText('experience-<?php echo $this->id;?>')">
+    	<span><?php echo $this->experience; ?></span>
+    </div>
+</div>

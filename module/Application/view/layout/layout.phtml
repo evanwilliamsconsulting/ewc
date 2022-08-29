@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)https://www.evtechnote.us/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--meta name="apple-mobile-web-app-capable" content="yes"-->
+    <link href="/css/styles.css" type="text/css" rel="stylesheet">
+    <link href="/css/nhp.css" type="text/css" rel="stylesheet">
+    <!-- development version, includes helpful console warnings -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRNNPXYFZE"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+
+       gtag('config', 'G-VRNNPXYFZE');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=a6a0g2hrxjm58bb5cysjzf6jgugbqf7l9u3m8hfjkdj3mkg7"></script> 
+    <script src="/js/nhpress.js"></script>
+    <script>tinymce.init({selector: '#textedit'});</script>
+ </head>
+<body class="body_class">
+    <div id="main-bar" class="evtechnote-color-1">
+    	<ul>
+		<?php echo print_r($this->layout()->site_toolbar,true) ?>
+		<?php echo print_r($this->layout()->user_toolbar,true) ?>
+       </ul>
+       <div style="padding-left:50px;">
+           <span style="color:white;font-family:Ariel;font-style:bold;font-size:24pt;">&nbsp;&nbsp;evanwilliamsconsulting.com</span>
+           <div style="position:relative;padding-left:350px;margin-top:-25px;padding-bottom:10px;">
+	   	<!-- span style="color:white;">&quot;Covering the Internet and Internet Technology&quot;</span -->
+	   </div>
+           <div id="issue_date">
+	       <span class="issue_date_text"><?php echo date("F j, Y");  ?>&nbsp;&nbsp;</span>
+	   </div>
+       <div>
+	</div>
+    </div>
+    <div id="main-header">
+      <!-- Unnamed (Shape) 
+      <div id="lightbulb"><a href="/"><img src="/img/lightbulb.jpg"/></a></div>
+	  -->
+      <!--
+      <div id="main-toolbar" class="evtechnote-color-5">
+	      <?php echo print_r($this->layout()->action_toolbar,true) ?>
+      </div>
+      -->
+      <div id="content" class="evtechnote-color-2">
+		<?php echo $this->content; ?>
+      </div>	
+    </div>
+    <div id="main-footer" class="evtechnote-color-1">
+	<div id="dialog_box">
+	</div>
+<!--
+	<div id="textedit" class="editbox">
+	</div>
+-->
+    	<div id="footer_text">
+		<span class="white">© <?php echo date("Y") ?> Evan Williams Consulting, LLC</span>
+    	</div>
+    </div>
+</body>
+</html>

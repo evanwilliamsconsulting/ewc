@@ -1,0 +1,70 @@
+<div>
+	<?php
+		$listing=array();
+		$index = 1;
+		foreach($this->content as $movie)
+		{
+			$original_title = $movie->original_title;
+			$popularity = $movie->popularity;
+			$vote_count = $movie->vote_count;
+			$video = $movie->video;
+			$poster_path = $movie->poster_path;
+			$id = $movie->id;
+			$adult = $movie->adult;
+			$backdrop_path = $movie->backdrop_path;
+			$original_language = $movie->original_language;
+			$genre_ids = $movie->genre_ids;
+			$title = $movie->title;
+			$vote_average = $movie->vote_average;
+			$overview = $movie->overview;
+			$release_date = $movie->release_date;
+
+			$listing[$index]=array("original_title"=>$original_title,"popularity"=>$popularity,"vote_count"=>$vote_count,"video"=>$video,"poster_path"=>$poster_path,"id"=>$id,"adult"=>$adult,"backdrop_path"=>$backdrop_path,"original_language"=>$original_language,"genre_ids"=>$genre_ids,"title"=>$title,"vote_average"=>$vote_average,"overview"=>$overview,"release_date"=>$release_date);
+			$index++;
+		}
+		?>
+		<br/>
+		<?php
+		foreach ($listing as $key => $item) {
+		?>
+		<br/>
+		<br/>
+		<br/>
+		<span><?php echo $key; ?></span>
+		<div class="listing" id="movie<?php echo $key; ?>">
+  			<span v-bind:title="message<?php echo $key; ?>"><?php echo $item["original_title"];?></span>
+			<button v-on:click="seen=true">Show Details</button>
+			<template v-if="seen">
+			<span>Popularity:</span>
+			<span><?php echo $item["popularity"];?></span>
+			<span>Vote Count</span>
+			<span><?php echo $item["vote_count"];?></span>
+			<span>video</span>
+			<span><?php echo $item["video"];?></span>
+			<span>poster_path</span>
+			<span><?php echo $item["poster_path"];?></span>
+			<span>id</span>
+			<span><?php echo $item["id"];?></span>
+			<span>adult</span>
+			<span><?php echo $item["adult"];?></span>
+			<span>backdrop_path</span>
+			<span><?php echo $item["backdrop_path"];?></span>
+			<span>original_language</span>
+			<span><?php echo $item["original_language"];?></span>
+			<span>title</span>
+			<span><?php echo $item["title"];?></span>
+			<span>vote_average</span>
+			<span><?php echo $item["vote_average"];?></span>
+			<span>overview</span>
+			<span><?php echo $item["overview"];?></span>
+			<span>release_date</span>
+			<span><?php echo $item["release_date"];?></span>
+			</template>
+		</div>
+		<br/>
+		<br/>
+	<?php
+	}
+	?>
+	<script src="/js/vue.js"></script>
+</div>

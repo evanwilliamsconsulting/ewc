@@ -1,0 +1,586 @@
+/* Color Theme Swatches in Hex */
+.evtechnote-color-1 { background-color: #474A59; }
+.evtechnote-color-2 { background-color: white; }
+.evtechnote-color-2b { background-color: #9BA0BF; }
+.evtechnote-color-3 { background-color: #D9320D; }
+.evtechnote-color-4 { background-color: #BF463B; }
+.evtechnote-color-5 { background-color: #BF6B6B; }
+.evtechnote-color-6 { background-color: white;  }
+
+@media only screen and (min-width: 1240px)
+{
+    .body_class
+    {
+		background-color:grey;
+    }
+    #main-bar
+    {
+	background-repeat: repeat-x;
+        background-image: url("/img/ridgeline-1240.png");
+	display:block;
+	width:1240px;
+	height:100px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #main-header
+    {
+        display:block;
+		color:black;
+		background-size: 100%;
+		width:1240px;
+		margin-left:auto;
+		margin-right:auto;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	display:inline;
+	float:left;
+    }
+/*
+    .toolbar-tab
+    {
+	list-style:none;
+	display:inline;
+	font-size:18pt;
+    }
+*/
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;
+    }
+    .actiontab {
+	list-style:none;
+	color:black;
+	font-size:18pt;
+	margin:10px;
+	padding:10px;
+	visibility:visible;
+	display:block;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
+    }
+    .sidebar {
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	float:left;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    #user_toolbar {
+	float:right;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+       }
+    #topic-toolbar {
+	float:right;
+	width:10%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    .bright {
+	color:black;
+	margin:10px;
+	padding:10px;
+    }
+    .bright a:link
+    {
+	color:black;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
+	#main-page
+	{
+		display:block;
+		position:absolute;
+		width:1240px;
+		margin-left:auto;
+		margin-right:auto;
+		height:auto;
+	}
+	#main-footer
+	{
+		color:white;
+		width:1240px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+}
+@media only screen and (min-width: 1024px)
+{
+    .body_class
+    {
+		background-color:grey;
+    }
+    #main-bar
+    {
+	background-repeat: repeat-x;
+        background-image: url("/img/ridgeline-1024.png");
+	display:block;
+	width:1024px;
+	height:100px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #main-header
+    {
+        display:block;
+		color:black;
+		background-size: 100%;
+		width:1024px;
+		margin-left:auto;
+		margin-right:auto;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	display:inline;
+	float:left;
+    }
+/*
+    .toolbar-tab
+    {
+	list-style:none;
+	display:inline;
+	font-size:18pt;
+    }
+*/
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;
+    }
+    .actiontab {
+	list-style:none;
+	color:black;
+	font-size:18pt;
+	margin:10px;
+	padding:10px;
+	visibility:visible;
+	display:block;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
+    }
+    .sidebar {
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	float:left;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    #user_toolbar {
+	float:right;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+       }
+    #topic-toolbar {
+	float:right;
+	width:10%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    .bright {
+	color:black;
+	margin:10px;
+	padding:10px;
+    }
+    .bright a:link
+    {
+	color:black;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
+	#main-page
+	{
+		display:block;
+		position:absolute;
+		width:1024px;
+		margin-left:auto;
+		margin-right:auto;
+		height:auto;
+	}
+	#main-footer
+	{
+		color:white;
+		width:1024px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+}
+/*
+@media only screen and (min-width: 980px) 
+{
+	.body_class
+	{
+        background-color:grey;
+	}
+    #main-header
+    {
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #main-bar
+    {
+	background-repeat: repeat-x;
+        background-image: url("/img/ridgeline-800.png");
+	display:block;
+	width:800px;
+	height:100px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
+    }
+    .sidebar {
+	    background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	    float:left;
+	    width:40%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    position:relative;
+    }
+    #user_toolbar {
+	    float:right;
+	    width:40%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    position:relative;
+    }
+    #topic-toolbar {
+	    float:right;
+	    width:10%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    position:relative;
+    }
+    .bright {
+	    color:white;
+	    margin:10px;
+	    padding:10px;
+    }
+    .bright a:link
+    {
+	color:white;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
+	#main-footer
+	{
+		color:white;
+		width:800px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+}
+*/
+@media only screen and (min-width: 120px) and (max-width: 639px) 
+{
+	.body_class
+	{
+		background-color:grey;
+	}
+    #main-bar
+    {
+	display:block;
+	width:auto;
+	margin-left:auto;
+	margin-right:auto;
+	background-repeat: repeat-x;
+        background-image: url("/img/ridgeline-480.png");
+	display:block;
+	height:100px;
+	width:480px;
+    }
+    #main-header
+    {
+	margin-left:auto;
+	margin-right:auto;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:hidden;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        //display:inline;
+        visibility:hidden;	
+    }
+    .sidebar {
+	visibility:hidden;
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	    float:left;
+	    width:40%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    position:relative;
+    }
+    #user_toolbar {
+	   float:right;
+	   width:40%;
+	   margin-left:auto;
+	   margin-right:auto;
+	   position:relative;
+    }
+    #topic-toolbar {
+	   float:right;
+	   width:10%;
+	   margin-left:auto;
+	   margin-right:auto;
+	   position:relative;
+    }
+    .bright {
+	   color:white;
+	   margin:10px;
+	   padding:10px;
+    }
+    .bright a:link
+    {
+	   color:white;
+    }
+    .bright a:visited
+    {
+	   color:pink;
+    }
+    .bright a:hover
+    {
+	    color:red;
+    }
+    #menu-crumbs
+    {
+	    visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    border: 1px solid black;
+    }
+	#main-footer
+	{
+		color:white;
+		width:auto;
+		margin-left:auto;
+		margin-right:auto;
+	}  
+}

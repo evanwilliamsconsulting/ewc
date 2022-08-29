@@ -1,0 +1,141 @@
+@charset "utf-8";
+/* CSS Document */
+#menubody
+{
+    margin:auto;
+    width:960px;
+}
+#nhpbox
+{
+	width:60%;
+	height:150px;
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	border:solid;
+	border-width:thin;
+	border-color:black;
+}
+.horiz
+{
+	position:relative;
+	border:solid;
+	border-width:thin;	
+}
+.centerd-bar
+{
+	width: 79%;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-right:auto;
+	margin-left:auto;
+	padding-right:auto;
+	padding-left:auto;
+	text-align:center;	
+}
+.left-bar
+{
+	width: 800px;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-right:auto;
+	margin-left:auto;
+	padding-right:auto;
+	padding-left:auto;
+	text-align:left;	
+}
+.bright-info
+{
+	background-color:#da2f61;
+	color:white;
+	height:5%;	
+}
+.white-black
+{
+	background-color:black;
+	color:white;
+	height:4%;
+}
+#menubox
+{
+	width:660px;
+	height:150px;
+	position:relative;
+	float:left;
+	border:solid;
+	border-width:thin;
+	border-color:black;
+}
+#menubar li
+{
+	list-style:none;
+}
+.menuitem
+{
+	font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+	font-size:20px;
+	font-style:normal;
+	font-weight:bold;
+}
+#nhp_new
+{
+	flush:right;
+}
+#nhp_holland
+{
+	flush:right;
+}
+#nhp_press
+{
+	flush:left
+}
+#picturebox
+{
+	border:solid;
+	border-width:thin;
+	border-color:black;
+	width:440px;
+	height:300px;
+	clear:both;
+}
+.nhphead 
+{
+	font-size:30pt;
+	color:white;
+	font-style:italic;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif
+}
+#contentblock
+{
+	width:880px;
+	height:650px;
+	position:relative;
+	float:left;
+	border:solid;
+	border-width:thin;
+	border-color:black;
+}
+#footerblock
+{
+        width:880px;
+        height:100px;
+	color:white;
+	background-color:black;
+        position:relative;
+        float:left;
+        border:solid;
+        border-width:thin;
+        border-color:black;
+}
+#blank_footer
+{
+        width:880px;
+        height:40px;
+	color:black;
+	background-color:white;
+        position:relative;
+        float:left;
+        border:solid;
+        border-width:thin;
+        border-color:white;
+}

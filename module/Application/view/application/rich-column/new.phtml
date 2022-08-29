@@ -1,0 +1,32 @@
+<div>
+	<h2>Content</h2>
+	<?php
+	    echo $this->form()->openTag($form);
+	    echo $this->formHidden($form->get('id'));
+            echo $this->formRow($form->get('width'));
+            echo $this->formRow($form->get('height'));
+            echo $this->formRow($form->get('gluex'));
+            echo $this->formRow($form->get('gluey'));
+            echo $this->formRow($form->get('prevx'));
+            echo $this->formRow($form->get('prevy'));
+            echo $this->formRow($form->get('resetx'));
+            echo $this->formRow($form->get('resety'));
+            echo $this->formRow($form->get('drift'));
+            echo $this->formRow($form->get('gravity'));
+            echo $this->formRow($form->get('offsetx'));
+            echo $this->formRow($form->get('offsety'));
+            echo $this->formRow($form->get('article'));
+            echo $this->formRow($form->get('startline'));
+            echo $this->formRow($form->get('endline'));
+            echo $this->formRow($form->get('useremainder'));
+            echo $this->formRow($form->get('usecontinuedon'));
+            echo $this->formRow($form->get('continuedon'));
+            echo $this->formRow($form->get('usecontinuedfrom'));
+            echo $this->formRow($form->get('continuedfrom'));
+            echo $this->formRow($form->get('charsperline'));
+            echo $this->formRow($form->get('textclass'));
+            echo $this->formRow($form->get('addlineheight'));
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+	?>
+</div>

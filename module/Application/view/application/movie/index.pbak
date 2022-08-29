@@ -1,0 +1,6 @@
+<div>
+	<div id="app">
+		{{ message }}
+	</div>
+	<script src="/js/vue.js"></script>
+</div>

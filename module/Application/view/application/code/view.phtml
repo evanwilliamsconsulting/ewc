@@ -1,0 +1,12 @@
+<div id="wordage_div" class="width800 viewcolor">
+	<div id="topic-toolbar">
+		<?php echo $this->topicToolbar('wordage',$this->id); ?>
+	</div>
+	<h2><?php echo $this->title; ?></h2>
+	<div id="wordage-view">
+		<?php echo $this->content; ?>	
+	</div>
+	<div id="wordage-edit" class="hidden">
+    		<textarea id="wordage-edit-textarea" rows="24" cols="200"><?php echo $this->content; ?></textarea>
+	</div>
+</div>

@@ -1,0 +1,614 @@
+/* Color Theme Swatches in Hex */
+.evtechnote-color-1 { background-color: #474A59; }
+.evtechnote-color-2 { background-color: #9BA0BF; }
+.evtechnote-color-3 { background-color: #D9320D; }
+.evtechnote-color-4 { background-color: #BF463B; }
+.evtechnote-color-5 { background-color: #BF6B6B; }
+
+@media only screen and (min-width: 1024px)
+{
+    #main-header
+    {
+       display:block;
+	color:black;
+	background-size: 100%;
+    }
+    #main-bar
+    {
+	position:absolute;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
+    }
+    .sidebar {
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	float:left;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    #user_toolbar {
+	float:right;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+       }
+    #topic-toolbar {
+	float:right;
+	width:10%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    .bright {
+	color:white;
+	margin:10px;
+	padding:10px;
+    }
+    .bright a:link
+    {
+	color:white;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    width:350px;
+	    height:350px;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
+}
+@media only screen and (max-width: 1024px)
+{
+    #main-header
+    {
+       display:block;
+	color:black;
+	background-size: 100%;
+    }
+    #main-bar
+    {
+	position:absolute;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
+    }
+    .sidebar {
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	float:left;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    #user_toolbar {
+	float:right;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+       }
+    #topic-toolbar {
+	float:right;
+	width:10%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    .bright {
+	color:white;
+	margin:10px;
+	padding:10px;
+    }
+    .bright a:link
+    {
+	color:white;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    width:350px;
+	    height:350px;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
+}
+@media only screen and (max-width: 480px) 
+{
+    #main-header
+    {
+       display:block;
+	color:black;
+	background-size: 100%;
+    }
+    #main-bar
+    {
+	position:absolute;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .usertab 
+    {
+	list-style:none;
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:hidden;
+    }
+    .usertab {
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:hidden;	
+    }
+    .sidebar {
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	float:left;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    #user_toolbar {
+	float:right;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+       }
+    #topic-toolbar {
+	float:right;
+	width:10%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+    }
+    .bright {
+	color:white;
+	margin:10px;
+	padding:10px;
+    }
+    .bright a:link
+    {
+	color:white;
+    }
+    .bright a:visited
+    {
+	color:pink;
+    }
+    .bright a:hover
+    {
+	color:red;
+    }
+    #menu-crumbs
+    {
+	visibility:hidden;
+    }
+    #dialog_box
+    {
+    }
+    #login_box 
+    {
+	    width:350px;
+	    height:350px;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    top:200px;
+	    left:200px;
+	    align-content:center;
+	    border: 1px solid black;
+    }
+    
+}
+#footer
+{
+}
+.itemHelper_Wide {
+}
+.itemHelper_Wide > ul {
+	list-style:none;
+}
+.itemHelper_Wide > ul > li {
+}
+#topic-toolbar-edit {
+	display:block;
+}
+#topic-toolbar-save {
+	display:none;
+}
+#correspondent-toolbar {
+	width: 80%;
+	margin-left:20%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	flush:right;
+	text-align:left;
+	margin-left:20%;
+	margin-right:auto;
+	position:relative;
+	top:-10px;
+}
+#masthead {
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	text-align:center;
+
+}
+#welcome {
+	position:absolute;
+	top:20px;
+	left:20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	width:20%;	
+}
+#topbar {
+	width: 10%;
+	margin-left:10%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	text-align:center;
+}
+.wordage-item {
+	width: 80%;
+	margin-left:20%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	flush:right;
+	text-align:left;
+	float:top;
+	height:200px;
+}
+.wordage-item > span {
+	font-size:11pt;
+}
+.wordage-item-title {
+	position:relative;
+	width:30%;
+	left:0%;
+	float:right;
+}
+.wordage-item-text {
+	width:70%;
+	left:0%;
+	top:10px;
+	height:auto;
+	flush:right;
+	position:relative;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.wordage-edit-text {
+	position:relative;
+	top:10px;
+	left:10px;
+	height:60%;
+	width:60%;
+	color:black;
+	margin:10px;
+}
+.wordage-edit-text > textarea {
+	width:99%;
+}
+.picture-item {
+	width: 80%;
+	margin-left:20%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	flush:right;
+	text-align:left;
+	float:top;
+	height:200px;
+}
+.picture-item > span {
+	font-size:11pt;
+}
+.picture-item-caption {
+	position:relative;
+	width:30%;
+	left:0%;
+	float:right;
+}
+.picture-item-image {
+	width:70%;
+	left:0%;
+	top:10px;
+	height:auto;
+	flush:right;
+	position:relative;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.file-item {
+	width: 80%;
+	margin-left:20%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	flush:right;
+	text-align:left;
+	float:top;
+	height:200px;
+}
+.file-item > span {
+	font-size:11pt;
+}
+.picture-edit-image {
+	position:relative;
+	top:0px;
+	left:0px;
+	height:auto;
+	width:auto;
+	color:black;
+	margin:10px;
+}
+.picture-edit-text > textarea {
+	width:99%;
+}
+#issue_date {
+	text-align:right;
+	position:relative;
+	top:-18px;	
+}
+.item {
+	width: 79%;
+	margin-left:20%;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	left:0%;
+}
+.item_sidebar {
+	width: 19%;
+	postition:relative;
+	left:1%;
+}
+
+.itemlist {
+    list-style:none;
+}
+.itemtab {
+    font-size:18pt;
+}
+#footer {
+	width: auto;
+	margin-left:5px;
+	margin-right:auto;
+	margin-top:5px;
+	margin-bottom:0px;
+	position:relative;
+	flush:right;
+	text-align:left;
+	float:top;
+	height:20px;
+}
+#picture {
+        position:absolute;
+	top:10px;
+	left:10px;
+	width:90%;
+	height:90%;
+	opacity:1.0;
+}
+#wordage {
+        position:absolute;
+	margin:auto;
+	top:30px;
+	left:30px;
+	width:80%;
+	height:80%;
+	opacity:1.0;
+}
+#floats {
+	position:fixed;
+	margin:auto;
+	top:5%;
+	left:5%;
+	width:90%;
+	height:90%;
+	opacity: 0.9;
+}
+#dialog {
+	display:none;
+}
+.bright a:hover
+{
+	color:white;
+}
+.bright a:active:
+{
+	color:white;
+}
+.white {
+	color:white;
+	margin:10px;
+	padding:10px;
+	font-size:large;
+	font-style:bold;
+}
+.width800 {
+	width:800px;
+	margin: 0 auto;
+}
+.viewcolor {
+}
+#wordage-edit
+{
+	display:none;
+}
+#experience-edit
+{
+	display:none;
+}
+#wordage-view
+{
+	display:block;
+}
+#experience-view
+{
+	display:block;
+}
+.expvis
+{
+	visibility:hidden;
+}
+.details
+{
+	visibility:hidden;
+}

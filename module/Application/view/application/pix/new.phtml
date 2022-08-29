@@ -1,0 +1,34 @@
+<div>
+	<h2>Content</h2>
+	<?php
+	    echo $this->form()->openTag($form);
+			    echo $this->formHidden($form->get('id'));
+	    echo $this->formHidden($form->get('username'));
+            echo $this->formRow($form->get('original'));
+				?>
+	<br/>
+	<?php
+            echo $this->formRow($form->get('width'));
+				?>
+	<br/>
+	<?php	
+            echo $this->formRow($form->get('height'));
+				?>
+	<br/>
+	<?php	
+            echo $this->formRow($form->get('caption'));
+				?>
+	<br/>
+	<?php	   
+            echo $this->formRow($form->get('credit'));
+				?>
+	<br/>
+	<?php
+            echo $this->formRow($form->get('picture'));
+				?>
+	<br/>
+	<?php	
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+	?>
+</div>

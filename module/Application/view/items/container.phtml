@@ -1,0 +1,12 @@
+<div class="wordage-item" id="container-<?php echo $this->id;?>">
+    <h2><?php echo $this->title; ?></h2>
+    <div class="wordage-item-title">
+        <span><a href="/wordage/view/<?php echo $this->id; ?>">Edit</a></span>
+        <span><a href="/wordage/delete/<?php echo $this->id; ?>">Delete</a></span>
+	<br />
+        <span><?php echo $this->original;?></span>
+    </div>
+    <div class="wordage-item-text" onclick="clickWordageItemText('wordage-<?php echo $this->id;?>')">
+    	<span>Container Items Go Here<span>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div id="binder">
+<span>Binder</span>
+</div>
+<!--
+< ?php echo $this->toolbar; ?>
+-->
+<?php echo $this->binder; ?>
+<?php
+	foreach ($this->items as $key => $item)
+	{
+		echo $item();
+	}
+?>

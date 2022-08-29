@@ -1,0 +1,30 @@
+<div id="login_box" class="pulldown_form">
+	<div id="close_box" class="far_right"><a href="#" onclick="closeBox()">X</a></div>
+	<br/>
+        <?php
+            foreach ($this->messages as $key => $value)
+            {
+                echo "<h4 style='color:black'>$value</h4>";
+                echo "<br/>";
+            }
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+        ?>
+        <h4>Username:
+        <?php
+            echo $this->formRow($form->get('username'));
+        ?></h4>
+        <h4>Password
+        <?php
+            echo $this->formRow($form->get('password'));
+        ?></h4>
+        <h4>Remember Me!
+        <?php
+            echo $this->formRow($form->get('rememberme'));
+        ?></h4>
+        <?php
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+        ?>
+</div>
+
