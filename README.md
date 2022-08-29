@@ -1,2 +1,1 @@
-# ewc
-Evan Williams Consulting
+Evtechnote Zend Doctrine Application
