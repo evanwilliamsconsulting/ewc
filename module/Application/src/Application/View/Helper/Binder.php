@@ -157,10 +157,11 @@ class Binder extends AbstractHelper
 	$downlink .= ",";
 	$downlink .= $this->binderCount;
 	$downlink .= ")'>&lt;</a>";
+	$addbinder = "<a href='#' onclick='addBinder()'>Add</a>";
 	/*
 	<span>binder selectors</span> <span>Add New Binder</span>";
 	*/
-        return $downlink . $binderstr . $totalstr . $uplink;
+        return $downlink . $binderstr . $totalstr . $uplink . $addbinder;
     }
 }
 ?>
