@@ -17,22 +17,16 @@ class ActionToolbar extends AbstractHelper
 	//$actionToolbarHTML = "<ul class='sitelist'>";
 	if (!($this->loggedIn))
 	{
-		$actionToolbarHTML = "";
+		$actionToolbarHTML = "<li class='action_item light'></li>";
 	}
 	else
 	{
-		$actionToolbarHTML = "<div id='action_menu'>";
-		$actionToolbarHTML .= "<span class='action_item'><a href='#' onclick='showFileSub();'>File</a></span>";
+		$actionToolbarHTML = "<li class='action_item light'><a href='#' onclick='showFileSub();'>File</a></li>";
 		$actionToolbarHTML .= $this->fileSubMenu();
-		$actionToolbarHTML .= "<br/>";
-		$actionToolbarHTML .= "<span class='action_item'><a href='#' onclick='showEditSub();'>Edit</a></span>";
-		$actionToolbarHTML .= "<br/>";
-		$actionToolbarHTML .= "<span class='action_item'><a href='#' onclick='showViewSub();'>View</a></span>";
-		$actionToolbarHTML .= "<br/>";
-		$actionToolbarHTML .= "<span class='action_item'><a href='#' onclick='showToolsSub();'>Tools</a></span>";
-		$actionToolbarHTML .= "<br/>";
-		$actionToolbarHTML .= "<span class='action_item'><a href='#' onclick='showHelpSub();'>Help</a></span>";
-		$actionToolbarHTML .= "</div>";
+		$actionToolbarHTML .= "<li class='action_item light'><a href='#' onclick='showEditSub();'>Edit</a></li>";
+		$actionToolbarHTML .= "<li class='action_item light'><a href='#' onclick='showViewSub();'>View</a></li>";
+		$actionToolbarHTML .= "<li class='action_item light'><a href='#' onclick='showToolsSub();'>Tools</a></li>";
+		$actionToolbarHTML .= "<li class='action_item light'><a href='#' onclick='showHelpSub();'>Help</a></li>";
 	}
 	return $actionToolbarHTML;
     }

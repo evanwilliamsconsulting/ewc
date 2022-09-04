@@ -584,6 +584,7 @@ return array(
             'Application\Controller\PixLink' => 'Application\Controller\PixlinkController',
             'Application\Controller\Wordage' => 'Application\Controller\WordageController',
             'Application\Controller\Outline' => 'Application\Controller\OutlineController',
+            'Application\Controller\Glossary' => 'Application\Controller\GlossaryController',
             'Application\Controller\Experience' => 'Application\Controller\ExperienceController',
             'Application\Controller\Code' => 'Application\Controller\CodeController',
             'Application\Controller\Picture' => 'Application\Controller\PictureController',

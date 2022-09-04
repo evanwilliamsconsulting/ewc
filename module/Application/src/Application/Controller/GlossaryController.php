@@ -10,7 +10,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Application\Entity\Outline;
+use Application\Entity\Glossary;
 use Hex\View\Helper\CustomHelper;
 use Doctrine\ORM\EntityManager;
 use Application\Form\Entity\WordageForm;
@@ -20,9 +20,9 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\Session\Container;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\View\Resolver;
-use Application\Entity\OutlineEntry as OutlineEntry;
+use Application\Entity\GlossaryEntry as GlossaryEntry;
 
-class OutlineController extends AbstractActionController
+class GlossaryController extends AbstractActionController
 {
     protected $em;
 	protected $authservice;
@@ -131,7 +131,7 @@ class OutlineController extends AbstractActionController
 	}
 		
 	$em = $this->getEntityManager()	;
-	$outline = $em->getRepository('Application\Entity\Outline')->find($id);
+	$outline = $em->getRepository('Application\Entity\Glossary')->find($id);
 	$em->remove($outline);
 	$em->flush();
 		
@@ -181,19 +181,18 @@ class OutlineController extends AbstractActionController
 		
 		$em = $this->getEntityManager()	;
 		
-		$outline = $em->getRepository('Application\Entity\Outline')->find($id);
+		$outline = $em->getRepository('Application\Entity\Glossary')->find($id);
 		
 		//$topic = new \Application\View\Helper\TopicToolbar('outline');
 		//$view->topic = $topic();
-		$theWords = $outline->getDescription();
 		$title = $outline->getTitle();
 		$outline_id = $id;
 
 		$params = array();
 		$orderby = array();
-		$params['outline_id'] = $id;
+		$params['glossary_id'] = $id;
                 $orderby['order_no'] = 'ASC';
-		$outlineEntry = $em->getRepository('Application\Entity\OutlineEntry')->findBy($params,$orderby);
+		$outlineEntry = $em->getRepository('Application\Entity\GlossaryEntry')->findBy($params,$orderby);
 
 		$entries = array();
 		foreach ($outlineEntry as $key => $item)
@@ -206,7 +205,7 @@ class OutlineController extends AbstractActionController
 			$entries[] = $entryItem;	
 		}
 		$view->title = $title;
-		$view->content = $theWords;
+		$view->content = "Glossary";
 		$view->entries = $entries;
 		$view->id =$id;
 	return $view;
@@ -232,7 +231,7 @@ class OutlineController extends AbstractActionController
 	$theArray = array('id' => $id);
 
 	$em = $this->getEntityManager();
-	$outline = $em->getRepository('Application\Entity\Outline')->findOneBy($theArray);
+	$outline = $em->getRepository('Application\Entity\Glossary')->findOneBy($theArray);
 
 	$outline->setWordage($changedtext);
 	$em->persist($outline);
@@ -254,17 +253,17 @@ class OutlineController extends AbstractActionController
 	$variables = array("status" => "200",'result'=>'test');
 
 	$em = $this->getEntityManager();
-	$outlineEntry = $em->getRepository('Application\Entity\OutlineEntry')->find($key);
-	$thisOutlineId = $outlineEntry->getOutlineId();
+	$outlineEntry = $em->getRepository('Application\Entity\GlossaryEntry')->find($key);
+	$thisGlossaryId = $outlineEntry->getGlossaryId();
 	$thisBinderId = $outlineEntry->getBinderId();
-	$outlineEntries = $em->getRepository('Application\Entity\OutlineEntry')->findAll();
+	$outlineEntries = $em->getRepository('Application\Entity\GlossaryEntry')->findAll();
 	$countAll = count($outlineEntries);
 	$newOrderNo = $countAll + 1;
 	
     	$userSession = new Container('user');
 	$username = $userSession->username;
 
-	$newEntry = new OutlineEntry();
+	$newEntry = new GlossaryEntry();
 	$newEntry->setUsername($username);
 	$theDate = date("Y-m-d");
 	$newEntry->setOriginal($theDate);
@@ -273,7 +272,7 @@ class OutlineController extends AbstractActionController
 	$newEntry->setDescription("New Description");
 	$newEntry->setOrderNo(1);
 	$newEntry->setBinderId(1);
-	$newEntry->setOutlineId($outlineId);
+	$newEntry->setGlossaryId($outlineId);
 
 	$em->persist($newEntry);
 	$em->flush();
@@ -291,7 +290,7 @@ class OutlineController extends AbstractActionController
 	$em = $this->getEntityManager();
 	$params = array();
 	$params['outline_id'] = $outlineId;
-	$outlineEntry = $em->getRepository('Application\Entity\OutlineEntry')->findBy($params);
+	$outlineEntry = $em->getRepository('Application\Entity\GlossaryEntry')->findBy($params);
 	$entries = array();
 	$previousKey = 1;
 	$currentKey = 0;
@@ -323,7 +322,7 @@ class OutlineController extends AbstractActionController
 	    { 
 		// Current Record should be replace by Previous Record
 		// Previous Record should be replace by Current Record
-		$outlineCurrent = $em->getRepository('Application\Entity\OutlineEntry')->find($key2);
+		$outlineCurrent = $em->getRepository('Application\Entity\GlossaryEntry')->find($key2);
 		$outlineCurrent->setOrderNo($previous_order_no);
 		$em->persist($outlineCurrent);
 		$update = 1;
@@ -336,7 +335,7 @@ class OutlineController extends AbstractActionController
 	$em->flush();
 	if ($update == 1)
 	{
-	    $outlinePrevious = $em->getRepository('Application\Entity\OutlineEntry')->find($previous_key2);
+	    $outlinePrevious = $em->getRepository('Application\Entity\GlossaryEntry')->find($previous_key2);
 	    $outlinePrevious->setOrderNo($order_no);
 	    $em->persist($outlinePrevious);
 	    $em->flush();
@@ -355,7 +354,7 @@ class OutlineController extends AbstractActionController
 	$em = $this->getEntityManager();
 	$params = array();
 	$params['outline_id'] = $outlineId;
-	$outlineEntry = $em->getRepository('Application\Entity\OutlineEntry')->findBy($params);
+	$outlineEntry = $em->getRepository('Application\Entity\GlossaryEntry')->findBy($params);
 	$entries = array();
 	$previousKey = 1;
 	$currentKey = 0;
@@ -387,7 +386,7 @@ class OutlineController extends AbstractActionController
 	    { 
 		// Current Record should be replace by Previous Record
 		// Previous Record should be replace by Current Record
-	        $outlinePrevious = $em->getRepository('Application\Entity\OutlineEntry')->find($previous_key2);
+	        $outlinePrevious = $em->getRepository('Application\Entity\GlossaryEntry')->find($previous_key2);
 	        $outlinePrevious->setOrderNo($order_no);
 	        $em->persist($outlinePrevious);
 		$update = 1;
@@ -397,7 +396,7 @@ class OutlineController extends AbstractActionController
 	    $previous_order_no = $order_no;
 	    $top = 0;	
         }	
-	$outlineCurrent = $em->getRepository('Application\Entity\OutlineEntry')->find($key2);
+	$outlineCurrent = $em->getRepository('Application\Entity\GlossaryEntry')->find($key2);
 	$outlineCurrent->setOrderNo($previous_order_no);
 	$em->persist($outlineCurrent);
 	$em->flush();
@@ -420,7 +419,7 @@ class OutlineController extends AbstractActionController
 	$test['key']=$key;
 	$variables = array("status" => "200",'result'=>'test','id'=>$outlineId,'key'=>$key);
 	$em = $this->getEntityManager();
-	$outline = $em->getRepository('Application\Entity\OutlineEntry')->find($key);
+	$outline = $em->getRepository('Application\Entity\GlossaryEntry')->find($key);
 	$em->remove($outline);
 	$em->flush();
         $response = $this->getResponse();
@@ -440,7 +439,7 @@ class OutlineController extends AbstractActionController
 	
 	$variables = array("status" => "200",'result'=>'test','id'=>$outlineId,'key'=>$key,'title'=>$title,'description'=>$description);
 	$em = $this->getEntityManager();
-	$outline = $em->getRepository('Application\Entity\OutlineEntry')->find($key);
+	$outline = $em->getRepository('Application\Entity\GlossaryEntry')->find($key);
 	$outline->setTitle($title);
 	$outline->setDescription($description);
 	$em->persist($outline);
@@ -477,7 +476,7 @@ class OutlineController extends AbstractActionController
 	$theArray = array('id' => $outlineid);
 
 	$em = $this->getEntityManager();
-	$outline = $em->getRepository('Application\Entity\Outline')->findOneBy($theArray);
+	$outline = $em->getRepository('Application\Entity\Glossary')->findOneBy($theArray);
 	$actualWords = $outline->getDescription();
 	$theWords = $outline->getDescription();
 	$title = $outline->getTitle();
@@ -515,7 +514,7 @@ class OutlineController extends AbstractActionController
 	$theArray = array('id' => $outlineid);
 
 	$em = $this->getEntityManager();
-	$outline = $em->getRepository('Application\Entity\Outline')->findOneBy($theArray);
+	$outline = $em->getRepository('Application\Entity\Glossary')->findOneBy($theArray);
 	$actualWords = $outline->getDescription();
 	$viewModel->setVariable('content',$actualWords);
 	$viewModel->setVariable('id',$theId);

@@ -1,6 +1,9 @@
 /* Color Theme Swatches in Hex */
+/*
 .evtechnote-color-1 { background-color: #474A59; }
-.evtechnote-color-2 { background-color: white; }
+*/
+.evtechnote-color-1 { background-color: grey; }
+.evtechnote-color-2 { background-color: white;  }
 .evtechnote-color-2b { background-color: #9BA0BF; }
 .evtechnote-color-3 { background-color: #D9320D; }
 .evtechnote-color-4 { background-color: #BF463B; }
@@ -19,7 +22,15 @@
         background-image: url("/img/ridgeline-1240.png");
 	display:block;
 	width:1240px;
-	height:100px;
+	height:60px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #action-bar
+    {
+	display:block;
+	width:1240px;
+	height:60px;
 	margin-left:auto;
 	margin-right:auto;
     }
@@ -27,7 +38,7 @@
     {
         display:block;
 		color:black;
-		background-size: 100%;
+		background-size: auto%;
 		width:1240px;
 		margin-left:auto;
 		margin-right:auto;
@@ -38,8 +49,23 @@
     }
     .usertab 
     {
-	list-style:none;
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .toolbar-list
     {
 	list-style:none;
@@ -69,14 +95,23 @@
     }
     .actiontab {
 	list-style:none;
-	color:black;
 	font-size:18pt;
 	margin:10px;
 	padding:10px;
 	visibility:visible;
-	display:block;
+	display:inline;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab {
+        list-style:none;
         color:black;
         font-size:18pt;
         margin:10px;
@@ -108,26 +143,9 @@
 	margin-right:auto;
 	position:relative;
     }
-    .bright {
-	color:black;
-	margin:10px;
-	padding:10px;
-    }
-    .bright a:link
-    {
-	color:black;
-    }
-    .bright a:visited
-    {
-	color:pink;
-    }
-    .bright a:hover
-    {
-	color:red;
-    }
     #menu-crumbs
     {
-	visibility:hidden;
+	
     }
     #dialog_box
     {
@@ -138,7 +156,7 @@
 	    background-color:white;
 	    width:350px;
 	    height:350px;
-	    top:200px;
+	    top:auto;
 	    left:200px;
 	    align-content:center;
 	    position:absolute;
@@ -175,7 +193,15 @@
         background-image: url("/img/ridgeline-1024.png");
 	display:block;
 	width:1024px;
-	height:100px;
+	height:60px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #action-bar
+    {
+	display:block;
+	width:1024px;
+	height:50px;
 	margin-left:auto;
 	margin-right:auto;
     }
@@ -183,7 +209,7 @@
     {
         display:block;
 		color:black;
-		background-size: 100%;
+		background-size: auto%;
 		width:1024px;
 		margin-left:auto;
 		margin-right:auto;
@@ -192,9 +218,24 @@
         list-style:none;
         float:left;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab 
     {
-	list-style:none;
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
     }
     .toolbar-list
     {
@@ -225,14 +266,23 @@
     }
     .actiontab {
 	list-style:none;
-	color:black;
 	font-size:18pt;
 	margin:10px;
 	padding:10px;
 	visibility:visible;
-	display:block;
+	display:inline;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab {
+	list-style:none;
         color:black;
         font-size:18pt;
         margin:10px;
@@ -264,26 +314,9 @@
 	margin-right:auto;
 	position:relative;
     }
-    .bright {
-	color:black;
-	margin:10px;
-	padding:10px;
-    }
-    .bright a:link
-    {
-	color:black;
-    }
-    .bright a:visited
-    {
-	color:pink;
-    }
-    .bright a:hover
-    {
-	color:red;
-    }
     #menu-crumbs
     {
-	visibility:hidden;
+	
     }
     #dialog_box
     {
@@ -294,7 +327,7 @@
 	    background-color:white;
 	    width:350px;
 	    height:350px;
-	    top:200px;
+	    top:auto;
 	    left:200px;
 	    align-content:center;
 	    position:absolute;
@@ -337,7 +370,15 @@
         background-image: url("/img/ridgeline-800.png");
 	display:block;
 	width:800px;
-	height:100px;
+	height:60px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #action-bar
+    {
+	display:block;
+	width:800px;
+	height:50px;
 	margin-left:auto;
 	margin-right:auto;
     }
@@ -345,9 +386,24 @@
         list-style:none;
         float:left;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab 
     {
 	list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        visibility:visible;	
     }
     .toolbar-list
     {
@@ -372,7 +428,17 @@
         display:inline;
         visibility:visible;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab {
+        list-style:none;
         color:black;
         font-size:18pt;
         margin:10px;
@@ -404,26 +470,9 @@
 	    margin-right:auto;
 	    position:relative;
     }
-    .bright {
-	    color:white;
-	    margin:10px;
-	    padding:10px;
-    }
-    .bright a:link
-    {
-	color:white;
-    }
-    .bright a:visited
-    {
-	color:pink;
-    }
-    .bright a:hover
-    {
-	color:red;
-    }
     #menu-crumbs
     {
-	visibility:hidden;
+	
     }
     #dialog_box
     {
@@ -434,7 +483,7 @@
 	    background-color:white;
 	    width:350px;
 	    height:350px;
-	    top:200px;
+	    top:auto;
 	    left:200px;
 	    align-content:center;
 	    position:absolute;
@@ -466,8 +515,16 @@
 	background-repeat: repeat-x;
         background-image: url("/img/ridgeline-480.png");
 	display:block;
-	height:100px;
+	height:60px;
 	width:480px;
+    }
+    #action-bar
+    {
+	display:block;
+	width:480px;
+	height:50px;
+	margin-left:auto;
+	margin-right:auto;
     }
     #main-header
     {
@@ -478,9 +535,24 @@
         list-style:none;
         float:left;
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab 
     {
-	list-style:none;
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
     }
     .toolbar-list
     {
@@ -503,18 +575,28 @@
         margin:10px;
         padding:10px;
         display:inline;
-        visibility:hidden;
+        
     }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
     .usertab {
+        list-style:none;
         color:black;
         font-size:18pt;
         margin:10px;
         padding:10px;
-        //display:inline;
-        visibility:hidden;	
+        display:inline;
+        	
     }
     .sidebar {
-	visibility:hidden;
+	
 	background-image: url("/images/home/u28.png")
     }
     #site_toolbar {
@@ -538,26 +620,9 @@
 	   margin-right:auto;
 	   position:relative;
     }
-    .bright {
-	   color:white;
-	   margin:10px;
-	   padding:10px;
-    }
-    .bright a:link
-    {
-	   color:white;
-    }
-    .bright a:visited
-    {
-	   color:pink;
-    }
-    .bright a:hover
-    {
-	    color:red;
-    }
     #menu-crumbs
     {
-	    visibility:hidden;
+	    
     }
     #dialog_box
     {
@@ -571,8 +636,8 @@
 	    position:absolute;
 	    padding:10px;
 	    margin:auto;
-	    top:200px;
-	    left:200px;
+	    top:auto;
+	    left:auto;
 	    align-content:center;
 	    border: 1px solid black;
     }

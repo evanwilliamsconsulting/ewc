@@ -93,7 +93,7 @@ class CodeHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 
 	$webRoot = "https://www.evtechnote.us/";
 	$fileDirectory = "filestore/Arduino/Blink/";
-	$fileRelative = "/usr/local/apache2/htdocs/evtechnote/public/" . $fileDirectory . "Blink.ino";
+	$fileRelative = "/usr/local/apache2/ewc/public/" . $fileDirectory . "Blink.ino";
 
 	$this->fileContents = file_get_contents($fileRelative);
 

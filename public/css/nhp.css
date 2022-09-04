@@ -1,5 +1,50 @@
 @charset "utf-8";
 /* CSS Document */
+#title-div
+{
+   margin:10px;
+   padding:10px;
+}
+.light
+{
+   color:white;
+}
+.light a:link
+{
+    color:white;
+}
+.light a:visited
+{
+    color:white;
+}
+.light a:hover
+{
+    color:white;
+}
+.light a:active
+{
+    color:pink;
+}
+.bright
+{
+    color:black;
+}
+.bright a:link
+{
+    color:red;
+}
+.bright a:visited
+{
+    color:black;
+}
+.bright a:hover
+{
+    color:black;
+}
+.bright a:active
+{
+    color:purple
+}
 #menucrumbs
 {
     top:-100px;
@@ -357,12 +402,15 @@
 	top:-25px;
 	text-align:right;
 	position:relative;
+	color:white;
+	flush:left;
 }
 .issue_date_text
 {
 	font-size:large;
 	font-style:bold;
 	color:white;
+	flush:right;
 }
 .item {
 	width: 79%;
@@ -530,22 +578,6 @@
 #file_sub {
 	width:auto;
 	height:auto;
-}
-#action_menu {
-	color:pink;
-	position:absolute;
-	left:40px;
-	top:400px;
-	width:200px;
-	height:auto;
-	z-index:100;
-}
-.action_item {
-	background-color:black;
-}
-.action_item a {
-	width:200px;
-	color:white;
 }
 .small_letters {
 	font-size: 10pt;

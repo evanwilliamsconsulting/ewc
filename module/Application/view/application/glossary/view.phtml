@@ -1,0 +1,55 @@
+<div id="outline_div" class="viewcolor">
+	<!--
+	<div id="topic-toolbar">
+		<?php echo $this->topicToolbar('outline',$this->id); ?>
+	</div>
+	-->
+	<!--
+	<h2><?php echo $this->title; ?></h2>
+	<div id="outline-view">
+		<?php echo $this->content; ?>	
+	</div>
+	<h2><?php echo $this->title; ?></h2>
+	-->
+	<div id="outline-entries">
+		<?php foreach ($this->entries as $num => $entries)
+		  {
+		      $title = $entries['title'];
+		      $description = $entries['description'];
+		      $id = $entries['id'];
+		      $key2 = $entries['key'];
+		      $order_no = $entries['order_no'];
+		?>
+		<div>
+			<div id="outline-entry-<?php echo $id; ?>-<?php echo $key2; ?>">
+				<span><?php echo $order_no; ?></span>
+			</div>
+			<div id="outline-entry-view-<?php echo $id; ?>-<?php echo $key2; ?>-title" class="edit_on">
+				<?php echo $title ?>
+			</div>
+			<div>
+				<textarea id="outline-entry-edit-<?php echo $id; ?>-<?php echo $key2; ?>-title" class="edit_off"><?php echo $title; ?></textarea>
+			</div>
+			<div id="outline-entry-view-<?php echo $id; ?>-<?php echo $key2; ?>-description" class="edit_on">
+				<?php echo $description ?>
+			</div>
+			<div>
+				<textarea id="outline-entry-edit-<?php echo $id; ?>-<?php echo $key2;?>-description" class="edit_off"><?php echo $description; ?></textarea>
+			</div>
+			<div>
+				<ul class="outline_tools">
+					<li>
+					<a href="#" onclick="editOutlineEntry(<?php echo $this->id; ?>,<?php echo $key2 ?>)" id="outline-entry-button-<?php echo $id; ?>-<?php echo $key2; ?>-edit" >Edit</a>
+					<a href="#" onclick="addOutlineEntry(<?php echo $this->id; ?>,<?php echo $key2 ?>)" id="outline-entry-button-<?php echo $id; ?>-<?php echo $key2; ?>-add" >Add</a>
+					<a href="#" onclick="upOutlineEntry(<?php echo $this->id; ?>,<?php echo $key2 ?>)" id="outline-entry-button-<?php echo $id; ?>-<?php echo $key2; ?>-up" >Up</a>
+					<a href="#" onclick="downOutlineEntry(<?php echo $this->id; ?>,<?php echo $key2 ?>)" id="outline-entry-button-<?php echo $id; ?>-<?php echo $key2; ?>-down" >Down</a>
+					<a href="#" onclick="deleteOutlineEntry(<?php echo $this->id; ?>,<?php echo $key2 ?>)" id="outline-entry-button-<?php echo $id; ?>-<?php echo $key2; ?>-delete" >Delete</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<?php
+			}
+		?>
+	</div>
+</div>

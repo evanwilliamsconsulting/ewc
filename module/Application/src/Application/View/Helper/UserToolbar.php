@@ -18,7 +18,7 @@ class UserToolbar extends AbstractHelper
     	//$siteToolbarHTML = "<div id='site_toolbar' class='toolbar'>";
         	if (!($this->loggedin))
         	{
-			$userToolbarHTML .= '<li class="usertab bright"><a href="#" onclick="';
+			$userToolbarHTML .= '<li class="usertab light"><a href="#" onclick="';
 			$userToolbarHTML .= 'clickLogin();">';
 			$userToolbarHTML .= "\n";
 			$userToolbarHTML .= "Login";
@@ -26,8 +26,8 @@ class UserToolbar extends AbstractHelper
 		}
 		else 
 		{
-	        	$userToolbarHTML = "<li class='usertab bright'>Welcome&nbsp;" . $this->username . "</li>\n";
-			$userToolbarHTML .= '<li class="usertab bright"><a href="/auth/logout">';
+	        	$userToolbarHTML = "<li class='usertab light'>Welcome&nbsp;" . $this->username . "</li>\n";
+			$userToolbarHTML .= '<li class="usertab light"><a href="/auth/logout">';
 			//$userToolbarHTML .= 'clickLogout();">';
 			$userToolbarHTML .= "Logout";
 			$userToolbarHTML .= "</a></li>\n";

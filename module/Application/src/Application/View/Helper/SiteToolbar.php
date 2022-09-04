@@ -16,11 +16,11 @@ class SiteToolbar extends AbstractHelper
     	//$siteToolbarHTML = "<div id='site_toolbar' class='toolbar'>";
 		//$siteToolbarHTML = "<ul class='sitelist'>";
 		$siteToolbarHTML = "";
-		$siteToolbarHTML .= "<a href='/index/index'><li class='sitetab bright'>Home</li></a>\n";
-		$siteToolbarHTML .= "<a href='/index/products'><li class='sitetab bright'>Products</li></a>\n";
-		$siteToolbarHTML .= "<a href='/index/services'><li class='sitetab bright'>Services</li></a>\n";
-		$siteToolbarHTML .= "<a href='/index/contact'><li class='sitetab bright'>Contact</li></a>\n";
-		$siteToolbarHTML .= "<a href='/auth/signup'><li class='sitetab bright'>Sign Up!</li></a>\n";
+		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/index'>Home</a></li>\n";
+		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/products'>Products</a></li>\n";
+		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/services'>Services</a></li>\n";
+		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/contact'>Contact</a></li>\n";
+		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/auth/signup'>Sign Up!</a></li>\n";
 		return $siteToolbarHTML;
     }
     public function setState()
