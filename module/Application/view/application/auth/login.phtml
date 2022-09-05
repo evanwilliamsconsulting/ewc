@@ -1,6 +1,7 @@
 <div id="login_box" class="pulldown_form">
 	<div id="close_box" class="far_right"><a href="#" onclick="closeBox()">X</a></div>
 	<br/>
+	<h2 class="floating">
         <?php
             foreach ($this->messages as $key => $value)
             {
@@ -10,15 +11,15 @@
             echo $this->form()->openTag($form);
             echo $this->formHidden($form->get('id'));
         ?>
-        <h4>Username:
+        <h4 class="floating">Username:
         <?php
             echo $this->formRow($form->get('username'));
         ?></h4>
-        <h4>Password
+        <h4 class="floating">Password
         <?php
             echo $this->formRow($form->get('password'));
         ?></h4>
-        <h4>Remember Me!
+        <h4 class="floating">Remember Me!
         <?php
             echo $this->formRow($form->get('rememberme'));
         ?></h4>

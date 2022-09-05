@@ -23,7 +23,7 @@ class RegistrationForm extends Form
 
         // Set Action for this form
 	// https://stackoverflow.com/questions/29470342/zend-framework-2-nothing-happens-after-an-interaction-with-the-button-in-the-fro
-	$this->setAttribute('action','signup');
+	$this->setAttribute('action','/auth/signup');
                 
         $this->addElements();
         $this->addInputFilter(); 

@@ -20,7 +20,6 @@ class SiteToolbar extends AbstractHelper
 		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/products'>Products</a></li>\n";
 		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/services'>Services</a></li>\n";
 		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/index/contact'>Contact</a></li>\n";
-		$siteToolbarHTML .= "<li class='sitetab bright'><a href='/auth/signup'>Sign Up!</a></li>\n";
 		return $siteToolbarHTML;
     }
     public function setState()

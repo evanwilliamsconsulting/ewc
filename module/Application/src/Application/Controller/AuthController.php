@@ -61,6 +61,8 @@ class AuthController extends AbstractActionController
     }
     public function registerAction()
     {
+	$this->log = $this->getServiceLocator()->get('log');
+        $log = $this->log;
     }
     public function signupAction()
     {
@@ -93,6 +95,10 @@ class AuthController extends AbstractActionController
 			{
 				// Get filtered and validated data
 				$data = $form->getData();
+/*
+				print_r($data);
+Array ( [username] => testtest [email] => test@test.com [first_name] => Test [middle_i] => A [last_name] => Test [passphrase] => fordham [password] => test123 [confirm_password] => test123 [submit] => Register! ) 
+*/
 
 				// Redirect to Review page.
 				return $this->redirect()->toRoute('auth',['action'=>'register']);
@@ -108,6 +114,8 @@ class AuthController extends AbstractActionController
 		'form' => $form,
 		'messages' => $messages
 	]);
+
+	$viewModel->setTerminal(true);
 	
 	return $viewModel;
     }

@@ -1,3 +1,5 @@
+<div id="signup_box" class="pulldown_form">
+	<div id="close_box" class="far_right"><a href="#" onclick="closeBox()">X</a></div>
 <?php
 /*
 $this->headTitle('User Registration - Step 1 - Login and Password');
@@ -82,62 +84,48 @@ else
 </div>
 
 
-<div class="row">
-    <div class="col-md-6">
-        <?= $this->form()->openTag($form); ?>
+<?= $this->form()->openTag($form); ?>
+    <div class="row">
         
-        <div class="form-group">
             <?= $this->formLabel($form->get('username')); ?>
             <?= $this->formElement($form->get('username')); ?>
             <?= $this->formElementErrors($form->get('username')); ?>                              
-        </div>
-
-        <div class="form-group">
             <?= $this->formLabel($form->get('email')); ?>
             <?= $this->formElement($form->get('email')); ?>
             <?= $this->formElementErrors($form->get('email')); ?>                              
-        </div>
+    </div>
+    <div class="row">
         
-        <div class="form-group">
             <?= $this->formLabel($form->get('first_name')); ?>
             <?= $this->formElement($form->get('first_name')); ?>
             <?= $this->formElementErrors($form->get('first_name')); ?>                              
-        </div>
-
-        <div class="form-group">
             <?= $this->formLabel($form->get('middle_i')); ?>
             <?= $this->formElement($form->get('middle_i')); ?>
             <?= $this->formElementErrors($form->get('middle_i')); ?>                              
-        </div>
 
-        <div class="form-group">
+    </div>
+    <div class="row">
+
             <?= $this->formLabel($form->get('last_name')); ?>
             <?= $this->formElement($form->get('last_name')); ?>
             <?= $this->formElementErrors($form->get('last_name')); ?>                              
-        </div>
-
-        <div class="form-group">
             <?= $this->formLabel($form->get('passphrase')); ?>
             <?= $this->formElement($form->get('passphrase')); ?>
             <?= $this->formElementErrors($form->get('passphrase')); ?>                              
-        </div>
-        
-        <div class="form-group">
+    </div>
+    <div class="row">
+
             <?= $this->formLabel($form->get('password')); ?>
             <?= $this->formElement($form->get('password')); ?>
             <?= $this->formElementErrors($form->get('password')); ?>                              
-        </div>
-        
-        <div class="form-group">
             <?= $this->formLabel($form->get('confirm_password')); ?>
             <?= $this->formElement($form->get('confirm_password')); ?>
             <?= $this->formElementErrors($form->get('confirm_password')); ?>                              
-        </div>
-        
-        <div class="form-group">
+    </div>
+    <div class="form-group">
         <?= $this->formElement($form->get('submit')); ?>
-        </div>
+    </div>
         
         <?= $this->form()->closeTag(); ?>
-    </div>    
 </div>   
+</div>

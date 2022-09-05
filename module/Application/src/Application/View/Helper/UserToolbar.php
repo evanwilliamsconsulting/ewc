@@ -19,6 +19,11 @@ class UserToolbar extends AbstractHelper
         	if (!($this->loggedin))
         	{
 			$userToolbarHTML .= '<li class="usertab light"><a href="#" onclick="';
+			$userToolbarHTML .= 'clickSignUp();">';
+			$userToolbarHTML .= "\n";
+			$userToolbarHTML .= "Sign Up!";
+			$userToolbarHTML .= "</a></li>\n";
+			$userToolbarHTML .= '<li class="usertab light"><a href="#" onclick="';
 			$userToolbarHTML .= 'clickLogin();">';
 			$userToolbarHTML .= "\n";
 			$userToolbarHTML .= "Login";

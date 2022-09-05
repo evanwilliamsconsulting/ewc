@@ -150,14 +150,28 @@
     #dialog_box
     {
     }
+    #signup_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:1040px;
+	    height:800px;
+	    top:100px;
+	    left:100px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
     #login_box 
     {
 	    opacity:0.8;
 	    background-color:white;
-	    width:350px;
-	    height:350px;
-	    top:auto;
-	    left:200px;
+	    width:1040px;
+	    height:800px;
+	    top:100px;
+	    left:100px;
 	    align-content:center;
 	    position:absolute;
 	    padding:10px;
@@ -175,7 +189,6 @@
 	}
 	#main-footer
 	{
-		color:white;
 		width:1240px;
 		margin-left:auto;
 		margin-right:auto;
@@ -321,14 +334,28 @@
     #dialog_box
     {
     }
+    #signup_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:824px;
+	    height:500px;
+	    top:100px;
+	    left:100px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
     #login_box 
     {
 	    opacity:0.8;
 	    background-color:white;
-	    width:350px;
-	    height:350px;
-	    top:auto;
-	    left:200px;
+	    width:824px;
+	    height:500px;
+	    top:100px;
+	    left:100px;
 	    align-content:center;
 	    position:absolute;
 	    padding:10px;
@@ -346,7 +373,6 @@
 	}
 	#main-footer
 	{
-		color:white;
 		width:1024px;
 		margin-left:auto;
 		margin-right:auto;
@@ -477,14 +503,28 @@
     #dialog_box
     {
     }
+    #signup_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:600px;
+	    height:400px;
+	    top:100px;
+	    left:100px;
+	    align-content:center;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    border: 1px solid black;
+    }
     #login_box 
     {
 	    opacity:0.8;
 	    background-color:white;
-	    width:350px;
-	    height:350px;
-	    top:auto;
-	    left:200px;
+	    width:600px;
+	    height:400px;
+	    top:100px;
+	    left:100px;
 	    align-content:center;
 	    position:absolute;
 	    padding:10px;
@@ -493,7 +533,6 @@
     }
 	#main-footer
 	{
-		color:white;
 		width:800px;
 		margin-left:auto;
 		margin-right:auto;
@@ -627,6 +666,20 @@
     #dialog_box
     {
     }
+    #signup_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    top:auto;
+	    left:auto;
+	    align-content:center;
+	    border: 1px solid black;
+    }
     #login_box 
     {
 	    opacity:0.8;
@@ -643,7 +696,6 @@
     }
 	#main-footer
 	{
-		color:white;
 		width:auto;
 		margin-left:auto;
 		margin-right:auto;

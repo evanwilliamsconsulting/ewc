@@ -91,6 +91,18 @@ $(document).ready(function()
 			}
 		});
 	},
+	clickSignUp = function()
+        {
+		$.ajax({
+			type:"POST",
+			url:"auth/signup",
+			success: function(data) {
+				$("#dialog_box").html(data);
+			}
+		});
+		$('#content').css("opacity", "0.5");
+		$("#dialog_box").show();
+	},
 	clickLogin = function()
 	{
 		$.ajax({
