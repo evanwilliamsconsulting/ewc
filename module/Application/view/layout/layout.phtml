@@ -26,19 +26,18 @@
 <body class="body_class">
     <div id="main-bar" class="evtechnote-color-1">
 	<div>
-    	<ul>
-		<?php echo print_r($this->layout()->site_toolbar,true) ?>
-	</ul>
-	<ul><?php echo print_r($this->layout()->user_toolbar,true) ?></ul>
+    	    <ul>
+	        <?php echo print_r($this->layout()->site_toolbar,true) ?>
+	        <?php echo print_r($this->layout()->user_toolbar,true) ?>
+            </ul>
 	</div>
 	<div id="issue_date">
-            <div style="color:white;font-family:Ariel;font-style:bold;font-size:24pt;">&nbsp;&nbsp;evanwilliamsconsulting.com</div>
-	    <div class="issue_date_text"><?php echo date("F j, Y");  ?>&nbsp;&nbsp;</div>
+            <div style="color:magenta;font-family:Ariel;font-style:bold;font-size:24pt;">&nbsp;&nbsp;evanwilliamsconsulting.com</div>
 	</div>
-    </div>
         <div id="action-bar" class="evtechnote-color-1">
             <ul><?php echo print_r($this->layout()->action_toolbar,true) ?></ul>
         </div>
+    </div>
     <div id="main-header">
       <!-- Unnamed (Shape) 
       <div id="lightbulb"><a href="/"><img src="/img/lightbulb.jpg"/></a></div>
