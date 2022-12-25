@@ -124,7 +124,6 @@ class Db extends AbstractWriter
         } else {
             $dataToInsert = $this->mapEventIntoColumn($event, $this->columnMap);
         }
-
         $statement = $this->db->query($this->prepareInsert($dataToInsert));
         $statement->execute($dataToInsert);
     }

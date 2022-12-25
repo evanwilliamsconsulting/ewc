@@ -15,7 +15,7 @@ return array(
     'db' => array(
         'driver'         => 'PdoMysql',
         'dsn'            => 'mysql:dbname=ewc;host=127.0.0.1',
-        'username'       => 'ewc',
+        'username'       => 'web',
         'password'       => 'ptH3984z'
     ),
     'service_manager' => array(
@@ -28,7 +28,7 @@ return array(
         'config' => array(
             'class' => 'Zend\Session\Config\SessionConfig',
             'options' => array(
-                'name' => 'nhp',
+                'name' => 'ewc',
 		'gc_maxlifetime' => 3600,
 		'gc_divisor' => 1,
             ),
@@ -46,7 +46,7 @@ return array(
                 'params' => array(
 		    'host' => '127.0.0.1',
 		    'port' => '3306',
-		    'user' => 'ewc',
+		    'user' => 'web',
 		    'password' => 'ptH3984z', 
 		    'dbname' => 'ewc',
                     'charset'  => 'utf8',

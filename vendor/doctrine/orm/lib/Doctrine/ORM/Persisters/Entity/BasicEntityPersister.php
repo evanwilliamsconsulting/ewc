@@ -1713,7 +1713,7 @@ class BasicEntityPersister implements EntityPersister
             }
             return $columns;
         }
-
+	//EJW
         if ($assoc !== null && strpos($field, " ") === false && strpos($field, "(") === false) {
             // very careless developers could potentially open up this normally hidden api for userland attacks,
             // therefore checking for spaces and function calls which are not allowed.

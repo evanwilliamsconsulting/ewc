@@ -49,13 +49,14 @@ class Content extends AbstractResultSet
 			$newArray = Array();
 			$newArray["type"] = "ContainerItem";
 			$newArray["object"] = $container;
-			$this->obj2->append($newArray);
-
 			$itemtype = $container->getItemType();
+			$newArray["itemtype"] = $itemtype;
 			$itemid = $container->getItemId();
+			$newArray["itemid"] = $itemid;
+			$this->obj->append($newArray);
+
 			$criteria = array("id" => $itemid);
 			
-
 			if (0 == strcmp($itemtype,"wordage"))
 			{
 				$em = $this->getEntityManager();
@@ -124,8 +125,7 @@ class Content extends AbstractResultSet
 				}
 			}
 		}
-
-	}
+    }
     public function getDataSource()
     {
 	 	return $this->obj;
@@ -178,7 +178,7 @@ class Content extends AbstractResultSet
      /** get rows as array */
      public function toArray()
 	 {
-	 	$it = $this->obj->getIterator();
+	   $it = $this->obj->getIterator();
 	   return $it->getArrayCopy();	
 	 }
 }

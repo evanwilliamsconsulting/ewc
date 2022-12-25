@@ -10,5 +10,5 @@ return array(
     'PHPTAL' => array($vendorDir . '/phptal/phptal/classes'),
     'DoctrineORMModule\\' => array($vendorDir . '/doctrine/doctrine-orm-module/src'),
     'DoctrineModule\\' => array($vendorDir . '/doctrine/doctrine-module/src'),
-    '' => array($baseDir . '/Entity'),
+    '' => array($baseDir . '/src'),
 );

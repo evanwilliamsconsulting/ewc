@@ -5,9 +5,9 @@ require_once "vendor/autoload.php";
 
 // Create a simple "default" Doctrine ORM configuration for XML Mapping
 $isDevMode = true;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/entity"), $isDevMode);
+//$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/entity"), $isDevMode);
 // stackoverflow.com/questions/1743225/doctrine2-no-metadata-classes-to-process
-//$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/module/Application/src/Application/Entity"), $isDevMode,null,null,false);
+$config = Setup::createAnnotationMetadataConfiguration(array("/usr/local/ewc/module/Application/src/Application/Entity"), $isDevMode,null,null,true);
 //$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/build"), $isDevMode,null,null,false);
 // or if you prefer yaml or annotations
 //$config = Setup::createXMLMetadataConfiguration(array(__DIR__."/config/xml"), $isDevMode);
@@ -17,7 +17,7 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/entity"),
 $conn = array(
     'driver' => 'pdo_mysql',
     'host' => 'localhost',
-    'dbname' => 'nhpress',
+    'dbname' => 'ewc',
     'user' => 'root',
     'password' => 'ptH3984z'
 );

@@ -23,6 +23,7 @@ use Application\Entity\Container as Container;
 use Application\Model\ContainerItems as ContainerItems;
 use Application\View\Helper\ContainerHelper as ContainerHelper;
 use Application\View\Helper\WordageHelper as WordageHelper;
+use Application\View\Helper\PictureHelper as PictureHelper;
 
 class IndexController extends AbstractActionController
 {
@@ -69,27 +70,27 @@ class IndexController extends AbstractActionController
 	$content->setEntityManager($em);
 	$content->loadDataSource();
 
-	$view = new ViewModel();
-
-	$view->content = print_r($content,true);
-
-
-
-
+	$htmlOutput = "<div>";
 	foreach ($content->toArray() as $num => $item)
 	{
 		$type = $item["type"];
+		$object = $item["object"];
 		if (0 == strcmp($type,"Wordage"))
 		{
-			$helper = new WordageHelper();
-			$helper->setServiceLocator($this->getServiceLocator());
-			$helper->setEntityManager($this->getEntityManager());
-			$object = $item["object"];
-			$helper->setObject($object);
-			$helper->setViewModel($view);
-			$view->content=$helper;
+			$wordage = $object->getWordage();
+			$htmlOutput .= "<div>Wordage-Start</div><br/>";
+			$htmlOutput .= $wordage;
+			$htmlOutput .= "<div>Wordage-End</div><br/>";
+		}
+		if (0 == strcmp($type,"Picture"))
+		{
+			$picture = $object->getPicture();
+			$htmlOutput .= "<div>Picture-Start</div><br/>";
+			$htmlOutput .= $picture;
+			$htmlOutput .= "<div>Picture-End</div><br/>";
 		}
 	}
+	$view->content = "$htmlOutput";
 
 
 /*

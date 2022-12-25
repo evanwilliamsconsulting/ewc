@@ -45,6 +45,7 @@ class ContainerItems implements InputFilterAwareInterface
 
     public function exchangeArray($data)
     {
+        $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->containerid = (isset($data['containerid'])) ? $data['containerid'] : null;
         $this->itemid = (isset($data['itemid'])) ? $data['itemid'] : null;
         $this->itemtype = (isset($data['itemtype'])) ? $data['itemtype'] : null;
@@ -60,6 +61,12 @@ class ContainerItems implements InputFilterAwareInterface
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 			$factory = new InputFactory();
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'id',
+                'required' => false,
+            )));
 
             $inputFilter->add(
             	$factory->createInput(array(
@@ -109,9 +116,16 @@ class ContainerItems implements InputFilterAwareInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="containerid", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="containerid", type="integer", nullable=false)
      */
     private $containerid;
 
@@ -167,6 +181,30 @@ class ContainerItems implements InputFilterAwareInterface
 	$this->containerid = $containerid;
 	return $this;
     }
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int id
+     * @return ContainerItem
+     *
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
     /**
      * Get item id
      *

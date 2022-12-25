@@ -47,7 +47,7 @@ class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
                     $log = new Logger();
 		    $dbconfig = array(
         		'driver'         => 'PdoMysql',
-        		'dsn'            => 'mysql:dbname=nhpress;host=localhost',
+        		'dsn'            => 'mysql:dbname=ewc;host=localhost',
         		'username'       => 'root',
         		'password'       => 'ptH3984z'
 			);
