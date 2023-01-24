@@ -25,11 +25,15 @@ class Picture implements InputFilterAwareInterface
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->binder_id = (isset($data['binder_id'])) ? $data['binder_id'] : null;
+        $this->credit = (isset($data['credit'])) ? $data['credit'] : null;
+        $this->subfolder = (isset($data['subfolder'])) ? $data['subfolder'] : null;
+        $this->picture = (isset($data['picture'])) ? $data['picture'] : null;
+        $this->caption = (isset($data['caption'])) ? $data['caption'] : null;
+        $this->width = (isset($data['width'])) ? $data['width'] : null;
+        $this->height = (isset($data['height'])) ? $data['height'] : null;
         $this->username = (isset($data['username'])) ? $data['username'] : null;
         $this->original = (isset($data['original'])) ? $data['original'] : null;
         $this->title= (isset($data['title'])) ? $data['title'] : null;
-        $this->picture = (isset($data['picture'])) ? $data['picture'] : null;
-        $this->columnSize = (isset($data['columnSize'])) ? $data['columnSize'] : null;
     }
     public function getInputFilter()
     {
@@ -51,10 +55,45 @@ class Picture implements InputFilterAwareInterface
 
             $inputFilter->add(
             	$factory->createInput(array(
+                'name' => 'credit',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'subfolder',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'picture',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'caption',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'width',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'height',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
                 'name' => 'username',
                 'required' => false,
             )));
-			
 
             $inputFilter->add(
             	$factory->createInput(array(
@@ -72,18 +111,6 @@ class Picture implements InputFilterAwareInterface
                 'required' => false,
             )));
 
-            $inputFilter->add(
-            	$factory->createInput(array(
-                'name' => 'wordage',
-                'required' => false,
-            )));
-
-            $inputFilter->add(
-            	$factory->createInput(array(
-                'name' => 'columnSize',
-                'required' => false,
-            )));
- 
             $this->inputFilter = $inputFilter;
         }
         return $this->inputFilter;
@@ -97,7 +124,6 @@ class Picture implements InputFilterAwareInterface
         return get_object_vars($this);
     }
 
-
     /**
      * @var integer
      *
@@ -106,7 +132,6 @@ class Picture implements InputFilterAwareInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
 
     /**
      *
@@ -133,9 +158,23 @@ class Picture implements InputFilterAwareInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="subfolder", type="string", length=255, nullable=false)
+     */
+    private $subfolder;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="picture", type="string", length=255, nullable=false)
      */
     private $picture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="caption", type="string", length=255, nullable=true)
+     */
+    private $caption;
 
     /**
      * @var integer
@@ -223,7 +262,7 @@ class Picture implements InputFilterAwareInterface
     }
 
     /**
-     * Set caption 
+     * Set title 
      *
      * @param string $title
      * @return Picture 
@@ -243,6 +282,52 @@ class Picture implements InputFilterAwareInterface
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set caption 
+     *
+     * @param string $caption
+     * @return Picture 
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * Get caption 
+     *
+     * @return string 
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * Get subfolder
+     *
+     * @return string
+     */
+    public function getSubfolder()
+    {
+        return $this->subfolder;
+    }
+
+    /**
+     * Set subfolder
+     *
+     * @param string $subfolder
+     * @return Picture
+     */
+    public function setSubfolder($subfolder)
+    {
+	$this->subfolder = $subfolder;
+
+	return $this;
     }
 
     /**

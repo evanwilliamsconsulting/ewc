@@ -49,9 +49,6 @@ class WordageController extends AbstractActionController
     }
     public function indexAction()
     {
-    	$this->log = $this->getServiceLocator()->get('log');
-    	$log = $this->log;
-    	$log->info("view action");
 
 	// Initialize the View
     	$view = new ViewModel();
@@ -60,17 +57,14 @@ class WordageController extends AbstractActionController
 
  	$persistent = $this->getAuthService()->getStorage();
 	$namespace = $persistent->getNamespace();
-	$log->info($namespace);
 
     	// 2Do: Populate username with user's username
     	$userSession = new Container('user');
 	$this->username = $userSession->username;
 	$username = $this->username;
-	$log->info($this->username);
 	$loggedIn = $userSession->loggedin;
 	if ($loggedIn)
 	{
-		$log->info("Logged In");
 		// Set the Helpers
 		$layout = $this->layout();
 		foreach($layout->getVariables() as $child)
@@ -81,39 +75,78 @@ class WordageController extends AbstractActionController
 	}
 	else
 	{
-		$log->info("Not Logged In");
 	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
 	}
+
+	/* See that! */
+        $em = $this->getEntityManager();
+	$wordages = $em->getRepository('Application\Entity\Wordage')->findAll();
+
+	$wordage_items = Array();
+
+	foreach ($wordages as $key => $wordage)
+	{
+		$wordage_item = Array();
+		$id = $wordage->getId();
+		$wordage_text  = $wordage->getWordage();
+		$binder_id = $wordage->getBinderId();
+		$title = $wordage->getTitle();
+		$wordage_item[] = $id;
+		$wordage_item[] = $binder_id;
+		$wordage_item[] = $title;
+		$wordage_item[] = $wordage_text;
+		$wordage_items[] = $wordage_item;
+	}
+	$html = "<div>";
+	$html .=  "<div>";
+	$html .= "<span>Id</span><span>Binder Id</span><span>Title</span><span>Wordage</span>";
+	$html .= "</div>";
+	foreach ($wordage_items as $key => $item)
+	{
+		$id = $item[0];
+		$binder_id = $item[1];
+		$title = $item[2];
+		$wordage_text = $item[3];
+		$html .= "<div>";	
+		$html .= "<span>";
+		$html .= $id;
+		$html .= "</span>";
+		$html .= "<span>";
+		$html .= $binder_id;
+		$html .= "</span>";
+		$html .= "<span>";
+		$html .= $title;
+		$html .= "</span>";
+		$html .= "<span>";
+		$html .= substr($wordage_text,0,40);
+		$html .= "</span>";
+		$html .= "</div>";
+	}
+	$html .= "</div>";
+
+	$view->content = $html;
 
 	return $view;
     }
     public function deleteAction()
     {
-    	$this->log = $this->getServiceLocator()->get('log');
-    	$log = $this->log;
-    	$log->info("delete action");
-
 	// Initialize the View
     	$view = new ViewModel();
 	$view->setTerminal(true);
 	// Retreive the parameters
 	$id = $this->params()->fromRoute('item');
-	$log->info($id);
 
 	// 2Do: Check to see that user is logged in
 
  	$persistent = $this->getAuthService()->getStorage();
 	$namespace = $persistent->getNamespace();
-	$log->info($namespace);
 
     	// 2Do: Populate username with user's username
     	$userSession = new Container('user');
 	$this->username = $userSession->username;
-	$log->info($this->username);
 	$loggedIn = $userSession->loggedin;
 	if ($loggedIn)
 	{
-		$log->info("Logged In");
 		// Set the Helpers
 		$layout = $this->layout();
 		foreach($layout->getVariables() as $child)
@@ -124,7 +157,6 @@ class WordageController extends AbstractActionController
 	}
 	else
 	{
-		$log->info("Not Logged In");
 	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
 	}
 		
@@ -141,25 +173,44 @@ class WordageController extends AbstractActionController
     }
     public function viewAction()
     {
-    	// Load the logger
-    	$this->log = $this->getServiceLocator()->get('log');
-		
+
+    	$userSession = new Container('user'); // Talk about conflicting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	}
 	// Initialize the View
     	$view = new ViewModel();
 	// Retreive the parameters
-	$id = $this->params()->fromRoute('item');
+
+	$id = $this->params()->fromQuery("id");
+
+	if (is_null($id))
+	{
+		$id = 22;
+	}
 		
 	// 2Do: Check to see that user is logged in
 
  	$persistent = $this->getAuthService()->getStorage();
 	$namespace = $persistent->getNamespace();
-/*
-	$username = $persistent->getUsername();
-*/
 
     	// 2Do: Populate username with user's username
     	$userSession = new Container('user');
 		$this->username = $userSession->username;
+		$username = $this->username;
 		$loggedIn = $userSession->loggedin;
 		if ($loggedIn)
 		{

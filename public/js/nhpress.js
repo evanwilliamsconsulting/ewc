@@ -49,6 +49,7 @@ $(document).ready(function()
 	{
 		theWordageId = wordagetextid;
 		thesource = "#" + thesource;
+		alert(wordagetextid);
 		$(thesource).hide();
 		$.ajax({
 			type:"POST",

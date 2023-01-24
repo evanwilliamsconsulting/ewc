@@ -8,6 +8,13 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\View\Model\ViewModel;
 use Application\Service\PictureService as PictureService;  
+use Zend\View\Resolver as Resolver;
+
+/*
+
+https://docs.zendframework.com/zend-view/php-renderer
+
+*/
  
 class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 {
@@ -18,6 +25,9 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     protected $itemId;
     protected $viewmodel;
     protected $renderer;
+    protected $width;
+    protected $height;
+    protected $caption;
 
     /** 
      * Set the service locator. 
@@ -75,9 +85,12 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     {
         $this->pictureObject = $pictureObject;
         $picture = $pictureObject->getPicture();
-        $picture = "thumb_" . $picture;
-        $username = $this->getUsername();
-        $this->picture = "/uploads/" . $username . "/pix/" . $picture;
+	$caption = $pictureObject->getCaption();
+	$this->caption = $caption;
+	$subfolder = $pictureObject->getSubfolder();
+        $this->picture =  "/images/" . $subfolder . "/" .  $picture;
+	$this->width = $pictureObject->getWidth();
+	$this->height = $pictureObject->getHeight();
     }
     public function setUsername($username)
     {
@@ -101,17 +114,34 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     }
     public function __invoke()
     {
-        $viewRender = $this->getServiceLocator()->get('ViewRenderer');
-    	
-    	$view = $this->getViewModel();
-		
-        //$view->picture = $this->picture;
-        $view->picture = "/images/placeholder.jpg";
-	$view->width= "50";
-	$view->height="50";
+	return $this->render();
+    }
+    public function render()
+    {
+	$picture = $this->picture;
+	$caption = $this->caption;
 
-	$view->setTemplate('items/picture.phtml');
-		
-	return $viewRender->render($view);
+	$img = "<img src='";
+	$img .= $picture;
+	$img .= "' width='";
+	$img .= $this->width;
+	$img .= "px' height='";
+	$img .= $this->height;
+	$img .= "px'>";
+
+	$caption_div = "<div width='";
+	$caption_div .= $this->width;
+	$caption_div .= "px'>";
+	$caption_div .= $caption;
+	$caption_div .= "</div>";
+	
+
+	$html = "";
+	$html .= "<div>";
+	$html .= $img;
+	$html .= $caption_div;
+	$html .= "</div>";
+	
+	return $html;
     }
 }

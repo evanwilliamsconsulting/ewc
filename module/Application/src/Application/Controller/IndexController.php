@@ -85,12 +85,31 @@ class IndexController extends AbstractActionController
 		if (0 == strcmp($type,"Picture"))
 		{
 			$picture = $object->getPicture();
+			$width = $object->getWidth();
+			$height = $object->getHeight();
+			$pictureHelper = new PictureHelper();
+			$pictureHelper->setServiceLocator($this->getServiceLocator());
+			$pictureHelper->setViewModel($view);
+			$pictureHelper->setEntityManager($this->em);
+			$pictureHelper->setObject($object);
+
+/*
 			$htmlOutput .= "<div>Picture-Start</div><br/>";
+			$htmlOutput .= "<img src='/images/";
 			$htmlOutput .= $picture;
+			$htmlOutput .= "' width=";
+			$htmlOutput .= $width; 
+			$htmlOutput .= " height=";
+			$htmlOutput .= $height;
+			$htmlOutput .= ">";
 			$htmlOutput .= "<div>Picture-End</div><br/>";
+*/
+		//	$view->picture = $pictureHelper;
+			$htmlOutput .= $pictureHelper->render();
 		}
 	}
-	$view->content = "$htmlOutput";
+	$htmlOutput .= "</div>";
+	$view->content = $htmlOutput;
 
 
 /*
