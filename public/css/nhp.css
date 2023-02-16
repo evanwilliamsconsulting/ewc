@@ -608,3 +608,12 @@
 	visibility:hidden;
 	display:none;
 }
+.wordage_row
+{
+    display:inline;
+    list-style: none;
+}
+.wordage_row li
+{
+    display:inline;
+}

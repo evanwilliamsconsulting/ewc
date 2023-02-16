@@ -2,9 +2,9 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @divnk      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @divcense   http://framework.zend.com/divcense/new-bsd New BSD License
  */
 namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -24,13 +24,13 @@ use Zend\View\Resolver;
 class WordageController extends AbstractActionController
 {
     protected $em;
-	protected $authservice;
-	protected $username;
-	protected $log;
+    protected $authservice;
+    protected $username;
+    protected $log;
  
     public function __construct()
-	{
-	}
+    {
+    }
     public function getEntityManager()
     {
         if (null == $this->em)
@@ -39,7 +39,7 @@ class WordageController extends AbstractActionController
 	}
 	return $this->em;
     }
-	public function getAuthService()
+    public function getAuthService()
     {
         if (! $this->authservice) {
             $this->authservice = $this->getServiceLocator()
@@ -50,7 +50,7 @@ class WordageController extends AbstractActionController
     public function indexAction()
     {
 
-	// Initialize the View
+	// Initiadivze the View
     	$view = new ViewModel();
 
 	// 2Do: Check to see that user is logged in
@@ -75,7 +75,7 @@ class WordageController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 	}
 
 	/* See that! */
@@ -97,30 +97,43 @@ class WordageController extends AbstractActionController
 		$wordage_item[] = $wordage_text;
 		$wordage_items[] = $wordage_item;
 	}
-	$html = "<div>";
-	$html .=  "<div>";
-	$html .= "<span>Id</span><span>Binder Id</span><span>Title</span><span>Wordage</span>";
-	$html .= "</div>";
+	$html = "<div class='wordage_table'>";
+	$html .=  "<ul class='wordage_row'>";
+	$html .= "<li class='wordage_id_col'>";
+	$html .= "Id";
+	$html .= "</li>";
+	$html .= "<li class='wordage_binder_id_col'>";
+	$html .= "Binder Id"; 
+	$html .= "</li>";
+	$html .= "<li class='wordage_title_col'>";
+	$html .= "Title";
+	$html .= "</li>";
+	$html .= "<li class='wordage_text_col'>";
+	$html .= "Wordage";
+	$html .= "</li>";
+	$html .= "</ul>";
+	$html .= "<br/>";
 	foreach ($wordage_items as $key => $item)
 	{
 		$id = $item[0];
 		$binder_id = $item[1];
-		$title = $item[2];
-		$wordage_text = $item[3];
-		$html .= "<div>";	
-		$html .= "<span>";
+		$title = strip_tags($item[2]);
+		$wordage_text = strip_tags($item[3]);
+		$html .= "<ul class='wordage_row'>";	
+		$html .= "<li class='wordage_id_col'>";
 		$html .= $id;
-		$html .= "</span>";
-		$html .= "<span>";
+		$html .= "</li>";
+		$html .= "<li class='wordage_binder_id_col'>";
 		$html .= $binder_id;
-		$html .= "</span>";
-		$html .= "<span>";
+		$html .= "</li >";
+		$html .= "<li class='wordage_title_col'>";
 		$html .= $title;
-		$html .= "</span>";
-		$html .= "<span>";
+		$html .= "</li>";
+		$html .= "<li class='wordage_text_col'>";
 		$html .= substr($wordage_text,0,40);
-		$html .= "</span>";
-		$html .= "</div>";
+		$html .= "</li >";
+		$html .= "</ul>";
+		$html .= "<br/>";
 	}
 	$html .= "</div>";
 
@@ -130,7 +143,7 @@ class WordageController extends AbstractActionController
     }
     public function deleteAction()
     {
-	// Initialize the View
+	// Initiadivze the View
     	$view = new ViewModel();
 	$view->setTerminal(true);
 	// Retreive the parameters
@@ -157,7 +170,7 @@ class WordageController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -174,7 +187,7 @@ class WordageController extends AbstractActionController
     public function viewAction()
     {
 
-    	$userSession = new Container('user'); // Talk about conflicting names!
+    	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
 	if ($loggedIn)
@@ -189,9 +202,9 @@ class WordageController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 	}
-	// Initialize the View
+	// Initiadivze the View
     	$view = new ViewModel();
 	// Retreive the parameters
 
@@ -224,11 +237,10 @@ class WordageController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       		return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 		}
 		
 		$em = $this->getEntityManager()	;
-		
 		$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
 		
 		//$topic = new \Application\View\Helper\TopicToolbar('wordage');
@@ -276,32 +288,34 @@ class WordageController extends AbstractActionController
     }
     public function editAction()
     {
+    	$userSession = new Container('user'); // Talk about confdivcting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+	// Initialize the View
+	// Retreive the parameters
 	$view = new ViewModel();
+/*
 	$view->setTerminal(true);
-	$renderer = new PhpRenderer();
-	$resolver = new Resolver\AggregateResolver();
-	$renderer->setResolver($resolver);
+*/
 
-	$map = new Resolver\TemplateMapResolver(array(
-    		'edit'      => __DIR__ . '/../../../view/application/wordage/edit.phtml',
-	));
-	$stack = new Resolver\TemplatePathStack(array(
-    		'script_paths' => array(
-        	__DIR__ . '/view',
-    		)
-	));
-
-	$resolver->attach($map);
-	$resolver->attach($stack);
-
-	$wordageid = $this->params()->fromRoute('item');
-	//$wordageid = $this->params()->fromQuery('id');
-	// Looking for: wordage- or 8 chars
-
-	$theArray = array('id' => $wordageid);
+	$id = $this->params()->fromQuery("id");
 
 	$em = $this->getEntityManager();
-	$wordage = $em->getRepository('Application\Entity\Wordage')->findOneBy($theArray);
+	$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
 	$actualWords = $wordage->getWordage();
 	$theWords = $wordage->getWordage();
 	$title = $wordage->getTitle();
@@ -313,14 +327,78 @@ class WordageController extends AbstractActionController
     }
     public function jsonAction()
     {
-	$viewModel = new ViewModel();
-	$viewModel->setTemplate("edit");
+    	$userSession = new Container('user'); // Talk about confdivcting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+	// Initiadivze the View
+    	$view = new ViewModel();
+	// Retreive the parameters
+
+	$wordageid = $this->params()->fromQuery("id");
+
+	if (is_null($wordageid))
+	{
+		$wordageid = 22;
+	}
+		
+	// 2Do: Check to see that user is logged in
+
+ 	$persistent = $this->getAuthService()->getStorage();
+	$namespace = $persistent->getNamespace();
+
+    	// 2Do: Populate username with user's username
+    	$userSession = new Container('user');
+		$this->username = $userSession->username;
+		$username = $this->username;
+		$loggedIn = $userSession->loggedin;
+		if ($loggedIn)
+		{
+			// Set the Helpers
+			$layout = $this->layout();
+			foreach($layout->getVariables() as $child)
+			{
+				$child->setLoggedIn(true);
+				$child->setUserName($username);
+			}
+		}
+		else
+		{
+	       		return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+		}
+		
+	$theArray = array('id' => $wordageid);
+
+	$em = $this->getEntityManager();
+	$wordage = $em->getRepository('Application\Entity\Wordage')->findOneBy($theArray);
+	$actualWords = $wordage->getWordage();
+
+	$view->setVariable('content',$actualWords);
+	$view->setVariable('id',$wordageid);
+	$view->setTemplate('json');
+
+	//$responseHTML = "<textarea>" . $actualWords . "</textarea>";
+
+
 	$renderer = new PhpRenderer();
 	$resolver = new Resolver\AggregateResolver();
 	$renderer->setResolver($resolver);
 
 	$map = new Resolver\TemplateMapResolver(array(
-    		'edit'      => __DIR__ . '/../../../view/application/wordage/edit.phtml',
+    		'json'      => __DIR__ . '/../../../view/application/wordage/json.phtml',
 	));
 	$stack = new Resolver\TemplatePathStack(array(
     		'script_paths' => array(
@@ -331,22 +409,7 @@ class WordageController extends AbstractActionController
 	$resolver->attach($map);
 	$resolver->attach($stack);
 
-	$wordageid = $this->params()->fromRoute('item');
-	//$wordageid = $this->params()->fromQuery('id');
-	// Looking for: wordage- or 8 chars
-	$viewModel->setVariable('theid',$wordageid);
-
-	$theArray = array('id' => $wordageid);
-
-	$em = $this->getEntityManager();
-	$wordage = $em->getRepository('Application\Entity\Wordage')->findOneBy($theArray);
-	$actualWords = $wordage->getWordage();
-	$viewModel->setVariable('content',$actualWords);
-	$viewModel->setVariable('id',$theId);
-
-	//$responseHTML = "<textarea>" . $actualWords . "</textarea>";
-
-	$wordageResponse = $renderer->render($viewModel);
+	$wordageResponse = $renderer->render($view);
 
 	$variables = array("id" => $wordageid,"view" => $wordageResponse);
 	$jsonModel = new JsonModel($variables);

@@ -8,20 +8,24 @@
     <link href="/css/styles.css" type="text/css" rel="stylesheet">
     <link href="/css/nhp.css" type="text/css" rel="stylesheet">
     <!-- development version, includes helpful console warnings -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRNNPXYFZE"></script>
-    <script>
-       window.dataLayer = window.dataLayer || [];
-       function gtag(){dataLayer.push(arguments);}
-       gtag('js', new Date());
-
-       gtag('config', 'G-VRNNPXYFZE');
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<!--
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=a6a0g2hrxjm58bb5cysjzf6jgugbqf7l9u3m8hfjkdj3mkg7"></script> 
+-->
     <script src="/js/nhpress.js"></script>
-    <script>tinymce.init({selector: '#textedit'});</script>
+    <script>tinymce.init({selector: '#wordage-edit-textarea',
+			plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+      			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+      			tinycomments_mode: 'embedded',
+      			tinycomments_author: 'Author name',
+      mergetags_list: [
+        { value: 'First.Name', title: 'First Name' },
+        { value: 'Email', title: 'Email' },
+      ]
+    });
+	</script>
  </head>
 <body class="body_class">
     <div id="main-bar" class="evtechnote-color-1">
@@ -54,10 +58,8 @@
     <div id="main-footer" class="evtechnote-color-1">
 	<div id="dialog_box">
 	</div>
-<!--
 	<div id="textedit" class="editbox">
 	</div>
--->
     	<div id="footer_text">
 		<span class="white">© <?php echo date("Y") ?> Evan Williams Consulting, LLC</span>
     	</div>

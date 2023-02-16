@@ -18,7 +18,8 @@
 	"symfony/yaml": "*",
         "symfony/cache": "*", 
         "zendframework/zend-log":"*",
-        "breuls/tmdb-library":"*"
+        "breuls/tmdb-library":"*",
+	"tinymce/tinymce"
     },
     "autoload" : {
         "psr-0" :{"": "src/"}
