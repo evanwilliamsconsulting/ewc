@@ -243,8 +243,6 @@ class WordageController extends AbstractActionController
 		$em = $this->getEntityManager()	;
 		$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
 		
-		//$topic = new \Application\View\Helper\TopicToolbar('wordage');
-		//$view->topic = $topic();
 		$theWords = $wordage->getWordage();
 		$title = $wordage->getTitle();
 		
@@ -379,39 +377,23 @@ class WordageController extends AbstractActionController
 		{
 	       		return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 		}
+
+
+	$id = $this->params()->fromQuery("id");
+
+	if (is_null($id))
+	{
+		$id = 22;
+	}
 		
-	$theArray = array('id' => $wordageid);
 
-	$em = $this->getEntityManager();
-	$wordage = $em->getRepository('Application\Entity\Wordage')->findOneBy($theArray);
-	$actualWords = $wordage->getWordage();
-
-	$view->setVariable('content',$actualWords);
-	$view->setVariable('id',$wordageid);
-	$view->setTemplate('json');
-
-	//$responseHTML = "<textarea>" . $actualWords . "</textarea>";
-
-
-	$renderer = new PhpRenderer();
-	$resolver = new Resolver\AggregateResolver();
-	$renderer->setResolver($resolver);
-
-	$map = new Resolver\TemplateMapResolver(array(
-    		'json'      => __DIR__ . '/../../../view/application/wordage/json.phtml',
-	));
-	$stack = new Resolver\TemplatePathStack(array(
-    		'script_paths' => array(
-        	__DIR__ . '/view',
-    		)
-	));
-
-	$resolver->attach($map);
-	$resolver->attach($stack);
-
-	$wordageResponse = $renderer->render($view);
-
-	$variables = array("id" => $wordageid,"view" => $wordageResponse);
+		$em = $this->getEntityManager()	;
+		$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
+		
+		$theWords = $wordage->getWordage();
+		$title = $wordage->getTitle();
+		
+	$variables = array("id" => $wordageid,"view" => $theWords);
 	$jsonModel = new JsonModel($variables);
         $response = $this->getResponse();
         $response->setStatusCode(200);

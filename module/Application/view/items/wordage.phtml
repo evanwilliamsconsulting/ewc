@@ -7,14 +7,20 @@
 	<div id="wordage-username" class="small_letters"><?php echo $this->original; ?></div>
 	<div id="wordage-timestamp" class="small_letters"><?php echo $this->username; ?></div>
 	<?php if ($this->loggedIn == true): ?>
-	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href='#' onclick="loadWordageForm(<?php echo $id; ?>,'wordage-target-<?php echo $this->id; ?>','wordage-presentation-<?php echo $this->id; ?>');">Edit</a></div>
+	    <?php echo $this->topicToolbar('wordage',$this->id); ?>
+	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href='#' onclick="loadEditForm('wordage',<?php echo $this->id; ?>);">Edit</a></div>
 	    <div id='topic-toolbar-save' class='toolbar-tab'><a href='#' onclick="saveEditForm('topic','wordage-target-',<?php echo $id; ?>);">Save</a></div>
 	<?php endif; ?>
         <div class="wordage-item-title">
 	    <br />
             <span><?php echo $this->original;?></span>
         </div>
-	<div id="wordage-presentation-<?php echo $id; ?>" class="wordage-item-content">
+	<div id="wordage-edit" class="wordage-item-content">
+		<div id="wordage-edit-textarea">
+		    <?php echo $this->wordage; ?>
+		</div>
+	</div>
+	<div id="wordage-view" class="wordage-item-content">
 		<?php echo $this->wordage; ?>
 	</div>
 	<div id="wordage-target-<?php echo $id; ?>">

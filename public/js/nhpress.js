@@ -22,7 +22,7 @@ $(document).ready(function()
 		data:window_info,
 		url:"index/setsize",
 		success:function(data) {
-			//alert(data);
+			////alert(data);
 		}
 	});
 */
@@ -32,7 +32,7 @@ $(document).ready(function()
 	},
 	showFileSub = function()
 	{
-		//alert("Hello");
+		////alert("Hello");
 		$("#file_sub").show();
 	},
 	closeForm = function()
@@ -49,7 +49,6 @@ $(document).ready(function()
 	{
 		theWordageId = wordagetextid;
 		thesource = "#" + thesource;
-		alert(wordagetextid);
 		$(thesource).hide();
 		$.ajax({
 			type:"POST",
@@ -147,7 +146,7 @@ $(document).ready(function()
 	{
 			$("#topic-toolbar-save").show();		
 			saveEditForm(id);
-			//alert("load");
+			////alert("load");
 			var ed = tinyMCE.get('wordage-edit-textarea');
 			//$ed.setProgressState(1); // Show progress
 			var url = "/wordage/content/" + id;
@@ -196,13 +195,13 @@ $(document).ready(function()
 			var startDate=$("input[type=text][name=startDate]").val();
 			var endDate=$("input[type=text][name=endDate]").val();
 /*
-		     alert(description);
-		     alert(skills);
-		     alert(company);
-		     alert(role);
-		     alert(title);
-		     alert(startDate);
-		     alert(endDate);
+		     //alert(description);
+		     //alert(skills);
+		     //alert(company);
+		     //alert(role);
+		     //alert(title);
+		     //alert(startDate);
+		     //alert(endDate);
 */
 		    var url = "/experience/change/" + id;
 			$.ajax({
@@ -237,8 +236,8 @@ $(document).ready(function()
 	{
 	    if (editInProgress == false)
 	    {
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -250,7 +249,7 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	   }
@@ -259,8 +258,8 @@ $(document).ready(function()
 	{
 	    if (editInProgress == false)
 	    {
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -272,15 +271,15 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
            }
 	},
 	saveOutlineEntry = function(id,key)
 	{
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -292,14 +291,14 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	},
 	indentOutlineEntry = function(id,key)
 	{
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -311,14 +310,14 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	},
 	outdentOutlineEntry = function(id,key)
 	{
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -330,7 +329,7 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	},
@@ -338,8 +337,8 @@ $(document).ready(function()
 	{	
 	    if (editInProgress == false)
 	    {
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -351,7 +350,7 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	    }
@@ -360,8 +359,8 @@ $(document).ready(function()
 	{
 	    if (editInProgress == false)
 	    {
-		alert(id);
-		alert(key);
+		//alert(id);
+		//alert(key);
 		theOutlineId = id;
 		theEntryKey = key;
 		$.ajax({
@@ -373,7 +372,7 @@ $(document).ready(function()
 				key:theEntryKey,
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         			}
 		});
 	    }
@@ -410,10 +409,10 @@ $(document).ready(function()
 		    theEntryKey = key;
 		    theTitle = $(editIdTitle).val();
 		    theDescription = $(editIdDescription).val();
-		    //alert(theOutlineId);
-		    //alert(theEntryKey);
-		    //alert(theTitle);
-		    //alert(theDescription);
+		    ////alert(theOutlineId);
+		    ////alert(theEntryKey);
+		    ////alert(theTitle);
+		    ////alert(theDescription);
 		    $.ajax({
 			type:"POST",
 			url:"/outline/save",
@@ -425,7 +424,7 @@ $(document).ready(function()
 				description:theDescription
 			}, 
 			success: function(data) {
-					alert(data);
+					//alert(data);
         		}
 		    });
 		    editInProgress = false;
@@ -459,7 +458,7 @@ $(document).ready(function()
 			}, 
 			url:"/wordage/change",
 			success: function(data) {
-				//alert(data);
+				////alert(data);
 			}
 		});
 	},
@@ -512,9 +511,9 @@ $(document).ready(function()
 	},
 	closeWordageEdit = function(wordagetextid)
 	{
-		//alert("close Wordage Edit");
+		////alert("close Wordage Edit");
 		var newContent = tinymce.activeEditor.getContent();
-		//alert(newContent);
+		////alert(newContent);
 		theWordageId = wordagetextid;
 		$.ajax({
 			type:"POST",
@@ -522,7 +521,7 @@ $(document).ready(function()
 			data:newContent,
 			theWordageID:wordagetextid,
 			success: function(data) {
-				//alert("update ran");
+				////alert("update ran");
 				window.location.href="/correspondant/index";
 				//window.location.href="http://dev.newhollandpress.com/correspondant/index";
 			}
