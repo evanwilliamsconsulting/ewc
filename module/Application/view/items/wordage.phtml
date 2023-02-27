@@ -7,9 +7,7 @@
 	<div id="wordage-username" class="small_letters"><?php echo $this->original; ?></div>
 	<div id="wordage-timestamp" class="small_letters"><?php echo $this->username; ?></div>
 	<?php if ($this->loggedIn == true): ?>
-	    <?php echo $this->topicToolbar('wordage',$this->id); ?>
-	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href='#' onclick="loadEditForm('wordage',<?php echo $this->id; ?>);">Edit</a></div>
-	    <div id='topic-toolbar-save' class='toolbar-tab'><a href='#' onclick="saveEditForm('topic','wordage-target-',<?php echo $id; ?>);">Save</a></div>
+	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href="/wordage/edit?id=<?php echo $this->id; ?>&from=correspondant">Edit</a></div>
 	<?php endif; ?>
         <div class="wordage-item-title">
 	    <br />

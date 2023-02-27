@@ -184,6 +184,7 @@ class WordageController extends AbstractActionController
         $response->setContent(json_encode($variables));
 	return $response;
     }
+
     public function viewAction()
     {
 
@@ -284,6 +285,72 @@ class WordageController extends AbstractActionController
         $response->setContent(json_encode($variables));
 	return $response;
     }
+    public function saveAction()
+    {
+    	$userSession = new Container('user'); // Talk about confdivcting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+	// Initialize the View
+	$view = new ViewModel();
+
+/*
+	$view->setTerminal(true);
+*/
+
+	$id = $this->params()->fromQuery("id");
+	$from = $this->params()->fromQuery("from");
+
+
+	if (is_null($from))
+	{
+		$from = "wordage";
+	}
+
+	$words = $this->getRequest()->getPost('wordage',null);
+	$title = $this->getRequest()->getPost('title',null);
+
+	$view->wordage = $words;
+	$view->title = $title;
+
+	$em = $this->getEntityManager();
+	$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
+		
+	$wordage->setWordage($words);
+	$wordage->setTitle($title);
+	$em->persist($wordage);
+	$em->flush();
+		
+	$view->title = $title;
+	$view->content = $words;
+	$view->id =$id;
+	
+	if (0 == strcmp($from,"correspondant"))
+	{
+	   return $this->redirect()->toUrl('/correspondant/index');
+	}
+	else if (0 == strcmp($from,"wordage"))
+	{
+	   return $this->redirect()->toUrl('/wordage/index');
+	}
+	else
+	{
+		return $view;
+	}
+    }
     public function editAction()
     {
     	$userSession = new Container('user'); // Talk about confdivcting names!
@@ -311,6 +378,13 @@ class WordageController extends AbstractActionController
 */
 
 	$id = $this->params()->fromQuery("id");
+	$from = $this->params()->fromQuery("from");
+
+
+	if (is_null($from))
+	{
+		$from = "wordage";
+	}
 
 	$em = $this->getEntityManager();
 	$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
@@ -321,6 +395,7 @@ class WordageController extends AbstractActionController
 	$view->title = $title;
 	$view->content = $theWords;
 	$view->id =$id;
+	$view->from = $from;
 	return $view;
     }
     public function jsonAction()
