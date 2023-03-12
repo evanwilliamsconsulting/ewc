@@ -617,3 +617,12 @@
 {
     display:inline;
 }
+.picture_row
+{
+    display:inline;
+    list-style:none;
+}
+.picture_row li
+{
+    display:inline;
+}

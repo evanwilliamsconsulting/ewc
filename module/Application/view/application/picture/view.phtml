@@ -1,0 +1,13 @@
+<div id="picture_div" class="width800 viewcolor">
+	<h2><?php echo $this->title; ?></h2>
+    <a href="/picture/edit?id=<?php echo $this->id;?>&from=picture">Edit</a>
+    <h2>Picture - <?php echo $this->title; ?></h2>
+    <div class="picture-item-caption">
+        <span><?php echo $this->caption;?></span>
+	<br />
+        <span><?php echo $this->original;?></span>
+    </div>
+    <div onclick="clickPictureItem('picture-<?php echo $this->id;?>')">
+    	<span><img src="<?php echo $this->picture; ?>" width=¨100¨ height=¨100¨></span>
+    </div>
+</div>

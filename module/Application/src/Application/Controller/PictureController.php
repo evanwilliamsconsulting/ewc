@@ -10,10 +10,12 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Application\Entity\Wordage;
+
+use Application\Entity\Picture;
 use Hex\View\Helper\CustomHelper;
 use Doctrine\ORM\EntityManager;
-use Application\Form\Entity\WordageForm;
+
+use Application\Form\Entity\PictureForm;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -24,9 +26,9 @@ use Zend\View\Resolver;
 class PictureController extends AbstractActionController
 {
     protected $em;
-	protected $authservice;
-	protected $username;
-	protected $log;
+    protected $authservice;
+    protected $username;
+    protected $log;
  
     public function __construct()
 	{
@@ -49,48 +51,157 @@ class PictureController extends AbstractActionController
     }
     public function indexAction()
     {
+
+	// Initiadivze the View
     	$view = new ViewModel();
-	    $view->content = $this->content();
-		
+
+	// 2Do: Check to see that user is logged in
+
+ 	$persistent = $this->getAuthService()->getStorage();
+	$namespace = $persistent->getNamespace();
+
+    	// 2Do: Populate username with user's username
+    	$userSession = new Container('user');
+	$this->username = $userSession->username;
+	$username = $this->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
 		$layout = $this->layout();
-		// This second layout look really should happen if logged in.
-		$layout->setTemplate('layout/correspondant');
-		
-        return $view;
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($username);
+		}
+	}
+	else
+	{
+	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+
+	/* See that! */
+        $em = $this->getEntityManager();
+	$pictures = $em->getRepository('Application\Entity\Picture')->findAll();
+
+	$picture_items = Array();
+
+	foreach ($pictures as $key => $picture)
+	{
+		$picture_item = Array();
+		$id = $picture->getId();
+		$picture_text  = $picture->getPicture();
+		$binder_id = $picture->getBinderId();
+		$title = $picture->getTitle();
+		$picture_item[] = $id;
+		$picture_item[] = $binder_id;
+		$picture_item[] = $title;
+		$picture_item[] = $picture_text;
+		$picture_items[] = $picture_item;
+	}
+	$html = "<div class='picture_table'>";
+	$html .=  "<ul class='picture_row'>";
+	$html .= "<li class='picture_id_col'>";
+	$html .= "Id";
+	$html .= "</li>";
+	$html .= "<li class='picture_binder_id_col'>";
+	$html .= "Binder Id"; 
+	$html .= "</li>";
+	$html .= "<li class='picture_title_col'>";
+	$html .= "Title";
+	$html .= "</li>";
+	$html .= "<li class='picture_text_col'>";
+	$html .= "Wordage";
+	$html .= "</li>";
+	$html .= "</ul>";
+	$html .= "<br/>";
+	foreach ($picture_items as $key => $item)
+	{
+		$id = $item[0];
+		$binder_id = $item[1];
+		$title = strip_tags($item[2]);
+		$picture_text = strip_tags($item[3]);
+		$html .= "<ul class='picture_row'>";	
+		$html .= "<li class='picture_id_col'>";
+		$html .= $id;
+		$html .= "</li>";
+		$html .= "<li class='picture_binder_id_col'>";
+		$html .= $binder_id;
+		$html .= "</li >";
+		$html .= "<li class='picture_title_col'>";
+		$html .= $title;
+		$html .= "</li>";
+		$html .= "<li class='picture_text_col'>";
+		$html .= substr($picture_text,0,40);
+		$html .= "</li >";
+		$html .= "</ul>";
+		$html .= "<br/>";
+	}
+	$html .= "</div>";
+
+	$view->content = $html;
+
+	return $view;
     }
     public function viewAction()
     {
-    	// Load the logger
-    	$this->log = $this->getServiceLocator()->get('log');
-    	$log = $this->log;
-    	$log->info("view action");
-		
-		// Initialize the View
-    	$view = new ViewModel();
-		// Retreive the parameters
-		$id = $this->params()->fromRoute('item');
-	    $log->info($id);
-		
-		// 2Do: Check to see that user is logged in
-    	if (!$this->getAuthService()->hasIdentity())
-        {
-	       return $this->redirect()->toUrl('http://www.newhollandpress.com/');
+	$userSession = new Container('user');
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+
+	if ($loggedIn)
+	{
+		// Set the helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);	
+		}
         }
-    	// 2Do: Populate username with user's username
-    	$userSession = new Container('user');
-		$this->username = $userSession->username;
-		$log->info($this->username);
+	else
+	{
+		return $this->redirect()->toUrl('evanwilliamsconsulting.local');
+	}
+	// Initialize the View
+	$view = new ViewModel();
+
+	// Retrieve the Parameters
+	$id = $this->params()->fromQuery('id');
+
+	if (is_null($id))
+	{
+		$id = 1;
+	}
 		
-		$em = $this->getEntityManager();
-		
-		$wordage = $em->getRepository('Application\Entity\Wordage')->find($id);
-		
-		//$topic = new \Application\View\Helper\TopicToolbar('wordage');
-		//$view->topic = $topic();
-		$theWords = $wordage->getWordage();
-		
-		$view->content = $theWords;
-		$view->id =$id;
+	$em = $this->getEntityManager();
+	
+	$picture = $em->getRepository('Application\Entity\Picture')->find($id);
+
+	$thePicture = $picture->getPicture();
+	$title = $picture->getTitle();
+	$caption = $picture->getCaption();
+	$width = $picture->getWidth();
+	$height = $picture->getHeight();	
+	$credit = $picture->getCredit();
+	$subfolder = $picture->getSubfolder();
+
+	$view->title = $title;
+	$pictureRelativeURI = '/images/';
+	if (!is_null($subfolder))
+	{
+	    $pictureRelativeURI .= $subfolder;
+	    $pictureRelativeURI .= '/';
+	}
+	$pictureRelativeURI .= $thePicture;
+	$view->picture = $pictureRelativeURI;
+	$view->caption = $caption;
+	$view->id =$id;
+	$view->width = $width;
+	$view->height = $height;
+	$view->credit = $credit;
+	$view->subfolder = $subfolder;
+
         return $view;
     }
     public function content()
