@@ -1,48 +1,20 @@
-<div id="<?php echo $this->pictureid; ?>" class="picture-item"> 
-  <figure class="image-container target">
-      <img id="target" src="<?php echo $this->actualPicture; ?>"/>
-      <figcaption class="image-meta">The Caption </figcaption>
-  </figure>
-
-  <script src="/darkroomjs/demo/vendor/fabric.js"></script>
-  <script src="/darkroomjs/build/darkroom.js"></script>
-
-  <script>
-    var dkrm = new Darkroom('#target', {
-      // Size options
-      minWidth: 100,
-      minHeight: 100,
-      maxWidth: 600,
-      maxHeight: 500,
-      ratio: 4/3,
-      backgroundColor: '#000',
-
-      // Plugins options
-      plugins: {
-        //save: false,
-        crop: {
-          quickCropKey: 67, //key "c"
-          //minHeight: 50,
-          //minWidth: 50,
-          //ratio: 4/3
-        }
-      },
-
-      // Post initialize script
-      initialize: function() {
-        var cropPlugin = this.plugins['crop'];
-        // cropPlugin.selectZone(170, 25, 300, 300);
-        cropPlugin.requireFocus();
-      }
-    });
-  </script>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-23657373-2', 'mattketmo.github.io');
-    ga('send', 'pageview');
-  </script>
+<div id="picture_div" class="width800 viewcolor">
+	<h2><?php echo $this->title; ?></h2>
+    <a href="/picture/edit?id=<?php echo $this->id;?>&from=picture">Edit</a>
+    <h2>Picture - <?php echo $this->title; ?></h2>
+    <div class="picture-item-caption">
+        <span><?php echo $this->caption;?></span>
+	<br />
+        <span><?php echo $this->original;?></span>
+    </div>
+    <div onclick="clickPictureItem('picture-<?php echo $this->id;?>')">
+    	<span><img src="<?php echo $this->picture; ?>" width=¨<?php echo $this->width; ?>¨ height=¨<?php echo $this->height; ?>¨></span>
+    </div>
+    <form method="post" action="/picture/resize?id=<?php echo $this->id; ?>&from=<?php echo $this->from; ?>">
+	<label>Picture Width</label>
+	<input id="picture_width" name="picture_width" type="text" value="<?php echo $this->resize_width; ?>">
+	<label>Picture Height</label>
+	<input id="picture_height" name="picture_height" type="text" value="<?php echo $this->resize_height; ?>">
+    	<input id="picture_resize" name="picture_resize" value="Resize" type="submit"/>
+    </form>
 </div>

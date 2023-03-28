@@ -143,6 +143,7 @@ class PictureController extends AbstractActionController
 
 	return $view;
     }
+
     public function viewAction()
     {
 	$userSession = new Container('user');
@@ -225,7 +226,7 @@ class PictureController extends AbstractActionController
 
 	$wordageid = $this->params()->fromPost('id');
 	$theId = substr($wordageid,strpos('wordage-',$wordageid)+8,strlen($wordageid));
-	$theArray = array('id' => $theId);
+	$theArray = array('id' => $id);
 
 	$em = $this->getEntityManager();
 	$wordage = $em->getRepository('Application\Entity\Wordage')->findOneBy($theArray);
@@ -242,42 +243,127 @@ class PictureController extends AbstractActionController
     }
     public function editAction()
     {
-	$viewModel = new ViewModel();
-	$viewModel->setTemplate("edit");
-	$renderer = new PhpRenderer();
-	$resolver = new Resolver\AggregateResolver();
-	$renderer->setResolver($resolver);
+	$userSession = new Container('user');
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
 
-	$map = new Resolver\TemplateMapResolver(array(
-    		'edit'      => __DIR__ . '/../../../view/application/picture/edit.phtml',
-	));
-	$stack = new Resolver\TemplatePathStack(array(
-    		'script_paths' => array(
-        	__DIR__ . '/view',
-    		)
-	));
+	if ($loggedIn)
+	{
+		// Set the helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);	
+		}
+        }
+	else
+	{
+		return $this->redirect()->toUrl('evanwilliamsconsulting.local');
+	}
+	// Initialize the View
+	$view = new ViewModel();
 
-	$resolver->attach($map);
-	$resolver->attach($stack);
+	// Retrieve the Parameters
+	$id = $this->params()->fromQuery('id');
 
-	$pictureid = $this->params()->fromQuery('id');
-	// Looking for: picture- or 8 chars
-	$theId = substr($pictureid,strpos('-',$pictureid)+8,strlen($pictureid));
-	$viewModel->setVariable('theid',$theId);
+	if (is_null($id))
+	{
+		$id = 1;
+	}
+		
+	$em = $this->getEntityManager();
+	
+	$picture = $em->getRepository('Application\Entity\Picture')->find($id);
 
-	$theArray = array('id' => $theId);
+	$thePicture = $picture->getPicture();
+	$title = $picture->getTitle();
+	$caption = $picture->getCaption();
+	$width = $picture->getWidth();
+	$height = $picture->getHeight();	
+	$credit = $picture->getCredit();
+	$subfolder = $picture->getSubfolder();
+
+	$view->title = $title;
+	$pictureRelativeURI = '/images/';
+	if (!is_null($subfolder))
+	{
+	    $pictureRelativeURI .= $subfolder;
+	    $pictureRelativeURI .= '/';
+	}
+	$pictureRelativeURI .= $thePicture;
+	$view->picture = $pictureRelativeURI;
+	$view->caption = $caption;
+	$view->id =$id;
+	$view->width = $width;
+	$view->height = $height;
+	$view->credit = $credit;
+	$view->subfolder = $subfolder;
+	$view->resize_width = $width;
+	$view->resize_height = $height;
+
+        return $view;
+    }
+    public function resizeAction()
+    {
+    	$userSession = new Container('user'); // Talk about confdivcting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+	// Initialize the View
+	$view = new ViewModel();
+
+/*
+	$view->setTerminal(true);
+*/
+
+	$id = $this->params()->fromQuery("id");
+	$from = $this->params()->fromQuery("from");
+
+
+	if (is_null($from))
+	{
+		$from = "picture";
+	}
+
+	$resize_width = $this->getRequest()->getPost('picture_width',null);
+	$resize_height = $this->getRequest()->getPost('picture_height',null);
 
 	$em = $this->getEntityManager();
+	$theArray = array('id' => $id );
 	$picture = $em->getRepository('Application\Entity\Picture')->findOneBy($theArray);
-	$actualPicture  = $picture->getPicture();
-	$viewModel->setVariable('actualPicture',$actualPicture);
-	$viewModel->setVariable('id',$theId);
-
-	$variables = array("id" => $pictureid,"view" => $renderer->render($viewModel),"thepicture" => print_r($picture,true));
-	$jsonModel = new JsonModel($variables);
-        $response = $this->getResponse();
-        $response->setStatusCode(200);
-        $response->setContent(json_encode($variables));
-	return $response;
+		
+	$picture->setWidth($resize_width);
+	$picture->setHeight($resize_height);
+	$em->persist($picture);
+	$em->flush();
+		
+	$view->id =$id;
+	
+	if (0 == strcmp($from,"correspondant"))
+	{
+	   return $this->redirect()->toUrl('/correspondant/index');
+	}
+	else if (0 == strcmp($from,"picture"))
+	{
+	   return $this->redirect()->toUrl('/picture/index');
+	}
+	else
+	{
+		return $view;
+	}
     }
 }
