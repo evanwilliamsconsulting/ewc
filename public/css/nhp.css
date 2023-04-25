@@ -626,3 +626,29 @@
 {
     display:inline;
 }
+.item_row
+{
+    display:inline;
+    list-style: none;
+}
+.item_row li
+{
+    display:inline;
+}
+.subitem_table
+{
+	position:relative;
+	left:100px;
+}
+.subitem_row
+{
+    display:inline;
+    list-style: none;
+}
+.subitem_row li
+{
+    display:inline;
+}
+.subitem_col
+{
+}

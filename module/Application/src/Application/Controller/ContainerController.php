@@ -56,8 +56,8 @@ class ContainerController extends AbstractActionController
     protected $em;
     protected $authservice;
     protected $username;
-    protected $obj;
-
+    protected $log;
+ 
     public function __construct()
     {
     }
@@ -65,15 +65,17 @@ class ContainerController extends AbstractActionController
     {
         if (null == $this->em)
         {
-	    try {
-            	$this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-                //$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-            } catch (Exception $e) {
-		print_r($e);
-		print_r($e-getPrevious());
-	    }
+            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 	}
 	return $this->em;
+    }
+    public function getAuthService()
+    {
+        if (! $this->authservice) {
+            $this->authservice = $this->getServiceLocator()
+                                      ->get('AuthService');
+        }
+        return $this->authservice;
     }
     public function oldAction()
     {
@@ -388,6 +390,146 @@ class ContainerController extends AbstractActionController
         return $view;
     }
     public function indexAction()
+    {
+
+	// Initiadivze the View
+    	$view = new ViewModel();
+
+	// 2Do: Check to see that user is logged in
+
+ 	$persistent = $this->getAuthService()->getStorage();
+	$namespace = $persistent->getNamespace();
+
+    	// 2Do: Populate username with user's username
+    	$userSession = new Container('user');
+	$this->username = $userSession->username;
+	$username = $this->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($username);
+		}
+	}
+	else
+	{
+	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	}
+
+	/* See that! */
+        $em = $this->getEntityManager();
+	$containers = $em->getRepository('Application\Entity\Container')->findAll();
+
+	$container_items = Array();
+
+	foreach ($containers as $key => $container)
+	{
+		$container_item = Array();
+		$id = $container->getId();
+		$title = $container->getTitle();
+		$type = $container->getContainerType();
+		$description = $container->getDescription();
+		$container_item[] = $id;
+		$container_item[] = $title;
+		$container_item[] = $type;
+		$container_item[] = $description;
+		$container_items[] = $container_item;
+	}
+	$html = "<div class='item_table'>";
+	$html .=  "<ul class='item_row'>";
+	$html .= "<li class='item_id_col'>";
+	$html .= "Id";
+	$html .= "</li>";
+	$html .= "<li class='item_title_col'>";
+	$html .= "Title";
+	$html .= "</li>";
+	$html .= "<li class='item_title_col'>";
+	$html .= "Type";
+	$html .= "</li>";
+	$html .= "<li class='item_title_col'>";
+	$html .= "Description";
+	$html .= "</li>";
+	$html .= "</ul>";
+	$html .= "<br/>";
+
+	foreach ($container_items as $key => $item)
+	{
+		$id = $item[0];
+		$title = strip_tags($item[1]);
+		$html .= "<ul class='item_row'>";	
+		$html .= "<li class='item_id_col'>";
+		$html .= $id;
+		$html .= "</li>";
+		$html .= "<li class='item_title_col'>";
+		$html .= $title;
+		$html .= "</li>";
+		$html .= "<li class='item_title_col'>";
+		$html .= $type;
+		$html .= "</li>";
+		$html .= "<li class='item_title_col'>";
+		$html .= $description;
+		$html .= "</li>";
+		$html .= "</ul>";
+		$html .= "<br/>";
+
+
+		//  Given the Container's Id, fetch the Container Items.
+		$params = Array();
+		$params['containerid'] = $id;
+		$containerItems = $em->getRepository('Application\Entity\ContainerItems')->findBy($params);
+
+
+		$containerHtml = "<div class='subitem_table'>";
+		$containerHtml .= "<ul class='subitem_row'>";
+		$containerHtml .= "<li class='subitem_col_id'>";
+		$containerHtml .= "id";
+		$containerHtml .= "</li>";
+		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "container_id";
+		$containerHtml .= "</li>";
+		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "itemid";
+		$containerHtml .= "</li>";
+		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "itemtype";
+		$containerHtml .= "</li>";
+		$containerHtml .= "</ul>";
+		foreach ($containerItems as $key => $containerItem)
+		{
+			$containerItem_id = $containerItem->getId();
+			$containerItem_containerid = $containerItem->getContainerId();
+			$containerItem_itemid = $containerItem->getItemId();
+			$containerItem_itemtype = $containerItem->getItemType();
+			$containerHtml .= "<ul class='subitem_row'>";
+			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= $containerItem_id;
+			$containerHtml .= "</li>";
+			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= $containerItem_containerid;
+			$containerHtml .= "</li>";
+			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= $containerItem_itemid;
+			$containerHtml .= "</li>";
+			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= $containerItem_itemtype;
+			$containerHtml .= "</li>";
+			$containerHtml .= "</ul>";
+		}
+		$containerHtml .= "<div>";
+
+		$html .= $containerHtml;
+	}
+	$html .= "</div>";
+
+	$view->content = $html;
+
+	return $view;
+    }
+    public function oldindexAction()
     {
 
     	$userSession = new Container('user'); // Talk about conflicting names!

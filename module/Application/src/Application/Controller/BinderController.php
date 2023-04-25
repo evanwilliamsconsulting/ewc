@@ -65,49 +65,92 @@ class BinderController extends AbstractActionController
     {
         if (null == $this->em)
         {
-	    try {
-            	$this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-                //$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-            } catch (Exception $e) {
-		//print_r($e);
-		//print_r($e-getPrevious());
-	    }
+            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 	}
 	return $this->em;
     }
+    public function getAuthService()
+    {
+        if (! $this->authservice) {
+            $this->authservice = $this->getServiceLocator()
+                                      ->get('AuthService');
+        }
+        return $this->authservice;
+    }
     public function indexAction()
     {
+
+	// Initiadivze the View
+    	$view = new ViewModel();
+
+	// 2Do: Check to see that user is logged in
+
+ 	$persistent = $this->getAuthService()->getStorage();
+	$namespace = $persistent->getNamespace();
+
+    	// 2Do: Populate username with user's username
     	$userSession = new Container('user');
 	$this->username = $userSession->username;
+	$username = $this->username;
 	$loggedIn = $userSession->loggedin;
-	//$loggedIn = true;
 	if ($loggedIn)
 	{
 		// Set the Helpers
 		$layout = $this->layout();
 		foreach($layout->getVariables() as $child)
 		{
-			//$child->setLoggedIn(true);
-			$child->setLoggedIn($loggedIn);
-			$child->setUserName($this->username);
-			}
+			$child->setLoggedIn(true);
+			$child->setUserName($username);
+		}
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
 	}
 
+	/* See that! */
         $em = $this->getEntityManager();
+	$binders = $em->getRepository('Application\Entity\Binder')->findAll();
 
-	$criteria = array("id" => 1);
-	$binders = $em->getRepository('Application\Entity\Binder')->findBy($criteria);
+	$binder_items = Array();
 
-	print_r($binders);	
+	foreach ($binders as $key => $binder)
+	{
+		$binder_item = Array();
+		$id = $binder->getId();
+		$title = $binder->getTitle();
+		$binder_item[] = $id;
+		$binder_item[] = $title;
+		$binder_items[] = $binder_item;
+	}
+	$html = "<div class='item_table'>";
+	$html .=  "<ul class='item_row'>";
+	$html .= "<li class='item_id_col'>";
+	$html .= "Id";
+	$html .= "</li>";
+	$html .= "<li class='item_title_col'>";
+	$html .= "Title";
+	$html .= "</li>";
+	$html .= "</ul>";
+	$html .= "<br/>";
+	foreach ($binder_items as $key => $item)
+	{
+		$id = $item[0];
+		$title = strip_tags($item[1]);
+		$html .= "<ul class='item_row'>";	
+		$html .= "<li class='item_id_col'>";
+		$html .= $id;
+		$html .= "</li>";
+		$html .= "<li class='item_title_col'>";
+		$html .= $title;
+		$html .= "</li>";
+		$html .= "</ul>";
+		$html .= "<br/>";
+	}
+	$html .= "</div>";
 
-	$criteria = array("binder_id" => 1);
-	$wordage = $em->getRepository('Application\Entity\Wordage')->findBy($criteria);
+	$view->content = $html;
 
-	print_r($wordage);
-    
+	return $view;
     }
 }

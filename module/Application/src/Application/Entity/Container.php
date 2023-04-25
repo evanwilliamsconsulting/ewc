@@ -39,6 +39,7 @@ class Container implements InputFilterAwareInterface
         $this->username = (isset($data['username'])) ? $data['username'] : null;
         $this->original = (isset($data['original'])) ? $data['original'] : null;
         $this->title= (isset($data['title'])) ? $data['title'] : null;
+        $this->description = (isset($data['description'])) ? $data['description'] : null;
         $this->background= (isset($data['background'])) ? $data['background'] : null;
         $this->frame = (isset($data['frame'])) ? $data['frame'] : null;
         $this->backgroundwidth  = (isset($data['backgroundwidth'])) ? $data['backgroundwidth'] : null;
@@ -87,6 +88,12 @@ class Container implements InputFilterAwareInterface
             $inputFilter->add(
             	$factory->createInput(array(
                 'name' => 'title',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'description',
                 'required' => false,
             )));
 
@@ -152,8 +159,9 @@ class Container implements InputFilterAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="wordage", type="string", length=255, nullable=false)
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
+    private $description;
     /**
      * @var string
      */
@@ -309,6 +317,29 @@ class Container implements InputFilterAwareInterface
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set Description 
+     *
+     * @param string $description
+     * @return Container
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get Description 
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
