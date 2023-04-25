@@ -20,7 +20,7 @@ use Publish\Block\Broadsheet;
 use Application\Entity\Items as Items; 
 use Application\Entity\Content as Content; 
 use Application\Entity\Container as Container;
-use Application\Model\ContainerItems as ContainerItems;
+//use Application\Entity\ContainerItems as ContainerItems;
 use Application\View\Helper\ContainerHelper as ContainerHelper;
 use Application\View\Helper\WordageHelper as WordageHelper;
 use Application\View\Helper\PictureHelper as PictureHelper;
