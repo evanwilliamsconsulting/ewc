@@ -70,7 +70,7 @@ class IndexController extends AbstractActionController
 	$content->setEntityManager($em);
 	$content->loadDataSource();
 
-	$htmlOutput = "<div>";
+	$htmlOutput = "<div class='page-frame'>";
 	foreach ($content->toArray() as $num => $item)
 	{
 		$type = $item["type"];
@@ -78,9 +78,9 @@ class IndexController extends AbstractActionController
 		if (0 == strcmp($type,"Wordage"))
 		{
 			$wordage = $object->getWordage();
-			$htmlOutput .= "<div>Wordage-Start</div><br/>";
+			$htmlOutput .= "<div class=' wordage-output'>";
 			$htmlOutput .= $wordage;
-			$htmlOutput .= "<div>Wordage-End</div><br/>";
+			$htmlOutput .= "</div>";
 		}
 		if (0 == strcmp($type,"Picture"))
 		{
@@ -94,7 +94,7 @@ class IndexController extends AbstractActionController
 			$pictureHelper->setObject($object);
 
 /*
-			$htmlOutput .= "<div>Picture-Start</div><br/>";
+			$htmlOutput .= "<div class='picture-output'>";
 			$htmlOutput .= "<img src='/images/";
 			$htmlOutput .= $picture;
 			$htmlOutput .= "' width=";
@@ -102,7 +102,7 @@ class IndexController extends AbstractActionController
 			$htmlOutput .= " height=";
 			$htmlOutput .= $height;
 			$htmlOutput .= ">";
-			$htmlOutput .= "<div>Picture-End</div><br/>";
+			$htmlOutput .= "</div><br/>";
 */
 		//	$view->picture = $pictureHelper;
 			$htmlOutput .= $pictureHelper->render();

@@ -137,7 +137,7 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
 	
 
 	$html = "";
-	$html .= "<div>";
+	$html .= "<div class='picture-output'>";
 	$html .= $img;
 	$html .= $caption_div;
 	$html .= "</div>";
