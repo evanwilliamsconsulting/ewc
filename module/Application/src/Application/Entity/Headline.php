@@ -1,4 +1,22 @@
 <?php
+/*
+
+mysql> show columns from Headline;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| binder_id  | int          | YES  |     | NULL    |                |
+| headline   | varchar(255) | NO   |     | NULL    |                |
+| username   | varchar(255) | YES  |     | NULL    |                |
+| original   | datetime     | YES  |     | NULL    |                |
+| fontsize   | varchar(255) | YES  |     | NULL    |                |
+| fontstyle  | varchar(255) | YES  |     | NULL    |                |
+| fontfamily | varchar(255) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+
+
+*/
 
 namespace Application\Entity;
 
@@ -25,6 +43,7 @@ class Headline implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
+        $this->binder_id = (isset($data['binder_id'])) ? $data['binder_id'] : null;
         $this->username = (isset($data['username'])) ? $data['username'] : null;
         $this->original = (isset($data['original'])) ? $data['original'] : null;
         $this->headline= (isset($data['headline'])) ? $data['headline'] : null;
@@ -45,6 +64,12 @@ class Headline implements InputFilterAwareInterface
             $inputFilter->add(
             	$factory->createInput(array(
                 'name' => 'id',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'binder_id',
                 'required' => false,
             )));
 
@@ -111,6 +136,14 @@ class Headline implements InputFilterAwareInterface
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="binder_id", type="integer", nullable=true)
+     *
+     */
+     private $binder_id;
+
+    /**
      * @var string
 	 * 
 	 * @ORM\Column(name="username", type="string", length=255, nullable=false)
@@ -165,6 +198,29 @@ class Headline implements InputFilterAwareInterface
     {
         return $this->id;
     }
+
+    /**
+     * Get binder_id
+     *
+     * @return integer
+     */
+     public function getBinderId()
+     {
+          return $this->binder_id;
+     }
+
+     /**
+      * Set binder_id
+      *
+      * @param string $binder_id
+      * return Headline
+      */
+      public function setBinderId($binder_id)
+      {
+          $this->binder_id = $binder_id;
+    
+          return $this;
+      }
 
     /**
      * Set username

@@ -626,6 +626,15 @@
 {
     display:inline;
 }
+.headline_row
+{
+    display:inline;
+    list-style: none;
+}
+.headline_row li
+{
+    display:inline;
+}
 .item_row
 {
     display:inline;
@@ -651,4 +660,8 @@
 }
 .subitem_col
 {
+}
+#headline_div
+{
+    background-color:white;
 }

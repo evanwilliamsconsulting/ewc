@@ -22,7 +22,7 @@
         background-image: url("/img/ridgeline-1240.png");
 	display:block;
 	width:1240px;
-	height:60px;
+	height:100px;
 	margin-left:auto;
 	margin-right:auto;
     }
@@ -203,11 +203,24 @@
 {
     background-color:white;
     width: 600px;
+    left:60px;
+    position:relative;
 }
 .picture-output
 {
     background-color:white;
     width:350px;
+    left:60px;
+    position:relative;
+}
+#binder
+{
+	background-color:black;
+	color:white;
+}
+#action-bar
+{
+	padding:10px;
 }
 }
 @media only screen and (min-width: 1024px)
@@ -227,7 +240,7 @@
         background-image: url("/img/ridgeline-1024.png");
 	display:block;
 	width:1024px;
-	height:60px;
+	height:100px;
 	margin-left:auto;
 	margin-right:auto;
     }
@@ -403,11 +416,24 @@
 {
     background-color:white;
     width: 600px;
+    left:100px;
+    position:relative;
 }
 .picture-output
 {
     background-color:white;
     width:350px;
+    left:100px;
+    position:relative;
+}
+#binder
+{
+	background-color:black;
+	color:white;
+}
+#action-bar
+{
+	padding:10px;
 }
 }
 @media only screen and (min-width: 120px) and (max-width: 639px) 
@@ -430,7 +456,7 @@
 	background-repeat: repeat-x;
         background-image: url("/img/ridgeline-480.png");
 	display:block;
-	height:60px;
+	height:100px;
 	width:480px;
     }
     #action-bar
@@ -581,10 +607,23 @@
 {
     background-color:white;
     width: 300px;
+    left:30px;
+    position:relative;
 }
 .picture-output
 {
     background-color:white;
     width:300px;
+    left:30px;
+    position:relative;
+}
+#binder
+{
+	background-color:black;
+	color:white;
+}
+#action-bar
+{
+	padding:10px;
 }
 }

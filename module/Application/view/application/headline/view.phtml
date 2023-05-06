@@ -1,4 +1,13 @@
-<div>
-	<h2>Content</h2>
-	<?php echo $this->customHelper(); ?> 
+<div id="headline_div" class="width800 viewcolor">
+	<a href="/headline/edit?id=<?php echo $this->id;?>&from=headline">Edit</a>
+	<h2><?php echo $this->headline; ?></h2>
+	<h2><?php echo $this->fontsize; ?></h2>
+	<h2><?php echo $this->fontstyle; ?></h2>
+	<h2><?php echo $this->fontfamily; ?></h2>
+	<div id="headline-view">
+		<?php echo $this->content; ?>	
+	</div>
+	<div id="headline-edit" class="hidden">
+    		<textarea id="headline-edit-textarea" rows="24" cols="200"><?php echo $this->content; ?></textarea>
+	</div>
 </div>

@@ -1,0 +1,10 @@
+<div id="headline_div">
+<div id="<?php echo $this->id; ?>" class="headline-edit-text"> 
+	<!-- span onclick="closeEditHeadline();">Save</span -->
+	<form method="post" action="/headline/save?id=<?php echo $this->id; ?>&from=<?php echo $this->from; ?>">
+	<input type="text" id="headline" name="headline" value="<?php echo $this->headline;?>">
+    	<textarea id="headline-edit-textarea" rows=20 cols=60 name="headline"><?php echo $this->content; ?></textarea>
+	<input type="submit" id="Save" name="Save"/>
+	</form>
+</div>
+</div>

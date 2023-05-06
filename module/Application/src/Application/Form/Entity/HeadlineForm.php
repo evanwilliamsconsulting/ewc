@@ -1,4 +1,19 @@
 <?php
+/*
+
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| headline   | varchar(255) | NO   |     | NULL    |                |
+| username   | varchar(255) | YES  |     | NULL    |                |
+| original   | datetime     | YES  |     | NULL    |                |
+| fontsize   | varchar(255) | YES  |     | NULL    |                |
+| fontstyle  | varchar(255) | YES  |     | NULL    |                |
+| fontfamily | varchar(255) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+
+*/
 
 namespace Application\Form\Entity;
 
@@ -15,129 +30,51 @@ class HeadlineForm extends Form
             'type' => 'hidden'
         ));
         $this->add(array(
-            'name' => 'width',
+            'name' => 'username',
+            'type' => 'text'
+        ));
+        $this->add(array(
+	    'name'=>'original',
+            'type' => 'DateTime',
+            'options' => array(
+                'label' => 'Original Date',
+                'format'=> 'Ymd',
+            ),
+         ));
+        $this->add(array(
+	    'name'=>'title',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Width',
+                'label' => 'Title',
+            ),
+        ));
+
+        $this->add(array(
+	    'name'=>'headline',
+            'type' => 'Textarea',
+            'options' => array(
+                'label' => 'Headline',
             ),
         ));
         $this->add(array(
-            'name' => 'height',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'height',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'gluex',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'gluex',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'gluey',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'gluey',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'prevx',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'prevx',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'prevy',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'prevy',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'resetx',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'resetx',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'resety',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'resety',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'drift',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'drift',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'gravity',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'gravity',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'offsetx',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'offsetx',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'offsety',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'offsety',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'headline',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'headline',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'topline',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'topline',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'usetopline',
-            'type' => 'Checkbox',
-            'options' => array(
-                'label' => 'Use Top Line',
-            ),
-        ));
-	$this->add(array(
-            'name' => 'fontsize',
+	    'name'=>'fontsize',
             'type' => 'Text',
             'options' => array(
                 'label' => 'Fontsize',
             ),
         ));
-	$this->add(array(
-            'name' => 'headlineclass',
+        $this->add(array(
+	    'name'=>'fontstyle',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Headline Class',
+                'label' => 'Fontstyle',
             ),
         ));
-	$this->add(array(
-            'name' => 'italic',
-            'type' => 'Checkbox',
+        $this->add(array(
+	    'name'=>'fontfamily',
+            'type' => 'Text',
             'options' => array(
-                'label' => 'Italic',
+                'label' => 'Fontfamily',
             ),
         ));
         $this->add(array(

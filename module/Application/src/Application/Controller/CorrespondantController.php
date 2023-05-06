@@ -327,6 +327,8 @@ class CorrespondantController extends AbstractActionController
     }
     public function addAction()
     {
+	$view = new ViewModel();
+
 	$this->log = $this->getServiceLocator()->get('log');
         $log = $this->log;
     	$userSession = new Container('user');
@@ -359,6 +361,7 @@ class CorrespondantController extends AbstractActionController
 		$newContent->setBinderId(1);
                 $em->persist($newContent);
                 $em->flush();
+		return $this->redirect()->toUrl('http://evanwilliamsconsulting.local/wordage/index');
         }
 	else if (0==strcmp($type,"Outline"))
 	{
