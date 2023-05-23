@@ -228,7 +228,7 @@ class CorrespondantController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl('https://www.evanwilliamsconsulting.com/');
 	}
 	$binder = $this->params()->fromQuery("binder");
 
@@ -282,6 +282,7 @@ class CorrespondantController extends AbstractActionController
 			else if (0 == strcmp($type,"Picture"))
 			{
 				$helperItem = new PictureHelper();
+				$helperItem->setLoggedIn(true);
 			}
 			else if (0 == strcmp($type,"Experience"))
 			{

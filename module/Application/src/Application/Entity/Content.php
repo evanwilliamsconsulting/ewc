@@ -78,6 +78,17 @@ class Content extends AbstractResultSet
 					$this->obj->append($newArray);
 				}
 			}
+			else if (0 == strcmp($itemtype,"headline"))
+			{
+				$headlines = $em->getRepository('Application\Entity\Headline')->findBy($criteria);
+				foreach ($headlines as $headline)
+				{
+					$newArray = Array();
+					$newArray['type'] = "Headline";
+					$newArray['object'] = $headline;
+					$this->obj->append($newArray);
+				}
+			}
 			else if (0 == strcmp($itemtype,"file"))
 			{	
 				$files = $em->getRepository('Application\Entity\File')->findBy($criteria);
@@ -180,4 +191,3 @@ class Content extends AbstractResultSet
 	   return $it->getArrayCopy();	
 	 }
 }
-?>

@@ -75,6 +75,13 @@ class IndexController extends AbstractActionController
 	{
 		$type = $item["type"];
 		$object = $item["object"];
+		if (0 == strcmp($type,"Headline"))
+		{
+			$headline = $object->getHeadline();
+			$htmlOutput .= "<div class='headline-output'>";
+			$htmlOutput .= $headline;
+			$htmlOutput .= "</div>";
+		}
 		if (0 == strcmp($type,"Wordage"))
 		{
 			$wordage = $object->getWordage();

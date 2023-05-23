@@ -1,5 +1,5 @@
-<div style="background-color:<?php echo $this->bcolor;?>" class="picture-item" id="picture-<?php echo $this->id;?>">
-    <h2>Picture - <?php echo $this->title; ?></h2>
+<div style="background-color:<?php echo $this->bcolor;?>" class="picture-output" id="picture-<?php echo $this->id;?>">
+    <h2>Picture - <?php echo $this->title; ?> - <?php echo $this->id; ?></h2>
     <?php if ($this->loggedIn == true): ?>
 	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href="/picture/edit?id=<?php echo $this->id; ?>&from=correspondant">Edit</a></div>
     <?php endif; ?>

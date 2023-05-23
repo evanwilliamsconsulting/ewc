@@ -137,7 +137,7 @@ class Binder extends AbstractHelper
 
     public function __invoke()
     {
-	$binderstr = "<span>Binder ";
+	$binderstr = "<span class='binder-class'>Binder ";
 	$binderstr .= $this->binderId;
 	$binderstr .= ": ";
 	$binderstr  .= $this->binderName;

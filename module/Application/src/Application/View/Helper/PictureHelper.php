@@ -23,11 +23,20 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     protected $picture;
     protected $username;
     protected $itemId;
-    protected $viewmodel;
-    protected $renderer;
     protected $width;
     protected $height;
     protected $caption;
+
+	protected $original;
+	protected $viewmodel;
+	protected $title;
+	protected $id;
+	protected $renderer;
+	protected $log;
+	// Array of Containers that this Wordage participates in.
+	protected $containerItems;
+	protected $em;
+	protected $loggedIn = false;
 
     /** 
      * Set the service locator. 
@@ -84,21 +93,15 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     public function setObject($pictureObject)
     {
         $this->pictureObject = $pictureObject;
+	$id = $pictureObject->getId();
         $picture = $pictureObject->getPicture();
 	$caption = $pictureObject->getCaption();
 	$this->caption = $caption;
 	$subfolder = $pictureObject->getSubfolder();
+	$this->id = $id;
         $this->picture =  "/images/" . $subfolder . "/" .  $picture;
 	$this->width = $pictureObject->getWidth();
 	$this->height = $pictureObject->getHeight();
-    }
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-    public function getUsername()
-    {
-        return $this->username;
     }
     public function setItemId($itemId)
     {
@@ -112,10 +115,60 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
     {
         return $this->renderer;
     }
+	public function setContainerItems($containerItems)
+	{
+		$this->containerItems = $containerItems;
+	}
+	public function getContainerItems()
+	{
+		return $this->containerItems;
+	}
+	public function setUsername($username)
+	{
+		$this->username = $username;
+	}
     public function __invoke()
     {
-	return $this->render();
+        $viewRender = $this->getServiceLocator()->get('ViewRenderer');
+    	//$sm = $this->getServiceLocator()->getServiceLocator();  
+        //$config = $sm->get('application')->getConfig(); 
+ 
+        //$retval = "<div>";
+	//	$retval .= $this->wordageObject->getWordage();
+	//	$retval .= "</div>";
+    	
+    	$view = $this->getViewModel();
+
+    	$containerItems = $this->getContainerItems();
+
+	if ($this->loggedIn == false)
+	{
+		$view->loggedIn = false;
+	}
+	else
+	{
+		$view->loggedIn = true;
+	}
+
+    	$view->containerItems = $containerItems;
+	
+		$view->picture = $this->picture;
+
+		$view->title = $this->title;
+
+		$view->original = $this->original;
+
+		$view->id =  $this->id;
+
+		$view->username = $this->username;
+
+		$view->editOn = false;
+		
+		$view->setTemplate('items/picture.phtml');
+		
+		return $viewRender->render($view);
     }
+/*
     public function render()
     {
 	$picture = $this->picture;
@@ -144,4 +197,5 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
 	
 	return $html;
     }
+*/
 }
