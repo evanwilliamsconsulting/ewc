@@ -137,11 +137,12 @@ class Binder extends AbstractHelper
 
     public function __invoke()
     {
-	$binderstr = "<span class='binder-class'>Binder ";
+	$openstr = "<div id='binder'>";
+	$binderstr = "<span>Binder ";
 	$binderstr .= $this->binderId;
 	$binderstr .= ": ";
 	$binderstr  .= $this->binderName;
-   	$binderstr  .= "/<span>";
+   	$binderstr  .= "</span>";
 	$totalstr = "<span>";
 	$totalstr .= $this->binderId;
 	$totalstr .= " of ";
@@ -158,10 +159,8 @@ class Binder extends AbstractHelper
 	$downlink .= $this->binderCount;
 	$downlink .= ")'>&lt;</a>";
 	$addbinder = "<a href='#' onclick='addBinder()'>Add</a>";
-	/*
-	<span>binder selectors</span> <span>Add New Binder</span>";
-	*/
-        return $downlink . $binderstr . $totalstr . $uplink . $addbinder;
+	$closestr = "</div>";
+        return $openstr . $downlink . $binderstr . $totalstr . $uplink . $addbinder . $closestr;
     }
 }
 ?>

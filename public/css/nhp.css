@@ -34,26 +34,6 @@
 {
     color:pink;
 }
-.bright
-{
-    color:black;
-}
-.bright a:link
-{
-    color:black;
-}
-.bright a:visited
-{
-    color:black;
-}
-.bright a:hover
-{
-    color:black;
-}
-.bright a:active
-{
-    color:purple
-}
 #menucrumbs
 {
     top:-100px;
@@ -668,25 +648,6 @@
 .headline-output
 {
     background-color:white;
-}
-.binder-class
-{
-    background-color: black;
-}
-.binder-class a
-{
-    background-color: black;
-    color: white;
-}
-.binder-class a:hover, a:active
-{
-    background-color: black;
-    color: purple;
-}
-.binder-class a:visited, a:link
-{
-    background-color: black;
-    color: white;
 }
 #picture-div
 {

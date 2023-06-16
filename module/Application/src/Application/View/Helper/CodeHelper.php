@@ -117,6 +117,7 @@ class CodeHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 
 	$previousPart = "";
 
+	
 	while ($i<$arrayLength)
 	{
 		$fileLine = $fileArray[$i];
@@ -151,7 +152,6 @@ class CodeHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 				$insertArray[] = $insertLine1;
 				$insertArray[] = $insertLine2;
 				$insertArray[] = "<br/>";
-				$arrayLength += 2;
 				$previousPart = $lastPartOfLine;
 				$firstArray = array_slice($fileArray,0,$i-1,true);
 				$secondArray = array_slice($fileArray,$i+1,$arrayLength - $i - 1,true);
@@ -161,9 +161,6 @@ class CodeHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 				$insertStyle[] = 'color:black;';	
 				$styleArray = array_merge($firstArray,$insertStyle,$secondArray);
 				$styleArray[$i] = "color:orange;";
-				$i++;
-				$i++;
-				$i++;
 			}
 
 		}

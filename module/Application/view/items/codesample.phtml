@@ -3,8 +3,11 @@
     <div>
 	<?php foreach($this->fileArray as $key => $line) { ?>
 	    <?php 
-		$styleArray = $this->styleArray;
-		$style = $styleArray[$key];
+		if ($key < count($styleArray))
+		{
+		    $styleArray = $this->styleArray;
+		    $style = $styleArray[$key];
+		}
 	    ?>
 	    <span style="<?php echo $style ?>">
 	    <?php echo $line ?>

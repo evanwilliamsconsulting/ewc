@@ -168,7 +168,6 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
 		
 		return $viewRender->render($view);
     }
-/*
     public function render()
     {
 	$picture = $this->picture;
@@ -197,5 +196,4 @@ class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
 	
 	return $html;
     }
-*/
 }
