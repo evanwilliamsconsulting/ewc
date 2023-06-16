@@ -125,7 +125,6 @@ class BaseHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 	$view->bcolor = "#336633";
 	$view->title = $this->title;
 	$view->fileid = $this->fileid;
-	$view->description = $this->description;
 	$view->author = $this->author;
 	$view->fileContents = $this->fileContents;
 

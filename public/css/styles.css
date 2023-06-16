@@ -213,14 +213,14 @@
     left:60px;
     position:relative;
 }
-#binder
-{
-	background-color:black;
-	color:white;
-}
 #action-bar
 {
 	padding:10px;
+}
+#binder
+{
+	background-color:white;
+	color:black:
 }
 }
 @media only screen and (min-width: 1024px)
@@ -426,14 +426,14 @@
     left:100px;
     position:relative;
 }
-#binder
-{
-	background-color:black;
-	color:white;
-}
 #action-bar
 {
 	padding:10px;
+}
+#binder
+{
+	background-color:white;
+	color:black:
 }
 }
 @media only screen and (min-width: 120px) and (max-width: 639px) 
@@ -617,13 +617,13 @@
     left:30px;
     position:relative;
 }
-#binder
-{
-	background-color:black;
-	color:white;
-}
 #action-bar
 {
 	padding:10px;
+}
+#binder
+{
+	background-color:white;
+	color:black:
 }
 }
