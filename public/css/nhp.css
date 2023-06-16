@@ -669,25 +669,6 @@
 {
     background-color:white;
 }
-.binder-class
-{
-    background-color: black;
-}
-.binder-class a
-{
-    background-color: black;
-    color: white;
-}
-.binder-class a:hover, a:active
-{
-    background-color: black;
-    color: purple;
-}
-.binder-class a:visited, a:link
-{
-    background-color: black;
-    color: white;
-}
 #picture-div
 {
     background-color: yellow;
