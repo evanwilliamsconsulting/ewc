@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver'         => 'PdoMysql',
-        'dsn'            => 'mysql:dbname=ewc;host=127.0.0.1',
+        'dsn'            => 'mysql:dbname=nhpress;host=127.0.0.1',
         'username'       => 'root',
         'password'       => 'ptH3984z'
     ),
@@ -48,7 +48,7 @@ return array(
 		    'port' => '3306',
 		    'user' => 'root',
 		    'password' => 'ptH3984z', 
-		    'dbname' => 'ewc',
+		    'dbname' => 'nhpress',
                     'charset'  => 'utf8',
                     'driverOptions' => array(
                         1002 => 'SET NAMES utf8'
