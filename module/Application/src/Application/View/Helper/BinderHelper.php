@@ -174,7 +174,7 @@ class BinderHelper extends AbstractHelper implements ServiceLocatorAwareInterfac
 
 	*/
 	$params = array();
-	$params['binder_id'] = '1';
+	$params['binder_id'] = $this->id;
 
 	$itemArray = array();
 	$view = new ViewModel();

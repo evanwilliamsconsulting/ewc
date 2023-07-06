@@ -74,6 +74,24 @@ class IndexController extends AbstractActionController
     }
     public function servicesAction()
     {
+	$id = 3;
+	$binder_id = 3;
+	$criteria = array("binder_id" => $binder_id);
+	$binderCriteria = array("id" => $binder_id);
+
+	/* See that! */
+        $em = $this->getEntityManager();
+	$binderObject = $em->getRepository('Application\Entity\Binder')->findBy($binderCriteria);
+	$obj = $binderObject[0];
+	$view = new ViewModel(array('id' => $id,
+	));
+	$binderItem = new BinderHelper();
+	$binderItem->setEntityManager($em);
+	$binderItem->setServiceLocator($this->getServiceLocator());
+	$binderItem->setViewModel($view);
+	$binderItem->setObject($obj);
+	$view->binder = $binderItem;
+	return $view;
     }
     public function contactAction()
     {
