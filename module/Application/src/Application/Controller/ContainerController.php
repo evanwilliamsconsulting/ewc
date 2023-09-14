@@ -447,10 +447,10 @@ class ContainerController extends AbstractActionController
 	$html .= "<li class='item_title_col'>";
 	$html .= "Title";
 	$html .= "</li>";
-	$html .= "<li class='item_title_col'>";
+	$html .= "<li class='item_type_col'>";
 	$html .= "Type";
 	$html .= "</li>";
-	$html .= "<li class='item_title_col'>";
+	$html .= "<li class='item_description_col'>";
 	$html .= "Description";
 	$html .= "</li>";
 	$html .= "</ul>";
@@ -460,6 +460,8 @@ class ContainerController extends AbstractActionController
 	{
 		$id = $item[0];
 		$title = strip_tags($item[1]);
+		$type = strip_tags($item[2]);
+		$description = strip_tags($item[3]);
 		$html .= "<ul class='item_row'>";	
 		$html .= "<li class='item_id_col'>";
 		$html .= $id;
@@ -467,10 +469,10 @@ class ContainerController extends AbstractActionController
 		$html .= "<li class='item_title_col'>";
 		$html .= $title;
 		$html .= "</li>";
-		$html .= "<li class='item_title_col'>";
+		$html .= "<li class='item_type_col'>";
 		$html .= $type;
 		$html .= "</li>";
-		$html .= "<li class='item_title_col'>";
+		$html .= "<li class='item_description_col'>";
 		$html .= $description;
 		$html .= "</li>";
 		$html .= "</ul>";
@@ -485,19 +487,20 @@ class ContainerController extends AbstractActionController
 
 		$containerHtml = "<div class='subitem_table'>";
 		$containerHtml .= "<ul class='subitem_row'>";
-		$containerHtml .= "<li class='subitem_col_id'>";
+		$containerHtml .= "<li class='subitem_id_col'>";
 		$containerHtml .= "id";
 		$containerHtml .= "</li>";
-		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "<li class='subitem_id_col'>";
 		$containerHtml .= "container_id";
 		$containerHtml .= "</li>";
-		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "<li class='subitem_id_col'>";
 		$containerHtml .= "itemid";
 		$containerHtml .= "</li>";
-		$containerHtml .= "<li class='subitem_col'>";
+		$containerHtml .= "<li class='subitem_type_col'>";
 		$containerHtml .= "itemtype";
 		$containerHtml .= "</li>";
 		$containerHtml .= "</ul>";
+		$containerHtml .= "<br/>";
 		foreach ($containerItems as $key => $containerItem)
 		{
 			$containerItem_id = $containerItem->getId();
@@ -505,23 +508,25 @@ class ContainerController extends AbstractActionController
 			$containerItem_itemid = $containerItem->getItemId();
 			$containerItem_itemtype = $containerItem->getItemType();
 			$containerHtml .= "<ul class='subitem_row'>";
-			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_id;
 			$containerHtml .= "</li>";
-			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_containerid;
 			$containerHtml .= "</li>";
-			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_itemid;
 			$containerHtml .= "</li>";
-			$containerHtml .= "<li class='subitem_col'>";
+			$containerHtml .= "<li class='subitem_type_col'>";
 			$containerHtml .= $containerItem_itemtype;
 			$containerHtml .= "</li>";
 			$containerHtml .= "</ul>";
+			$containerHtml .= "<br/>";
 		}
-		$containerHtml .= "<div>";
-
+		$containerHtml .= "</div>";
 		$html .= $containerHtml;
+		$html .= "</div>";
+
 	}
 	$html .= "</div>";
 

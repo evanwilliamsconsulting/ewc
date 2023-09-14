@@ -102,12 +102,36 @@ class IndexController extends AbstractActionController
 	$view = new ViewModel();
 	$layout = $this->layout();
 
+	/* 
+		I have not previously loaded the record for the Container itself.
+		The Container Object contains information about the container,
+		not the items that are part of the Container: ConttainerItems.
+
+		In addition to Content there is a ContainerItems Entity,
+		which probably retrieves this data without bringing in the
+		contained Entities.
+	*/
+
+	$params = array();
+	$orderby = array();
+	$params['id'] = 1;
+	$containerEntry = $em->getRepository('Application\Entity\Container')->findBy($params);
+
+	foreach ($containerEntry as $key => $item)
+	{
+			$bgcolor = $item->getBgColor();
+	}
+	
+
 	$content = new Content();
 	$content->setContainerId(1);
 	$content->setEntityManager($em);
 	$content->loadDataSource();
 
-	$htmlOutput = "<div class='page-frame'>";
+	$htmlOutput = "<div style='background:";
+	$htmlOutput .= $bgcolor;
+	$htmlOutput .= "';>";
+
 	foreach ($content->toArray() as $num => $item)
 	{
 		$type = $item["type"];
@@ -152,6 +176,7 @@ class IndexController extends AbstractActionController
 			$htmlOutput .= $pictureHelper->render();
 		}
 	}
+	$htmlOutput .= "<span>Hello!</span>";
 	$htmlOutput .= "</div>";
 	$view->content = $htmlOutput;
 
