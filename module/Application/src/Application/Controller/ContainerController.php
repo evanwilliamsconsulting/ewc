@@ -514,9 +514,11 @@ class ContainerController extends AbstractActionController
 			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_containerid;
 			$containerHtml .= "</li>";
-			$containerHtml .= "<li class='subitem_id_col'>";
+			$containerHtml .= "<li class='subitem_id_col'><a href='/";
+			$containerHtml .= $containerItem_itemtype;
+			$containerHtml .= "/edit?id=" . $containerItem_itemid . "&from=container'>"; 
 			$containerHtml .= $containerItem_itemid;
-			$containerHtml .= "</li>";
+			$containerHtml .= "</a></li>";
 			$containerHtml .= "<li class='subitem_type_col'>";
 			$containerHtml .= $containerItem_itemtype;
 			$containerHtml .= "</li>";
