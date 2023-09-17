@@ -5,7 +5,9 @@ mysql> show columns from ContainerItems;
 +-------------+--------------+------+-----+---------+-------+
 | Field       | Type         | Null | Key | Default | Extra |
 +-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    | auto  |
 | containerid | int(11)      | NO   |     | NULL    |       |
+| container_order | int      | YES  |     | NULL    |       |
 | itemid      | int(11)      | NO   |     | NULL    |       |
 | itemtype    | char(5)      | NO   |     | NULL    |       |
 | original    | datetime     | YES  |     | NULL    |       |
@@ -47,6 +49,7 @@ class ContainerItems implements InputFilterAwareInterface
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->containerid = (isset($data['containerid'])) ? $data['containerid'] : null;
+	$this->containerorder =  (isset($data['container_order'])) ? $data['container_order'] : null;
         $this->itemid = (isset($data['itemid'])) ? $data['itemid'] : null;
         $this->itemtype = (isset($data['itemtype'])) ? $data['itemtype'] : null;
 	$this->original = (isset($data['original'])) ? $data['original'] : null;
@@ -71,6 +74,12 @@ class ContainerItems implements InputFilterAwareInterface
             $inputFilter->add(
             	$factory->createInput(array(
                 'name' => 'containerid',
+                'required' => false,
+            )));
+
+            $inputFilter->add(
+            	$factory->createInput(array(
+                'name' => 'container_order',
                 'required' => false,
             )));
 
@@ -132,6 +141,13 @@ class ContainerItems implements InputFilterAwareInterface
     /**
      * @var integer
      *
+     * @ORM\Column(name="container_order", type="integer", nullable=false)
+     */
+    private $container_order;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="itemid", type="integer", nullable=false)
      */
     private $itemid;
@@ -159,6 +175,28 @@ class ContainerItems implements InputFilterAwareInterface
     private $original;
 
 
+    /**
+     * Get container order
+     *
+     * @return integer 
+     */
+    public function getContainerOrder()
+    {
+        return $this->container_order;
+    }
+
+    /*
+     *   Set containerorder
+     *
+     *   @param int $container_order
+     *   @return ContainerItem
+     *
+     */ 
+    public function setContainerorder($container_order)
+    {
+	$this->container_order = $container_order;
+	return $this;
+    }
     /**
      * Get container id
      *

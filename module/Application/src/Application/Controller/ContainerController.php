@@ -491,6 +491,9 @@ class ContainerController extends AbstractActionController
 		$containerHtml .= "id";
 		$containerHtml .= "</li>";
 		$containerHtml .= "<li class='subitem_id_col'>";
+		$containerHtml .= "order";
+		$containerHtml .= "</li>";
+		$containerHtml .= "<li class='subitem_id_col'>";
 		$containerHtml .= "container_id";
 		$containerHtml .= "</li>";
 		$containerHtml .= "<li class='subitem_id_col'>";
@@ -505,11 +508,15 @@ class ContainerController extends AbstractActionController
 		{
 			$containerItem_id = $containerItem->getId();
 			$containerItem_containerid = $containerItem->getContainerId();
+			$containerItem_order = $containerItem->getContainerOrder();
 			$containerItem_itemid = $containerItem->getItemId();
 			$containerItem_itemtype = $containerItem->getItemType();
 			$containerHtml .= "<ul class='subitem_row'>";
 			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_id;
+			$containerHtml .= "</li>";
+			$containerHtml .= "<li class='subitem_id_col'>";
+			$containerHtml .= $containerItem_order;
 			$containerHtml .= "</li>";
 			$containerHtml .= "<li class='subitem_id_col'>";
 			$containerHtml .= $containerItem_containerid;
