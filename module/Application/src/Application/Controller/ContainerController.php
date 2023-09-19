@@ -79,6 +79,11 @@ class ContainerController extends AbstractActionController
     }
     public function oldAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
 	$view = new ViewModel();
 
 	$this->log = $this->getServiceLocator()->get('log');
@@ -98,7 +103,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 
         $em = $this->getEntityManager();
@@ -185,6 +190,12 @@ class ContainerController extends AbstractActionController
     }
     public function listAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$view = new ViewModel();
 
 	$this->log = $this->getServiceLocator()->get('log');
@@ -204,7 +215,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 
         $em = $this->getEntityManager();
@@ -287,7 +298,8 @@ class ContainerController extends AbstractActionController
 		$html .= $title;
 		$html .= "&nbsp;-Edit:&nbsp;";
 		$html .= "<a href='";
-		$html .= "https://www.evtechnote.us/container/edit?id=";
+		$html .= $rooturl
+		$html .= "container/edit?id=";
 		$html .= trim($id);
 		$html .= "'>Edit</a>";
 		$html .= "<br/>";
@@ -300,6 +312,12 @@ class ContainerController extends AbstractActionController
     }
     public function editAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$view = new ViewModel();
 
 	$this->log = $this->getServiceLocator()->get('log');
@@ -319,7 +337,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 
         $em = $this->getEntityManager();
@@ -376,7 +394,7 @@ class ContainerController extends AbstractActionController
 			$html .= $itemtype;
 			$html .= "&nbsp;";
 			$html .= "<a href='";
-			$html .= "https://www.evtechnote.us/";
+			$html .= $rooturl;
 			$html .= $itemtype;
 			$html .= "/view/";
 			$html .= trim($itemid);
@@ -550,6 +568,11 @@ class ContainerController extends AbstractActionController
     }
     public function oldindexAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
 
     	$userSession = new Container('user'); // Talk about conflicting names!
 	$this->username = $userSession->username;
@@ -566,7 +589,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
     
         $em = $this->getEntityManager();
@@ -693,6 +716,12 @@ class ContainerController extends AbstractActionController
     }
     public function viewAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$view = new ViewModel();
 
 	$this->log = $this->getServiceLocator()->get('log');
@@ -712,7 +741,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 
         $em = $this->getEntityManager();

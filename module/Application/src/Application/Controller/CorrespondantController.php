@@ -83,6 +83,12 @@ class CorrespondantController extends AbstractActionController
     }
     public function containerAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$this->log = $this->getServiceLocator()->get('log');
         $log = $this->log;
     	$userSession = new Container('user');
@@ -101,7 +107,7 @@ class CorrespondantController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 /*
         $em = $this->getEntityManager();
@@ -355,7 +361,7 @@ class CorrespondantController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 
         $em = $this->getEntityManager();

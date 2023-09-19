@@ -50,6 +50,12 @@ class GlossaryController extends AbstractActionController
     }
     public function indexAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
     	$log->info("view action");
@@ -83,67 +89,19 @@ class GlossaryController extends AbstractActionController
 	else
 	{
 		$log->info("Not Logged In");
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 
 	return $view;
     }
-/*
-    public function d_eleteAction()
-    {
-    	$this->log = $this->getServiceLocator()->get('log');
-    	$log = $this->log;
-    	$log->info("delete action");
-
-	// Initialize the View
-    	$view = new ViewModel();
-	$view->setTerminal(true);
-	// Retreive the parameters
-	$id = $this->params()->fromRoute('item');
-	$log->info($id);
-
-	// 2Do: Check to see that user is logged in
-
- 	$persistent = $this->getAuthService()->getStorage();
-	$namespace = $persistent->getNamespace();
-	$log->info($namespace);
-
-    	// 2Do: Populate username with user's username
-    	$userSession = new Container('user');
-	$this->username = $userSession->username;
-	$log->info($this->username);
-	$loggedIn = $userSession->loggedin;
-	if ($loggedIn)
-	{
-		$log->info("Logged In");
-		// Set the Helpers
-		$layout = $this->layout();
-		foreach($layout->getVariables() as $child)
-		{
-			$child->setLoggedIn(true);
-			$child->setUserName($username);
-		}
-	}
-	else
-	{
-		$log->info("Not Logged In");
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
-	}
-		
-	$em = $this->getEntityManager()	;
-	$outline = $em->getRepository('Application\Entity\Glossary')->find($id);
-	$em->remove($outline);
-	$em->flush();
-		
-	$variables = array("status" => "200",'id'=>$theId);
-        $response = $this->getResponse();
-        $response->setStatusCode(200);
-        $response->setContent(json_encode($variables));
-	return $response;
-    }
-*/
     public function viewAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	// Load the logger
     	$this->log = $this->getServiceLocator()->get('log');
 		
@@ -176,7 +134,7 @@ class GlossaryController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 		
 		$em = $this->getEntityManager()	;

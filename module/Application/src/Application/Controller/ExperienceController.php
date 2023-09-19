@@ -59,6 +59,11 @@ class ExperienceController extends AbstractActionController
     }
     public function contentAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
 
 	// Initialize the View
     	$view = new ViewModel();
@@ -75,7 +80,7 @@ class ExperienceController extends AbstractActionController
     	$userSession = new Container('user');
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
-/*
+
 	if ($loggedIn)
 	{
 		// Set the Helpers
@@ -88,9 +93,8 @@ class ExperienceController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
-*/
 		
 	$em = $this->getEntityManager()	;
 		
@@ -107,6 +111,12 @@ class ExperienceController extends AbstractActionController
     }
     public function deleteAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initialize the View
     	$view = new ViewModel();
 	$view->setTerminal(true);
@@ -134,7 +144,7 @@ class ExperienceController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -150,7 +160,12 @@ class ExperienceController extends AbstractActionController
     }
     public function viewAction()
     {
-		
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initialize the View
     	$view = new ViewModel();
 	// Retreive the parameters
@@ -184,7 +199,7 @@ class ExperienceController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 		
 
@@ -269,69 +284,6 @@ class ExperienceController extends AbstractActionController
         $response->setContent(json_encode($variables));
 	return $response;
     }
-/*
-    public function editAction()
-    {
-		
-	// Initialize the View
-    	$view = new ViewModel();
-	// Retreive the parameters
-	$id = $this->params()->fromRoute('item');
-		
-
- 	$persistent = $this->getAuthService()->getStorage();
-	$namespace = $persistent->getNamespace();
-
-	//$username = $persistent->getUsername();
-
-
-    	// 2Do: Populate username with user's username
-    	$userSession = new Container('user');
-		$this->username = $userSession->username;
-		$username = $this->username;
-		$loggedIn = $userSession->loggedin;
-		if ($loggedIn)
-		{
-			// Set the Helpers
-			$layout = $this->layout();
-			foreach($layout->getVariables() as $child)
-			{
-				$child->setLoggedIn(true);
-				$child->setUserName($username);
-			}
-		}
-		else
-		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
-		}
-		
-		$em = $this->getEntityManager();
-		
-		$experience = $em->getRepository('Application\Entity\Experience')->find($id);
-
-		
-		//$topic = new \Application\View\Helper\TopicToolbar('experience');
-		//$view->topic = $topic();
-		$theDescription = $experience->getDescription();
-		$startDate = $experience->getStartDate();
-		$endDate = $experience->getEndDate();
-		$company = $experience->getCompany();
-		$role = $experience->getRole();
-		$skills = $experience->getSkills();
-		$title = $experience->getTitle();
-		
-		$view->title = $title;
-		$view->content = $theDescription;
-		$view->startDate = $startDate->format("m/d/Y");
-		$view->endDate = $endDate->format("m/d/Y");
-		$view->company = $company;
-		$view->role = $role;
-		$view->skills = $skills;
-		$view->id =$id;
-	return $view;
-
-    }
-*/
     public function editAction()
     {
 	$view = new ViewModel();

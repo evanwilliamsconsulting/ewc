@@ -62,6 +62,12 @@ class CodeController extends AbstractActionController
     }
     public function contentAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
 
@@ -93,7 +99,7 @@ class CodeController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -113,7 +119,7 @@ class CodeController extends AbstractActionController
 	$firstLine = $codeSample->getFirstLine();
 	$lastLine = $codeSample->getLastLine();
 
-	$webRoot = "https://www.evtechnote.us/";
+	$webRoot = $rooturl;
 	$fileDirectory = "filestore/Arduino/Blink/";
 	$fileRelative = "/usr/local/apache2/htdocs/evtechnote/public/" . $fileDirectory . "Blink.ino";
 
@@ -134,6 +140,11 @@ class CodeController extends AbstractActionController
     }
     public function deleteAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
 
@@ -164,7 +175,7 @@ class CodeController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -181,6 +192,12 @@ class CodeController extends AbstractActionController
     }
     public function viewAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	// Load the logger
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
@@ -211,7 +228,7 @@ class CodeController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 		
 		$em = $this->getEntityManager()	;

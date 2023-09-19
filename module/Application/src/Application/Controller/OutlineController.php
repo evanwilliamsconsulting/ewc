@@ -50,6 +50,12 @@ class OutlineController extends AbstractActionController
     }
     public function indexAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
     	$log->info("view action");
@@ -83,14 +89,20 @@ class OutlineController extends AbstractActionController
 	else
 	{
 		$log->info("Not Logged In");
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 
 	return $view;
     }
 /*
-    public function d_eleteAction()
+    public function deleteAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$this->log = $this->getServiceLocator()->get('log');
     	$log = $this->log;
     	$log->info("delete action");
@@ -127,7 +139,7 @@ class OutlineController extends AbstractActionController
 	else
 	{
 		$log->info("Not Logged In");
-	       	return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -176,7 +188,7 @@ class OutlineController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://www.evtechnote.us/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 		
 		$em = $this->getEntityManager()	;
