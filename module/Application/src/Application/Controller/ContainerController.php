@@ -391,6 +391,11 @@ class ContainerController extends AbstractActionController
     }
     public function indexAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITEROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
 
 	// Initiadivze the View
     	$view = new ViewModel();
@@ -417,7 +422,7 @@ class ContainerController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 
 	/* See that! */

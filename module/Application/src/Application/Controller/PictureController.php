@@ -52,6 +52,12 @@ class PictureController extends AbstractActionController
     public function indexAction()
     {
 
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initiadivze the View
     	$view = new ViewModel();
 
@@ -77,7 +83,7 @@ class PictureController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 
 	/* See that! */
@@ -146,6 +152,12 @@ class PictureController extends AbstractActionController
 
     public function viewAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$userSession = new Container('user');
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -162,7 +174,7 @@ class PictureController extends AbstractActionController
         }
 	else
 	{
-		return $this->redirect()->toUrl('evanwilliamsconsulting.local');
+		return $this->redirect()->toUrl($rooturl);
 	}
 	// Initialize the View
 	$view = new ViewModel();
@@ -243,6 +255,12 @@ class PictureController extends AbstractActionController
     }
     public function editAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$userSession = new Container('user');
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -259,7 +277,7 @@ class PictureController extends AbstractActionController
         }
 	else
 	{
-		return $this->redirect()->toUrl('evanwilliamsconsulting.local');
+		return $this->redirect()->toUrl($rooturl);
 	}
 	// Initialize the View
 	$view = new ViewModel();
@@ -306,6 +324,12 @@ class PictureController extends AbstractActionController
     }
     public function resizeAction()
     {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -321,7 +345,7 @@ class PictureController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 	// Initialize the View
 	$view = new ViewModel();

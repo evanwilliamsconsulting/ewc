@@ -7,6 +7,9 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 return array(
+    'settings' => array(
+        'SITE_ROOT' => 'evanwilliamsconsulting.test',
+	),
 // Doctrine config
     'doctrine' => array(
         'connection' => array(

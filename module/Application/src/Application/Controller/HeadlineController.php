@@ -50,6 +50,12 @@ class HeadlineController extends AbstractActionController
     public function indexAction()
     {
 
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initiadivze the View
     	$view = new ViewModel();
 
@@ -75,7 +81,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 {
-	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 
 	/* See that! */
@@ -134,6 +140,13 @@ class HeadlineController extends AbstractActionController
     }
     public function deleteAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initiadivze the View
     	$view = new ViewModel();
 	$view->setTerminal(true);
@@ -161,7 +174,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       	return $this->redirect()->toUrl($rooturl);
 	}
 		
 	$em = $this->getEntityManager()	;
@@ -179,6 +192,12 @@ class HeadlineController extends AbstractActionController
     public function viewAction()
     {
 
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -194,7 +213,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 	// Initiadivze the View
     	$view = new ViewModel();
@@ -229,7 +248,7 @@ class HeadlineController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 		
 		$em = $this->getEntityManager()	;
@@ -249,12 +268,25 @@ class HeadlineController extends AbstractActionController
     }
     public function headlineAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$view = new ViewModel();
         $view->content = $this->content();
         return $view;
     }
     public function changeAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
 
 	$changedtext = $this->params()->fromPost('thetext');
 
@@ -277,6 +309,13 @@ class HeadlineController extends AbstractActionController
     }
     public function saveAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -292,7 +331,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 	// Initialize the View
 	$view = new ViewModel();
@@ -339,6 +378,13 @@ class HeadlineController extends AbstractActionController
     }
     public function editAction()
     {
+	
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -354,7 +400,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 	// Initialize the View
 	// Retreive the parameters
@@ -394,6 +440,13 @@ class HeadlineController extends AbstractActionController
     }
     public function jsonAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
     	$userSession = new Container('user'); // Talk about confdivcting names!
 	$this->username = $userSession->username;
 	$loggedIn = $userSession->loggedin;
@@ -409,7 +462,7 @@ class HeadlineController extends AbstractActionController
 	}
 	else
 	{
-	       return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       return $this->redirect()->toUrl($rooturl);
 	}
 	// Initiadivze the View
     	$view = new ViewModel();
@@ -444,7 +497,7 @@ class HeadlineController extends AbstractActionController
 		}
 		else
 		{
-	       		return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       		return $this->redirect()->toUrl($rooturl);
 		}
 
 

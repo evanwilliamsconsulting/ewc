@@ -80,6 +80,12 @@ class BinderController extends AbstractActionController
     public function indexAction()
     {
 
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	// Initiadivze the View
     	$view = new ViewModel();
 
@@ -105,7 +111,7 @@ class BinderController extends AbstractActionController
 	}
 	else
 	{
-	       	return $this->redirect()->toUrl('https://evanwilliamsconsulting.local/');
+	       	return $this->redirect()->toUrl($urlroot);
 	}
 
 	/* See that! */

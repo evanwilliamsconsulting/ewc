@@ -46,6 +46,17 @@ use Application\Service\IndexControllerFactory as IndexControllerFactory;
 
 class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface, ConfigProviderInterface
 {
+// https;//stackoverflow.com/questions/12993136/where-to-put-custom-settings-in-zend-framework-2
+    public function getConfig() {
+	$config = array();
+	$configFiles = array(
+        	include __DIR__ . '/config/module.config.php',
+	);
+	foreach ($configFiles as $file) {
+	    $config = \Zend\Stdlib\ArrayUtils::merge($config,$file);
+        }
+        return $config;
+    }
     public function getServiceConfig()
     {
         return array(
@@ -152,10 +163,6 @@ class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
     {
 	$exception = $e->getParam('exception');
 	print($exception);
-    }
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
     }
     public function getAutoloaderConfig()
     {

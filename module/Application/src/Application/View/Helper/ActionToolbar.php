@@ -36,6 +36,8 @@ class ActionToolbar extends AbstractHelper
 	$subMenu .= "<span id='file_new_wordage_menu' class='action_item'><a href='/correspondant/add?type=Wordage'>New Wordage</a></span>";
 	$subMenu .= "<br/>";
 	$subMenu .= "<span id='file_new_outline_menu' class='action_item'><a href='/correspondant/add?type=Outline'>New Outline</a></span>";
+	$subMenu .= "<br/>";
+	$subMenu .= "<span id='file_new_outline_menu' class='action_item'><a href='/correspondant/add?type=Picture'>New Picture</a></span>";
 	$subMenu .= "</div>";
 	return $subMenu;
     }

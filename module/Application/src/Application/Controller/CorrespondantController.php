@@ -328,6 +328,13 @@ class CorrespondantController extends AbstractActionController
     }
     public function addAction()
     {
+
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
 	$view = new ViewModel();
 
 	$this->log = $this->getServiceLocator()->get('log');
@@ -362,7 +369,8 @@ class CorrespondantController extends AbstractActionController
 		$newContent->setBinderId(1);
                 $em->persist($newContent);
                 $em->flush();
-		return $this->redirect()->toUrl('http://evanwilliamsconsulting.local/wordage/index');
+		$uri = $urlroot . 'wordage/index';
+		return $this->redirect()->toUrl($uri);
         }
 	else if (0==strcmp($type,"Outline"))
 	{

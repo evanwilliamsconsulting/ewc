@@ -39,8 +39,10 @@ class Content extends AbstractResultSet
 		$containerId = $this->containerId;
 		$criteria = Array();
 		$criteria["containerid"] = $containerId;
+		$order = Array();
+		$order["container_order"] = "ASC";
 
-		$containers = $em->getRepository('Application\Entity\ContainerItems')->findBy($criteria);
+		$containers = $em->getRepository('Application\Entity\ContainerItems')->findBy($criteria,$order);
 
 		foreach ($containers as $container)
 		{
