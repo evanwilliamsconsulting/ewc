@@ -375,7 +375,7 @@ class CorrespondantController extends AbstractActionController
 		$newContent->setBinderId(1);
                 $em->persist($newContent);
                 $em->flush();
-		$uri = $urlroot . 'wordage/index';
+		$uri = $rooturl . 'wordage/index';
 		return $this->redirect()->toUrl($uri);
         }
 	else if (0==strcmp($type,"Outline"))
@@ -388,6 +388,19 @@ class CorrespondantController extends AbstractActionController
                 $em->persist($newContent);
                 $em->flush();
 	}
+	else if (0==strcmp($type,"Picture"))
+        {
+		$newContent = new Picture();
+		$newContent->setTitle("picture1");
+		$newContent->setCredit("EJW");
+		$newContent->setWidth(300);
+		$newContent->setHeight(300);
+                $newContent->setUsername("ewilliams");
+		$newContent->setCaption("test");
+		$newContent->setBinderId(1);
+                $em->persist($newContent);
+                $em->flush();
+        }
 	return $view;
     }
 }

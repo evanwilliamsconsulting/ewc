@@ -17,4 +17,23 @@
 	<input id="picture_height" name="picture_height" type="text" value="<?php echo $this->resize_height; ?>">
     	<input id="picture_resize" name="picture_resize" value="Resize" type="submit"/>
     </form>
+    <form enctype="multipart/form-data" method="post" action="/picture/upload?id=<?php echo $this->id; ?>&from=<?php echo $this->from; ?>">
+	<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
+	<select id="subfolder" name="subfolder">
+	<?php
+		$i = 1;
+		foreach ($this->image_folders as $key => $folder)
+		{
+			echo "<option value='";
+			echo $i;
+			echo "'>";
+			echo $folder;
+			echo "</option>";
+			$i += 1;
+		}
+	?>
+	</select>
+	<input type="file" id="myFile" name="filename">
+        <input id="picture_upload" name="picture_upload" value="Upload" type="submit">
+    </form>
 </div>

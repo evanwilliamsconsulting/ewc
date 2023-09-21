@@ -310,6 +310,12 @@ class PictureController extends AbstractActionController
 	    $pictureRelativeURI .= '/';
 	}
 	$pictureRelativeURI .= $thePicture;
+
+	// Get all subdirectory names
+	// https://stackoverflow.com/questions/15774669/list-all-files-in-one-directory.php
+	$image_folders = array_diff(scandir('/usr/local/ewc/public/images'),array('.','..'));
+	
+
 	$view->picture = $pictureRelativeURI;
 	$view->caption = $caption;
 	$view->id =$id;
@@ -319,6 +325,7 @@ class PictureController extends AbstractActionController
 	$view->subfolder = $subfolder;
 	$view->resize_width = $width;
 	$view->resize_height = $height;
+	$view->image_folders =  $image_folders;
 
         return $view;
     }
@@ -375,6 +382,99 @@ class PictureController extends AbstractActionController
 	$em->persist($picture);
 	$em->flush();
 		
+	$view->id =$id;
+	
+	if (0 == strcmp($from,"correspondant"))
+	{
+	   return $this->redirect()->toUrl('/correspondant/index');
+	}
+	else if (0 == strcmp($from,"picture"))
+	{
+	   return $this->redirect()->toUrl('/picture/index');
+	}
+	else
+	{
+		return $view;
+	}
+    }
+    public function uploadAction()
+    {
+	// Retrieve Custom Config
+	$config = $this->getServiceLocator()->get('config');
+	$settings = $config['settings'];
+	$SITEROOT = $settings['SITE_ROOT'];
+	$rooturl = 'https://' . $SITEROOT . '/';
+
+    	$userSession = new Container('user'); // Talk about confdivcting names!
+	$this->username = $userSession->username;
+	$loggedIn = $userSession->loggedin;
+	if ($loggedIn)
+	{
+		// Set the Helpers
+		$layout = $this->layout();
+		foreach($layout->getVariables() as $child)
+		{
+			$child->setLoggedIn(true);
+			$child->setUserName($this->username);
+		}
+	}
+	else
+	{
+	       return $this->redirect()->toUrl($rooturl);
+	}
+	// Initialize the View
+	$view = new ViewModel();
+
+/*
+	$view->setTerminal(true);
+*/
+
+	$id = $this->params()->fromQuery("id");
+	$from = $this->params()->fromQuery("from");
+
+
+	if (is_null($from))
+	{
+		$from = "picture";
+	}
+
+	$image_folders = array_diff(scandir('/usr/local/ewc/public/images'),array('.','..'));
+
+	$subfolder_id = $_POST['subfolder'];
+	$files = $_FILES['filename'];
+	$tmp_name = $files["tmp_name"];
+	$name = $files["name"];
+
+	$i = 1;
+	$subfolder_name = "archive";
+	foreach ($image_folders as $key => $folder_name)
+	{
+		if ($i == $subfolder_id)
+		{
+			$subfolder_name = $folder_name;
+		}
+		$i += 1;
+	}
+
+	$full_path = "/usr/local/ewc/public/images";
+	$full_path .= "/";
+	$full_path .= $subfolder_name;
+	$full_path .= "/";
+	$full_path .= $name;
+	print($full_path);
+	move_uploaded_file($tmp_name,$full_path);
+
+	$em = $this->getEntityManager();
+	$theArray = array('id' => $id );
+	$picture = $em->getRepository('Application\Entity\Picture')->findOneBy($theArray);
+		
+	//$picture->setWidth($resize_width);
+	//$picture->setHeight($resize_height);
+	$picture->setSubfolder($subfolder_name);
+	$picture->setPicture($name);
+	$em->persist($picture);
+	$em->flush();
+
 	$view->id =$id;
 	
 	if (0 == strcmp($from,"correspondant"))
