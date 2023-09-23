@@ -1,0 +1,22 @@
+<div id="product_div" class="width800 viewcolor">
+	<a href="/product/edit?id=<?php echo $this->id;?>&from=product">Edit</a>
+	<h2><?php echo $this->title; ?></h2>
+	<div id="product-view">
+		<?php echo $this->name; ?>	
+	</div>
+	<div id="product-view">
+		<?php echo $this->title; ?>	
+	</div>
+	<div id="product-view">
+		<?php echo $this->description; ?>	
+	</div>
+	<div id="product-view">
+		<?php echo $this->sku; ?>	
+	</div>
+	<div id="product-view">
+		<?php echo $this->price; ?>	
+	</div>
+	<div id="product-edit" class="hidden">
+    		<textarea id="product-edit-textarea" rows="24" cols="200"><?php echo $this->description; ?></textarea>
+	</div>
+</div>

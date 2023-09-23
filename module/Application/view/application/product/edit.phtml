@@ -1,0 +1,11 @@
+<div id="<?php echo $this->id; ?>" class="product-edit-text"> 
+	<!-- span onclick="closeEditWordage();">Save</span -->
+	<form method="post" action="/product/save?id=<?php echo $this->id; ?>&from=<?php echo $this->from; ?>">
+	<input type="text" id="title" name="title" value="<?php echo $this->title;?>">
+	<input type="text" id="name" name="name" value="<?php echo $this->name;?>">
+	<input type="text" id="sku" name="sku" value="<?php echo $this->sku;?>">
+	<input type="text" id="price" name="price" value="<?php echo $this->price;?>">
+    	<textarea id="description" rows=20 cols=60 name="description"><?php echo $this->description; ?></textarea>
+	<input type="submit" id="Save" name="Save"/>
+	</form>
+</div>

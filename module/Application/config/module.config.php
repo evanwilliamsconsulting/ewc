@@ -590,6 +590,7 @@ return array(
             'Application\Controller\Pix' => 'Application\Controller\PixController',
             'Application\Controller\PixLink' => 'Application\Controller\PixlinkController',
             'Application\Controller\Wordage' => 'Application\Controller\WordageController',
+            'Application\Controller\Product' => 'Application\Controller\ProductController',
             'Application\Controller\Outline' => 'Application\Controller\OutlineController',
             'Application\Controller\Glossary' => 'Application\Controller\GlossaryController',
             'Application\Controller\Experience' => 'Application\Controller\ExperienceController',
