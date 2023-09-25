@@ -25,6 +25,7 @@ use Application\Model\Items as Items;
 use Application\Entity\Wordage as Wordage;
 use Application\Entity\Outline as Outline;
 use Application\Entity\Picture as Picture;
+use Application\Entity\Product as Product;
 use Application\Entity\File as File;
 use Application\Entity\CodeSample as CodeSample;
 use Application\Entity\Experience as Experience;
@@ -39,6 +40,9 @@ use Application\Service\WordageService as WordageService;
 
 use Application\View\Helper\OutlineHelper as OutlineHelper;
 use Application\Service\OutlineService as OutlineService;
+
+use Application\View\Helper\ProductHelper as ProductHelper;
+use Application\Service\ProductService as ProductService;
 
 use Application\View\Helper\PictureHelper as PictureHelper;
 use Application\View\Helper\FileHelper as FileHelper;
@@ -271,7 +275,7 @@ class CorrespondantController extends AbstractActionController
 	$view = new ViewModel();
 	$ENTITY_ROOT = "Application\\Entity\\";
 
-	$types = array("Wordage","Picture","Experience","File","CodeBase","CodeSample","Outline");
+	$types = array("Wordage","Picture","Experience","File","CodeBase","CodeSample","Outline","Product");
 
 	foreach ($types as $key => $type)
 	{	
@@ -283,6 +287,11 @@ class CorrespondantController extends AbstractActionController
 			if (0 == strcmp($type,"Wordage"))
 			{
 				$helperItem = new WordageHelper();
+				$helperItem->setLoggedIn(true);
+			}
+			if (0 == strcmp($type,"Product"))
+			{
+				$helperItem = new ProductHelper();
 				$helperItem->setLoggedIn(true);
 			}
 			else if (0 == strcmp($type,"Picture"))
@@ -376,6 +385,18 @@ class CorrespondantController extends AbstractActionController
                 $em->persist($newContent);
                 $em->flush();
 		$uri = $rooturl . 'wordage/index';
+		return $this->redirect()->toUrl($uri);
+        }
+	if (0==strcmp($type,"Product"))
+        {
+		$newContent = new Product();
+		$newContent->setTitle("new");
+                $newContent->setUsername("ewilliams");
+		$newContent->setColumnsize(40);
+		$newContent->setBinderId(1);
+                $em->persist($newContent);
+                $em->flush();
+		$uri = $rooturl . 'product/index';
 		return $this->redirect()->toUrl($uri);
         }
 	else if (0==strcmp($type,"Outline"))

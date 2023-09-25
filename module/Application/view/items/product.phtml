@@ -1,0 +1,36 @@
+<?php
+	$topic = "product";
+?>
+<div class="product-output" id="product-<?php echo $this->id;?>">
+    <div class="lines">
+        <h2>Product - <?php echo $this->title; ?> - <?php echo $this->id; ?></h2>
+	<div id="product-username" class="small_letters"><?php echo $this->original; ?></div>
+	<div id="product-timestamp" class="small_letters"><?php echo $this->username; ?></div>
+	<?php if ($this->loggedIn == true): ?>
+	    <div id='topic-toolbar-edit' class='toolbar-tab'><a href="/product/edit?id=<?php echo $this->id; ?>&from=correspondant">Edit</a></div>
+	<?php endif; ?>
+        <div class="product-item-title">
+	    <br />
+            <span><?php echo $this->original;?></span>
+        </div>
+	<div id="product-edit" class="product-item-content">
+		<div id="product-edit-textarea">
+		    <?php echo $this->description; ?>
+		</div>
+	</div>
+	<div id="product-view" class="product-item-content">
+		<?php echo $this->name; ?>
+	</div>
+	<div id="product-view" class="product-item-content">
+		<?php echo $this->description; ?>
+	</div>
+	<div id="product-view" class="product-item-content">
+		<?php echo $this->sku; ?>
+	</div>
+	<div id="product-view" class="product-item-content">
+		<?php echo $this->price; ?>
+	</div>
+	<div id="product-target-<?php echo $id; ?>">
+	</div>
+    </div>
+</div>

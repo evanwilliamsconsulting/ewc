@@ -23,6 +23,7 @@ use Application\Entity\Container as Container;
 //use Application\Entity\ContainerItems as ContainerItems;
 use Application\View\Helper\ContainerHelper as ContainerHelper;
 use Application\View\Helper\WordageHelper as WordageHelper;
+use Application\View\Helper\ProductHelper as ProductHelper;
 use Application\View\Helper\PictureHelper as PictureHelper;
 use Application\View\Helper\BinderHelper as BinderHelper;
 
@@ -142,13 +143,27 @@ class IndexController extends AbstractActionController
 			$htmlOutput .= "<div class='headline-output'>";
 			$htmlOutput .= $headline;
 			$htmlOutput .= "</div>";
+			// $htmlOutput .= "<br/>";
 		}
 		if (0 == strcmp($type,"Wordage"))
 		{
 			$wordage = $object->getWordage();
-			$htmlOutput .= "<div class=' wordage-output'>";
+			$htmlOutput .= "<div class='wordage-output'>";
 			$htmlOutput .= $wordage;
 			$htmlOutput .= "</div>";
+		}
+		if (0 == strcmp($type,"Product"))
+		{
+			$productHelper = new ProductHelper();
+			$productHelper->setServiceLocator($this->getServiceLocator());
+			$productHelper->setViewModel($view);
+			$productHelper->setEntityManager($this->em);
+			$productHelper->setObject($object);
+
+			$htmlOutput .= "<div class='product-output'>";
+			$htmlOutput .= $productHelper->render();
+			$htmlOutput .= "</div>";
+			$htmlOutput .= "<br/>";
 		}
 		if (0 == strcmp($type,"Picture"))
 		{
@@ -161,22 +176,10 @@ class IndexController extends AbstractActionController
 			$pictureHelper->setEntityManager($this->em);
 			$pictureHelper->setObject($object);
 
-/*
-			$htmlOutput .= "<div class='picture-output'>";
-			$htmlOutput .= "<img src='/images/";
-			$htmlOutput .= $picture;
-			$htmlOutput .= "' width=";
-			$htmlOutput .= $width; 
-			$htmlOutput .= " height=";
-			$htmlOutput .= $height;
-			$htmlOutput .= ">";
-			$htmlOutput .= "</div><br/>";
-*/
-		//	$view->picture = $pictureHelper;
 			$htmlOutput .= $pictureHelper->render();
+			$htmlOutput .= "<br/>";
 		}
 	}
-	$htmlOutput .= "<span>Hello!</span>";
 	$htmlOutput .= "</div>";
 	$view->content = $htmlOutput;
 

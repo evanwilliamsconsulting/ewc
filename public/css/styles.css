@@ -204,6 +204,20 @@
     left:60px;
     position:relative;
 }
+.headline-output
+{
+    background-color:white;
+    width: 600px;
+    left:60px;
+    position:relative;
+}
+.product-output
+{
+    background-color:white;
+    width: 600px;
+    left:60px;
+    position:relative;
+}
 .picture-output
 {
     background-color:white;
@@ -415,6 +429,20 @@
     left:100px;
     position:relative;
 }
+.headline-output
+{
+    background-color:white;
+    width: 600px;
+    left:100px;
+    position:relative;
+}
+.product-output
+{
+    background-color:white;
+    width: 600px;
+    left:100px;
+    position:relative;
+}
 .picture-output
 {
     background-color:white;
@@ -598,6 +626,20 @@
 	}  
 
 .wordage-output
+{
+    background-color:white;
+    width: 300px;
+    left:30px;
+    position:relative;
+}
+.headline-output
+{
+    background-color:white;
+    width: 300px;
+    left:30px;
+    position:relative;
+}
+.product-output
 {
     background-color:white;
     width: 300px;

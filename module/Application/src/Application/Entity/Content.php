@@ -69,6 +69,18 @@ class Content extends AbstractResultSet
 					$this->obj->append($newArray);
 				}
 			}
+			if (0 == strcmp($itemtype,"product"))
+			{
+				$em = $this->getEntityManager();
+				$products = $em->getRepository('Application\Entity\Product')->findBy($criteria);
+				foreach	($products as $product)
+				{
+					$newArray = Array();
+					$newArray["type"] = "Product";	
+					$newArray["object"] = $product;
+					$this->obj->append($newArray);
+				}
+			}
 			else if (0 == strcmp($itemtype,"picture"))
 			{
 				$pictures = $em->getRepository('Application\Entity\Picture')->findBy($criteria);
