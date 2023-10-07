@@ -35,7 +35,7 @@ interface ResultStatement extends Traversable
      *
      * @return bool
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null);
+    public function setFetchMode($mode, mixed ...$args);
 
     /**
      * Returns the next row of a result set.

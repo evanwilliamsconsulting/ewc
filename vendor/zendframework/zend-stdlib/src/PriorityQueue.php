@@ -25,7 +25,7 @@ use Serializable;
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
  */
-class PriorityQueue implements Countable, IteratorAggregate, Serializable
+class PriorityQueue implements Countable, IteratorAggregate
 {
     const EXTR_DATA     = 0x00000001;
     const EXTR_PRIORITY = 0x00000002;
@@ -125,6 +125,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->items);
@@ -162,6 +163,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return SplPriorityQueue
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         $queue = $this->getQueue();

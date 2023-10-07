@@ -17,7 +17,7 @@ use Serializable;
  * Also, provides predictable heap order for datums added with the same priority
  * (i.e., they will be emitted in the same order they are enqueued).
  */
-class SplPriorityQueue extends \SplPriorityQueue implements Serializable
+class SplPriorityQueue extends \SplPriorityQueue 
 {
     /**
      * @var int Seed used to ensure queue order for items of the same priority

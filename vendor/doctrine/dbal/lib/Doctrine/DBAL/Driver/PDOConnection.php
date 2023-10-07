@@ -11,7 +11,8 @@ use function func_get_args;
  * PDO implementation of the Connection interface.
  * Used by all PDO-based drivers.
  */
-class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
+#class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
+class PDOConnection extends PDO implements  ServerInfoAwareConnection
 {
     /**
      * @param string       $dsn
@@ -35,6 +36,7 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function exec($statement)
     {
         try {
@@ -55,6 +57,7 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function prepare($prepareString, $driverOptions = [])
     {
         try {
@@ -67,7 +70,7 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
-    public function query()
+    public function test()
     {
         $args      = func_get_args();
         $argsCount = count($args);
@@ -94,14 +97,22 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
+/* EJW
     public function quote($input, $type = ParameterType::STRING)
     {
         return parent::quote($input, $type);
+    }
+*/
+    public function quote($input, $type = ParameterType::STRING)
+    {
+        return parent::quote($input, $type ?? 1);
     }
 
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function lastInsertId($name = null)
     {
         try {

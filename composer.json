@@ -19,7 +19,7 @@
         "symfony/cache": "*", 
         "zendframework/zend-log":"*",
         "breuls/tmdb-library":"*",
-	"tinymce/tinymce"
+	"tinymce/tinymce":"*"
     },
     "autoload" : {
         "psr-0" :{"": "src/"}

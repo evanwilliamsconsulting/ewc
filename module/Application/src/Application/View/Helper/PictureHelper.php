@@ -18,6 +18,7 @@ https://docs.zendframework.com/zend-view/php-renderer
  
 class PictureHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 {
+    protected $serviceLocator;
     protected static $state;
     protected $pictureObject;
     protected $picture;

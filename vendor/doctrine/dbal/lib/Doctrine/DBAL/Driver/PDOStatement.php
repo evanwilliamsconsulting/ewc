@@ -43,9 +43,11 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+    public function setFetchMode($mode, mixed ...$args)
     {
+	$fetchMode = $mode;
         $fetchMode = $this->convertFetchMode($fetchMode);
+
 
         // This thin wrapper is necessary to shield against the weird signature
         // of PDOStatement::setFetchMode(): even if the second and third
@@ -69,6 +71,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function bindValue($param, $value, $type = ParameterType::STRING)
     {
         $type = $this->convertParamType($type);
@@ -83,6 +86,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function bindParam($column, &$variable, $type = ParameterType::STRING, $length = null, $driverOptions = null)
     {
         $type = $this->convertParamType($type);
@@ -97,6 +101,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function closeCursor()
     {
         try {
@@ -111,6 +116,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function execute($params = null)
     {
         try {
@@ -123,6 +129,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function fetch($fetchMode = null, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0)
     {
         $fetchMode = $this->convertFetchMode($fetchMode);
@@ -149,7 +156,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
+    public function fetchAll($fetchMode = null,mixed ...$args)
     {
         $fetchMode = $this->convertFetchMode($fetchMode);
 
@@ -175,6 +182,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function fetchColumn($columnIndex = 0)
     {
         try {
