@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -33,12 +33,11 @@ class AlterTableDecorator extends AlterTable implements PlatformDecoratorInterfa
         'columnformat'  => 4,
         'format'        => 4,
         'storage'       => 5,
-        'after'         => 6
     ];
 
     /**
      * @param AlterTable $subject
-     * @return self Provides a fluent interface
+     * @return \Zend\Db\Sql\Platform\PlatformDecoratorInterface
      */
     public function setSubject($subject)
     {
@@ -62,14 +61,14 @@ class AlterTableDecorator extends AlterTable implements PlatformDecoratorInterfa
             if ($insertPos !== false) {
                 switch ($needle) {
                     case 'REFERENCES':
-                        $insertStart[2] = ! isset($insertStart[2]) ? $insertPos : $insertStart[2];
+                        $insertStart[2] = !isset($insertStart[2]) ? $insertPos : $insertStart[2];
                     // no break
                     case 'PRIMARY':
                     case 'UNIQUE':
-                        $insertStart[1] = ! isset($insertStart[1]) ? $insertPos : $insertStart[1];
+                        $insertStart[1] = !isset($insertStart[1]) ? $insertPos : $insertStart[1];
                     // no break
                     default:
-                        $insertStart[0] = ! isset($insertStart[0]) ? $insertPos : $insertStart[0];
+                        $insertStart[0] = !isset($insertStart[0]) ? $insertPos : $insertStart[0];
                 }
             }
         }
@@ -131,9 +130,6 @@ class AlterTableDecorator extends AlterTable implements PlatformDecoratorInterfa
                         $insert = ' STORAGE ' . strtoupper($coValue);
                         $j = 2;
                         break;
-                    case 'after':
-                        $insert = ' AFTER ' . $adapterPlatform->quoteIdentifier($coValue);
-                        $j = 2;
                 }
 
                 if ($insert) {

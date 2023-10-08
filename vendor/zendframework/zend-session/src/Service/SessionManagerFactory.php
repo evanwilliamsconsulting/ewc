@@ -9,7 +9,6 @@
 
 namespace Zend\Session\Service;
 
-use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -18,7 +17,6 @@ use Zend\Session\Container;
 use Zend\Session\SaveHandler\SaveHandlerInterface;
 use Zend\Session\SessionManager;
 use Zend\Session\Storage\StorageInterface;
-use Zend\Session\ManagerInterface;
 
 class SessionManagerFactory implements FactoryInterface
 {
@@ -32,7 +30,7 @@ class SessionManagerFactory implements FactoryInterface
     ];
 
     /**
-     * Create session manager object (v3 usage).
+     * Create session manager object
      *
      * Will consume any combination (or zero) of the following services, when
      * present, to construct the SessionManager instance:
@@ -57,59 +55,58 @@ class SessionManagerFactory implements FactoryInterface
      *   this is true; set it to false to disable.
      * - validators: ...
      *
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array $options
+     * @param  ServiceLocatorInterface    $services
      * @return SessionManager
+     * @throws ServiceNotCreatedException if any collaborators are not of the
+     *         correct type
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $services)
     {
         $config        = null;
         $storage       = null;
         $saveHandler   = null;
         $validators    = [];
         $managerConfig = $this->defaultManagerConfig;
-        $options       = [];
 
-        if ($container->has(ConfigInterface::class)) {
-            $config = $container->get(ConfigInterface::class);
-            if (! $config instanceof ConfigInterface) {
+        if ($services->has('Zend\Session\Config\ConfigInterface')) {
+            $config = $services->get('Zend\Session\Config\ConfigInterface');
+            if (!$config instanceof ConfigInterface) {
                 throw new ServiceNotCreatedException(sprintf(
                     'SessionManager requires that the %s service implement %s; received "%s"',
-                    ConfigInterface::class,
-                    ConfigInterface::class,
+                    'Zend\Session\Config\ConfigInterface',
+                    'Zend\Session\Config\ConfigInterface',
                     (is_object($config) ? get_class($config) : gettype($config))
                 ));
             }
         }
 
-        if ($container->has(StorageInterface::class)) {
-            $storage = $container->get(StorageInterface::class);
-            if (! $storage instanceof StorageInterface) {
+        if ($services->has('Zend\Session\Storage\StorageInterface')) {
+            $storage = $services->get('Zend\Session\Storage\StorageInterface');
+            if (!$storage instanceof StorageInterface) {
                 throw new ServiceNotCreatedException(sprintf(
                     'SessionManager requires that the %s service implement %s; received "%s"',
-                    StorageInterface::class,
-                    StorageInterface::class,
+                    'Zend\Session\Storage\StorageInterface',
+                    'Zend\Session\Storage\StorageInterface',
                     (is_object($storage) ? get_class($storage) : gettype($storage))
                 ));
             }
         }
 
-        if ($container->has(SaveHandlerInterface::class)) {
-            $saveHandler = $container->get(SaveHandlerInterface::class);
-            if (! $saveHandler instanceof SaveHandlerInterface) {
+        if ($services->has('Zend\Session\SaveHandler\SaveHandlerInterface')) {
+            $saveHandler = $services->get('Zend\Session\SaveHandler\SaveHandlerInterface');
+            if (!$saveHandler instanceof SaveHandlerInterface) {
                 throw new ServiceNotCreatedException(sprintf(
                     'SessionManager requires that the %s service implement %s; received "%s"',
-                    SaveHandlerInterface::class,
-                    SaveHandlerInterface::class,
+                    'Zend\Session\SaveHandler\SaveHandlerInterface',
+                    'Zend\Session\SaveHandler\SaveHandlerInterface',
                     (is_object($saveHandler) ? get_class($saveHandler) : gettype($saveHandler))
                 ));
             }
         }
 
         // Get session manager configuration, if any, and merge with default configuration
-        if ($container->has('config')) {
-            $configService = $container->get('config');
+        if ($services->has('Config')) {
+            $configService = $services->get('Config');
             if (isset($configService['session_manager'])
                 && is_array($configService['session_manager'])
             ) {
@@ -119,22 +116,9 @@ class SessionManagerFactory implements FactoryInterface
             if (isset($managerConfig['validators'])) {
                 $validators = $managerConfig['validators'];
             }
-
-            if (isset($managerConfig['options'])) {
-                $options = $managerConfig['options'];
-            }
         }
 
-        $managerClass = class_exists($requestedName) ? $requestedName : SessionManager::class;
-        if (! is_subclass_of($managerClass, ManagerInterface::class)) {
-            throw new ServiceNotCreatedException(sprintf(
-                'SessionManager requires that the %s service implement %s',
-                $managerClass,
-                ManagerInterface::class
-            ));
-        }
-
-        $manager = new $managerClass($config, $storage, $saveHandler, $validators, $options);
+        $manager = new SessionManager($config, $storage, $saveHandler, $validators);
 
         // If configuration enables the session manager as the default manager for container
         // instances, do so.
@@ -145,21 +129,5 @@ class SessionManagerFactory implements FactoryInterface
         }
 
         return $manager;
-    }
-
-    /**
-     * Create a SessionManager instance (v2 usage)
-     *
-     * @param ServiceLocatorInterface $services
-     * @param null|string $canonicalName
-     * @param string $requestedName
-     * @return SessionManager
-     */
-    public function createService(
-        ServiceLocatorInterface $services,
-        $canonicalName = null,
-        $requestedName = SessionManager::class
-    ) {
-        return $this($services, $requestedName);
     }
 }

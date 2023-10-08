@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\I18n\Filter;
@@ -18,7 +20,7 @@ abstract class AbstractLocale extends AbstractFilter
      */
     public function __construct()
     {
-        if (! extension_loaded('intl')) {
+        if (!extension_loaded('intl')) {
             throw new Exception\ExtensionNotLoadedException(sprintf(
                 '%s component requires the intl PHP extension',
                 __NAMESPACE__
@@ -30,7 +32,7 @@ abstract class AbstractLocale extends AbstractFilter
      * Sets the locale option
      *
      * @param  string|null $locale
-     * @return $this
+     * @return AbstractLocale
      */
     public function setLocale($locale = null)
     {
@@ -45,7 +47,7 @@ abstract class AbstractLocale extends AbstractFilter
      */
     public function getLocale()
     {
-        if (! isset($this->options['locale'])) {
+        if (!isset($this->options['locale'])) {
             $this->options['locale'] = Locale::getDefault();
         }
         return $this->options['locale'];

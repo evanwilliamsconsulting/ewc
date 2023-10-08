@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -39,8 +39,7 @@ abstract class AbstractZendServer extends AbstractAdapter
         $prefix      = ($namespace === '') ? '' : $namespace . self::NAMESPACE_SEPARATOR;
 
         $result = $this->zdcFetch($prefix . $normalizedKey);
-        if ($result === false) {
-            $result  = null;
+        if ($result === null) {
             $success = false;
         } else {
             $success  = true;
@@ -217,12 +216,11 @@ abstract class AbstractZendServer extends AbstractAdapter
                         'resource' => false,
                     ],
                     'supportedMetadata'  => [],
-                    'minTtl'             => 1,
                     'maxTtl'             => 0,
                     'staticTtl'          => true,
                     'ttlPrecision'       => 1,
                     'useRequestTime'     => false,
-                    'lockOnExpire'       => ini_get('zend_datacache.lock_on_expire') ? 120 : 0,
+                    'expiredRead'        => false,
                     'maxKeyLength'       => 0,
                     'namespaceIsPrefix'  => true,
                     'namespaceSeparator' => self::NAMESPACE_SEPARATOR,

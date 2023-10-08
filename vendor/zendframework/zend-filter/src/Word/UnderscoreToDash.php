@@ -11,6 +11,10 @@ namespace Zend\Filter\Word;
 
 class UnderscoreToDash extends SeparatorToSeparator
 {
+    /**
+     * Constructor
+     *
+     */
     public function __construct()
     {
         parent::__construct('_', '-');

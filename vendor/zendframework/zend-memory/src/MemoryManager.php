@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-memory for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-memory/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Memory;
@@ -70,7 +72,7 @@ class MemoryManager
      *
      * @var array
      */
-    private $unloadCandidates = [];
+    private $unloadCandidates = array();
 
     /**
      * List of object sizes.
@@ -81,7 +83,7 @@ class MemoryManager
      *
      * @var array
      */
-    private $sizes = [];
+    private $sizes = array();
 
     /**
      * Last modified object
@@ -149,7 +151,7 @@ class MemoryManager
                     break;
             }
 
-            $this->memoryLimit = (int) ($this->memoryLimit * 2 / 3);
+            $this->memoryLimit = (int) ($this->memoryLimit*2/3);
         } // No limit otherwise
     }
 
@@ -220,7 +222,7 @@ class MemoryManager
      */
     public function create($value = '')
     {
-        return $this->createContainer($value, false);
+        return $this->_create($value, false);
     }
 
     /**
@@ -233,23 +235,22 @@ class MemoryManager
      */
     public function createLocked($value = '')
     {
-        return $this->createContainer($value, true);
+        return $this->_create($value, true);
     }
 
     /**
-     * Create new Zend\Memory container object
+     * Create new Zend\Memory object
      *
      * @param string $value
      * @param  bool $locked
-     * @return Container\ContainerInterface
-     * @throws Exception\ExceptionInterface
+     * @return \Zend\Memory\Container\ContainerInterface
+     * @throws \Zend\Memory\Exception\ExceptionInterface
      */
-    private function createContainer($value, $locked)
+    private function _create($value, $locked)
     {
         $id = $this->nextId++;
 
-        // Use only memory locked objects if backend is not specified
-        if ($locked  || ($this->cache === null)) {
+        if ($locked  ||  ($this->cache === null) /* Use only memory locked objects if backend is not specified */) {
             return new Container\Locked($value);
         }
 
@@ -260,8 +261,7 @@ class MemoryManager
 
         // Store last object size as 0
         $this->sizes[$id] = 0;
-
-        // Prepare object for next modifications
+        // prepare object for next modifications
         $this->lastModified = $valueObject;
 
         return new Container\AccessController($valueObject);
@@ -394,7 +394,7 @@ class MemoryManager
             return;
         }
 
-        if (! $container->isSwapped()) {
+        if (!$container->isSwapped()) {
             $this->cache->setItem($this->managerId . $id, $container->getRef());
         }
 

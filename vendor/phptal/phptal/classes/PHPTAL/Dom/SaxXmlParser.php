@@ -370,7 +370,7 @@ class PHPTAL_Dom_SaxXmlParser
             // $match expression below somehow triggers quite deep recurrency and stack overflow in preg
             // to avoid this, check string bit by bit, omitting ASCII fragments.
             if (strlen($str) > 200) {
-                $chunks = preg_split('/(?>[\x09\x0A\x0D\x20-\x7F]+)/',$str,null,PREG_SPLIT_NO_EMPTY);
+                $chunks = preg_split('/(?>[\x09\x0A\x0D\x20-\x7F]+)/',$str,0,PREG_SPLIT_NO_EMPTY);
                 foreach ($chunks as $chunk) {
                     if (strlen($chunk) < 200) {
                         $this->checkEncoding($chunk);
@@ -392,7 +392,7 @@ class PHPTAL_Dom_SaxXmlParser
                . '|\xF4[\x80-\x8F][\x80-\xBF]{2}';    // plane 16
 
             if (!preg_match('/^(?:(?>'.$match.'))+$/s',$str)) {
-                $res = preg_split('/((?>'.$match.')+)/s',$str,null,PREG_SPLIT_DELIM_CAPTURE);
+                $res = preg_split('/((?>'.$match.')+)/s',$str,0,PREG_SPLIT_DELIM_CAPTURE);
                 for($i=0; $i < count($res); $i+=2)
                 {
                     $res[$i] = self::convertBytesToEntities(array(1=>$res[$i]));
@@ -406,7 +406,9 @@ class PHPTAL_Dom_SaxXmlParser
             $forbid = '/((?>[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F]+))/s';
 
             if (preg_match($forbid, $str)) {
-                $str = preg_replace_callback($forbid, array('self', 'convertBytesToEntities'), $str);
+                $str = preg_replace_callback($forbid, static function (array $m): string {
+                    return self::convertBytesToEntities($m);
+                }, $str);
                 $this->raiseError("Invalid ISO-8859-1 characters: ".$str);
             }
         }
@@ -419,10 +421,8 @@ class PHPTAL_Dom_SaxXmlParser
      * Changes all bytes to hexadecimal XML entities
      *
      * @param array $m first array element is used for input
-     *
-     * @return string
      */
-    private static function convertBytesToEntities(array $m)
+    private static function convertBytesToEntities(array $m): string
     {
         $m = $m[1];
         $out = "";
@@ -443,20 +443,17 @@ class PHPTAL_Dom_SaxXmlParser
         /* <?php ?> blocks can't reliably work in attributes (due to escaping impossible in XML)
            so they have to be converted into special TALES expression
         */
-        $types = ini_get('short_open_tag')?'php|=|':'php';
-        $str = preg_replace_callback("/<\?($types)(.*?)\?>/", array('self', 'convertPHPBlockToTALES'), $str);
+        $types = version_compare(PHP_VERSION, '5.4.0') < 0 ? (ini_get('short_open_tag') ? 'php|=|' : 'php') : 'php|=';
+        $str = preg_replace_callback("/<\?($types)(.*?)\?>/", static function ($m) {
+            list(, $type, $code) = $m;
+            if ($type === '=') $code = 'echo '.$code;
+            return '${structure phptal-internal-php-block:'.rawurlencode($code).'}';
+        }, $str);
 
         // corrects all non-entities and neutralizes potentially problematic CDATA end marker
         $str = strtr(preg_replace('/&(?!(?:#x?[a-f0-9]+|[a-z][a-z0-9]*);)/i', '&amp;', $str), array('<'=>'&lt;', ']]>'=>']]&gt;'));
 
         return $str;
-    }
-
-    private static function convertPHPBlockToTALES($m)
-    {
-        list(, $type, $code) = $m;
-        if ($type === '=') $code = 'echo '.$code;
-        return '${structure phptal-internal-php-block:'.rawurlencode($code).'}';
     }
 
     public function getSourceFile()

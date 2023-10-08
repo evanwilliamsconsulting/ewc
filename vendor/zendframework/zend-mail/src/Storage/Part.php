@@ -1,15 +1,17 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-mail for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-mail/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Mail\Storage;
 
 use RecursiveIterator;
-use Zend\Mail\Header\HeaderInterface;
 use Zend\Mail\Headers;
+use Zend\Mail\Header\HeaderInterface;
 use Zend\Mime;
 
 class Part implements RecursiveIterator, Part\PartInterface
@@ -80,10 +82,10 @@ class Part implements RecursiveIterator, Part\PartInterface
     public function __construct(array $params)
     {
         if (isset($params['handler'])) {
-            if (! $params['handler'] instanceof AbstractStorage) {
+            if (!$params['handler'] instanceof AbstractStorage) {
                 throw new Exception\InvalidArgumentException('handler is not a valid mail handler');
             }
-            if (! isset($params['id'])) {
+            if (!isset($params['id'])) {
                 throw new Exception\InvalidArgumentException('need a message id with a handler');
             }
 
@@ -94,13 +96,7 @@ class Part implements RecursiveIterator, Part\PartInterface
         $params['strict'] = isset($params['strict']) ? $params['strict'] : false;
 
         if (isset($params['raw'])) {
-            Mime\Decode::splitMessage(
-                $params['raw'],
-                $this->headers,
-                $this->content,
-                Mime\Mime::LINEEND,
-                $params['strict']
-            );
+            Mime\Decode::splitMessage($params['raw'], $this->headers, $this->content, Mime\Mime::LINEEND, $params['strict']);
         } elseif (isset($params['headers'])) {
             if (is_array($params['headers'])) {
                 $this->headers = new Headers();
@@ -174,20 +170,20 @@ class Part implements RecursiveIterator, Part\PartInterface
      * @throws Exception\RuntimeException
      * @return null
      */
-    protected function cacheContent()
+    protected function _cacheContent()
     {
         // caching content if we can't fetch parts
         if ($this->content === null && $this->mail) {
             $this->content = $this->mail->getRawContent($this->messageNum);
         }
 
-        if (! $this->isMultipart()) {
+        if (!$this->isMultipart()) {
             return;
         }
 
         // split content in parts
         $boundary = $this->getHeaderField('content-type', 'boundary');
-        if (! $boundary) {
+        if (!$boundary) {
             throw new Exception\RuntimeException('no boundary found in content type to split message');
         }
         $parts = Mime\Decode::splitMessageStruct($this->content, $boundary);
@@ -213,7 +209,7 @@ class Part implements RecursiveIterator, Part\PartInterface
             return $this->parts[$num];
         }
 
-        if (! $this->mail && $this->content === null) {
+        if (!$this->mail && $this->content === null) {
             throw new Exception\RuntimeException('part not found');
         }
 
@@ -222,9 +218,9 @@ class Part implements RecursiveIterator, Part\PartInterface
             // return
         }
 
-        $this->cacheContent();
+        $this->_cacheContent();
 
-        if (! isset($this->parts[$num])) {
+        if (!isset($this->parts[$num])) {
             throw new Exception\RuntimeException('part not found');
         }
 
@@ -252,7 +248,7 @@ class Part implements RecursiveIterator, Part\PartInterface
             // return
         }
 
-        $this->cacheContent();
+        $this->_cacheContent();
 
         $this->countParts = count($this->parts);
         return $this->countParts;
@@ -264,7 +260,6 @@ class Part implements RecursiveIterator, Part\PartInterface
      * Lazy-loads if not already attached.
      *
      * @return Headers
-     * @throws Exception\RuntimeException
      */
     public function getHeaders()
     {
@@ -275,11 +270,6 @@ class Part implements RecursiveIterator, Part\PartInterface
             } else {
                 $this->headers = new Headers();
             }
-        }
-        if (! $this->headers instanceof Headers) {
-            throw new Exception\RuntimeException(
-                '$this->headers must be an instance of Headers'
-            );
         }
 
         return $this->headers;

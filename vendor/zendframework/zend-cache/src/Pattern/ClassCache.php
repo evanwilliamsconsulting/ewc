@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -18,16 +18,16 @@ class ClassCache extends CallbackCache
      * Set options
      *
      * @param  PatternOptions $options
-     * @return ClassCache Provides a fluent interface
+     * @return ClassCache
      * @throws Exception\InvalidArgumentException if missing 'class' or 'storage' options
      */
     public function setOptions(PatternOptions $options)
     {
         parent::setOptions($options);
 
-        if (! $options->getClass()) {
+        if (!$options->getClass()) {
             throw new Exception\InvalidArgumentException("Missing option 'class'");
-        } elseif (! $options->getStorage()) {
+        } elseif (!$options->getStorage()) {
             throw new Exception\InvalidArgumentException("Missing option 'storage'");
         }
         return $this;
@@ -51,12 +51,12 @@ class ClassCache extends CallbackCache
 
         $cache = $options->getCacheByDefault();
         if ($cache) {
-            $cache = ! in_array($method, $options->getClassNonCacheMethods());
+            $cache = !in_array($method, $options->getClassNonCacheMethods());
         } else {
             $cache = in_array($method, $options->getClassCacheMethods());
         }
 
-        if (! $cache) {
+        if (!$cache) {
             if ($args) {
                 return call_user_func_array($callback, $args);
             } else {

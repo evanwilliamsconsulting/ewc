@@ -1,4 +1,21 @@
 <?php
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license. For more information, see
+ * <http://www.doctrine-project.org>.
+ */
 
 namespace DoctrineORMModule\Yuml;
 
@@ -18,7 +35,7 @@ class MetadataGrapher
      *
      * @var array
      */
-    protected $visitedAssociations = [];
+    protected $visitedAssociations = array();
 
     /**
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
@@ -30,7 +47,7 @@ class MetadataGrapher
      *
      * @var \Doctrine\Common\Persistence\Mapping\ClassMetadata[]
      */
-    private $classByNames = [];
+    private $classByNames = array();
 
     /**
      * Generate a YUML compatible `dsl_text` to describe a given array
@@ -43,8 +60,8 @@ class MetadataGrapher
     public function generateFromMetadata(array $metadata)
     {
         $this->metadata            = $metadata;
-        $this->visitedAssociations = [];
-        $str                       = [];
+        $this->visitedAssociations = array();
+        $str                       = array();
 
         foreach ($metadata as $class) {
             $parent = $this->getParent($class);
@@ -55,7 +72,7 @@ class MetadataGrapher
 
             $associations = $class->getAssociationNames();
 
-            if (empty($associations) && ! isset($this->visitedAssociations[$class->getName()])) {
+            if (empty($associations) && !isset($this->visitedAssociations[$class->getName()])) {
                 $str[] = $this->getClassString($class);
 
                 continue;
@@ -153,9 +170,9 @@ class MetadataGrapher
 
         $className    = $class->getName();
         $classText    = '[' . str_replace('\\', '.', $className);
-        $fields       = [];
+        $fields       = array();
         $parent       = $this->getParent($class);
-        $parentFields = $parent ? $parent->getFieldNames() : [];
+        $parentFields = $parent ? $parent->getFieldNames() : array();
 
         foreach ($class->getFieldNames() as $fieldName) {
             if (in_array($fieldName, $parentFields)) {
@@ -169,7 +186,7 @@ class MetadataGrapher
             }
         }
 
-        if (! empty($fields)) {
+        if (!empty($fields)) {
             $classText .= '|' . implode(';', $fields);
         }
 
@@ -187,7 +204,7 @@ class MetadataGrapher
      */
     private function getClassByName($className)
     {
-        if (! isset($this->classByNames[$className])) {
+        if (!isset($this->classByNames[$className])) {
             foreach ($this->metadata as $class) {
                 if ($class->getName() === $className) {
                     $this->classByNames[$className] = $class;
@@ -196,7 +213,7 @@ class MetadataGrapher
             }
         }
 
-        return $this->classByNames[$className] ?? null;
+        return isset($this->classByNames[$className])? $this->classByNames[$className]: null;
     }
 
     /**
@@ -210,7 +227,7 @@ class MetadataGrapher
     {
         $className = $class->getName();
 
-        if (! class_exists($className) || (! $parent = get_parent_class($className))) {
+        if (!class_exists($className) || (!$parent = get_parent_class($className))) {
             return null;
         }
 
@@ -232,7 +249,7 @@ class MetadataGrapher
                 return false;
             }
 
-            $this->visitedAssociations[$className] = [];
+            $this->visitedAssociations[$className] = array();
 
             return true;
         }
@@ -241,8 +258,8 @@ class MetadataGrapher
             return false;
         }
 
-        if (! isset($this->visitedAssociations[$className])) {
-            $this->visitedAssociations[$className] = [];
+        if (!isset($this->visitedAssociations[$className])) {
+            $this->visitedAssociations[$className] = array();
         }
 
         $this->visitedAssociations[$className][$association] = true;

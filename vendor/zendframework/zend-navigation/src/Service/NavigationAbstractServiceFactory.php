@@ -9,7 +9,6 @@
 
 namespace Zend\Navigation\Service;
 
-use Interop\Container\ContainerInterface;
 use Zend\Navigation\Navigation;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -18,7 +17,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Navigation abstract service factory
  *
  * Allows configuring several navigation instances. If you have a navigation config key named "special" then you can
- * use $container->get('Zend\Navigation\Special') to retrieve a navigation instance with this configuration.
+ * use $serviceLocator->get('Zend\Navigation\Special') to retrieve a navigation instance with this configuration.
  */
 final class NavigationAbstractServiceFactory implements AbstractFactoryInterface
 {
@@ -34,7 +33,12 @@ final class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      *
      * @var string
      */
-    const SERVICE_PREFIX = 'Zend\\Navigation\\';
+    const SERVICE_PREFIX = 'Zend\Navigation\\';
+
+    /**
+     * Normalized name prefix
+     */
+    const NAME_PREFIX = 'zendnavigation';
 
     /**
      * Navigation configuration
@@ -44,87 +48,60 @@ final class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     protected $config;
 
     /**
-     * Can we create a navigation by the requested name? (v3)
+     * Can we create a navigation by the requested name?
      *
-     * @param ContainerInterface $container
-     * @param string $requestedName Name by which service was requested, must
-     *     start with Zend\Navigation\
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param string $name Service name (as resolved by ServiceManager)
+     * @param string $requestedName Name by which service was requested, must start with Zend\Navigation\
      * @return bool
      */
-    public function canCreate(ContainerInterface $container, $requestedName)
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if (0 !== strpos($requestedName, self::SERVICE_PREFIX)) {
+        if (0 !== strpos($name, self::NAME_PREFIX)) {
             return false;
         }
-        $config = $this->getConfig($container);
+        $config = $this->getConfig($serviceLocator);
 
-        return $this->hasNamedConfig($requestedName, $config);
+        return (!empty($config[$this->getConfigName($name)]));
     }
 
     /**
-     * Can we create a navigation by the requested name? (v2)
+     * Create a navigation container
      *
-     * @param ServiceLocatorInterface $container
-     * @param string $name Normalized name by which service was requested;
-     *     ignored.
-     * @param string $requestedName Name by which service was requested, must
-     *     start with Zend\Navigation\
-     * @return bool
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $container, $name, $requestedName)
-    {
-        return $this->canCreate($container, $requestedName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param string $name Service name (as resolved by ServiceManager)
+     * @param string $requestedName Name by which service was requested
      * @return Navigation
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $config  = $this->getConfig($container);
-        $factory = new ConstructedNavigationFactory($this->getNamedConfig($requestedName, $config));
-        return $factory($container, $requestedName);
-    }
-
-    /**
-     * Can we create a navigation by the requested name? (v2)
-     *
-     * @param ServiceLocatorInterface $container
-     * @param string $name Normalized name by which service was requested;
-     *     ignored.
-     * @param string $requestedName Name by which service was requested, must
-     *     start with Zend\Navigation\
-     * @return Navigation
-     */
-    public function createServiceWithName(ServiceLocatorInterface $container, $name, $requestedName)
-    {
-        return $this($container, $requestedName);
+        $config = $this->getConfig($serviceLocator);
+        $factory = new ConstructedNavigationFactory($config[$this->getConfigName($name)]);
+        return $factory->createService($serviceLocator);
     }
 
     /**
      * Get navigation configuration, if any
      *
-     * @param  ContainerInterface $container
+     * @param  ServiceLocatorInterface $services
      * @return array
      */
-    protected function getConfig(ContainerInterface $container)
+    protected function getConfig(ServiceLocatorInterface $services)
     {
         if ($this->config !== null) {
             return $this->config;
         }
 
-        if (! $container->has('config')) {
-            $this->config = [];
+        if (!$services->has('Config')) {
+            $this->config = array();
             return $this->config;
         }
 
-        $config = $container->get('config');
-        if (! isset($config[self::CONFIG_KEY])
-            || ! is_array($config[self::CONFIG_KEY])
+        $config = $services->get('Config');
+        if (!isset($config[self::CONFIG_KEY])
+            || !is_array($config[self::CONFIG_KEY])
         ) {
-            $this->config = [];
+            $this->config = array();
             return $this->config;
         }
 
@@ -138,52 +115,8 @@ final class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * @param string $name
      * @return string
      */
-    private function getConfigName($name)
+    protected function getConfigName($name)
     {
-        return substr($name, strlen(self::SERVICE_PREFIX));
-    }
-
-    /**
-     * Does the configuration have a matching named section?
-     *
-     * @param string $name
-     * @param array|\ArrayAccess $config
-     * @return bool
-     */
-    private function hasNamedConfig($name, $config)
-    {
-        $withoutPrefix = $this->getConfigName($name);
-
-        if (isset($config[$withoutPrefix])) {
-            return true;
-        }
-
-        if (isset($config[strtolower($withoutPrefix)])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get the matching named configuration section.
-     *
-     * @param string $name
-     * @param array|\ArrayAccess $config
-     * @return array
-     */
-    private function getNamedConfig($name, $config)
-    {
-        $withoutPrefix = $this->getConfigName($name);
-
-        if (isset($config[$withoutPrefix])) {
-            return $config[$withoutPrefix];
-        }
-
-        if (isset($config[strtolower($withoutPrefix)])) {
-            return $config[strtolower($withoutPrefix)];
-        }
-
-        return [];
+        return substr($name, strlen(self::NAME_PREFIX));
     }
 }

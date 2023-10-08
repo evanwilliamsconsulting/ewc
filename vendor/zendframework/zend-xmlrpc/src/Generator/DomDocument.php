@@ -9,8 +9,6 @@
 
 namespace Zend\XmlRpc\Generator;
 
-use DOMNode;
-
 /**
  * DOMDocument based implementation of a XML/RPC generator
  */
@@ -22,7 +20,7 @@ class DomDocument extends AbstractGenerator
     protected $dom;
 
     /**
-     * @var DOMNode
+     * @var \DOMNode
      */
     protected $currentElement;
 
@@ -32,7 +30,7 @@ class DomDocument extends AbstractGenerator
      * @param string $name
      * @return void
      */
-    protected function openXmlElement($name)
+    protected function _openElement($name)
     {
         $newElement = $this->dom->createElement($name);
 
@@ -44,7 +42,7 @@ class DomDocument extends AbstractGenerator
      *
      * @param string $text
      */
-    protected function writeTextData($text)
+    protected function _writeTextData($text)
     {
         $this->currentElement->appendChild($this->dom->createTextNode($text));
     }
@@ -57,7 +55,7 @@ class DomDocument extends AbstractGenerator
      * @param string $name
      * @return void
      */
-    protected function closeXmlElement($name)
+    protected function _closeElement($name)
     {
         if (isset($this->currentElement->parentNode)) {
             $this->currentElement = $this->currentElement->parentNode;
@@ -79,7 +77,7 @@ class DomDocument extends AbstractGenerator
      *
      * @return void
      */
-    protected function init()
+    protected function _init()
     {
         $this->dom = new \DOMDocument('1.0', $this->encoding);
         $this->currentElement = $this->dom;

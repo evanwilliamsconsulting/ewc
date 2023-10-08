@@ -1,11 +1,11 @@
 <?php
 /**
  * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zend-log for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
+*
+* @link      http://github.com/zendframework/zf2 for the canonical source repository
+* @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+* @license   http://framework.zend.com/license/new-bsd New BSD License
+*/
 
 namespace Zend\Log\Processor;
 
@@ -18,23 +18,10 @@ class Backtrace implements ProcessorInterface
     protected $traceLimit = 10;
 
     /**
-     * Classes within these namespaces in the stack are ignored
-     * @var array
+     * Classes within this namespace in the stack are ignored
+     * @var string
      */
-    protected $ignoredNamespaces = ['Zend\\Log'];
-
-    /**
-     * Set options for a backtrace processor. Accepted options are:
-     * - ignoredNamespaces: array of namespaces to be excluded from the logged backtrace
-     *
-     * @param array|null $options
-     */
-    public function __construct(array $options = null)
-    {
-        if (! empty($options['ignoredNamespaces'])) {
-            $this->ignoredNamespaces = array_merge($this->ignoredNamespaces, (array) $options['ignoredNamespaces']);
-        }
-    }
+    protected $ignoredNamespace = 'Zend\\Log';
 
     /**
      * Adds the origin of the log() call to the event extras
@@ -51,15 +38,15 @@ class Backtrace implements ProcessorInterface
 
         $i = 0;
         while (isset($trace[$i]['class'])
-               && $this->shouldIgnoreFrame($trace[$i]['class'])
+               && false !== strpos($trace[$i]['class'], $this->ignoredNamespace)
         ) {
             $i++;
         }
 
         $origin = [
-            'file'     => isset($trace[$i - 1]['file']) ? $trace[$i - 1]['file'] : null,
-            'line'     => isset($trace[$i - 1]['line']) ? $trace[$i - 1]['line'] : null,
-            'class'    => isset($trace[$i]['class']) ? $trace[$i]['class'] : null,
+            'file'     => isset($trace[$i-1]['file'])   ? $trace[$i-1]['file']   : null,
+            'line'     => isset($trace[$i-1]['line'])   ? $trace[$i-1]['line']   : null,
+            'class'    => isset($trace[$i]['class'])    ? $trace[$i]['class']    : null,
             'function' => isset($trace[$i]['function']) ? $trace[$i]['function'] : null,
         ];
 
@@ -73,16 +60,6 @@ class Backtrace implements ProcessorInterface
     }
 
     /**
-     * Get all ignored namespaces
-     *
-     * @return array
-     */
-    public function getIgnoredNamespaces()
-    {
-        return $this->ignoredNamespaces;
-    }
-
-    /**
      * Provide backtrace as slim as possible
      *
      * @return array[]
@@ -90,22 +67,5 @@ class Backtrace implements ProcessorInterface
     protected function getBacktrace()
     {
         return debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $this->traceLimit);
-    }
-
-    /**
-     * Determine whether the current frame in the backtrace should be ignored based on the class name
-     *
-     * @param string $class
-     * @return bool
-     */
-    protected function shouldIgnoreFrame($class)
-    {
-        foreach ($this->ignoredNamespaces as $ignoredNamespace) {
-            if (false !== strpos($class, $ignoredNamespace)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

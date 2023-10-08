@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -152,7 +152,7 @@ class PatternOptions extends AbstractOptions
     public function __construct($options = null)
     {
         // disable file/directory permissions by default on windows systems
-        if (stripos(PHP_OS, 'WIN') === 0) {
+        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
             $this->filePermission = false;
             $this->dirPermission = false;
         }
@@ -168,7 +168,7 @@ class PatternOptions extends AbstractOptions
      * - ObjectCache
      *
      * @param  bool $cacheByDefault
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setCacheByDefault($cacheByDefault)
     {
@@ -199,7 +199,7 @@ class PatternOptions extends AbstractOptions
      * - ObjectCache
      *
      * @param  bool $cacheOutput
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setCacheOutput($cacheOutput)
     {
@@ -230,11 +230,11 @@ class PatternOptions extends AbstractOptions
      *
      * @param  string $class
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setClass($class)
     {
-        if (! is_string($class)) {
+        if (!is_string($class)) {
             throw new Exception\InvalidArgumentException('Invalid classname provided; must be a string');
         }
         $this->class = $class;
@@ -261,7 +261,7 @@ class PatternOptions extends AbstractOptions
      * - ClassCache
      *
      * @param  array $classCacheMethods
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setClassCacheMethods(array $classCacheMethods)
     {
@@ -289,7 +289,7 @@ class PatternOptions extends AbstractOptions
      * - ClassCache
      *
      * @param  array $classNonCacheMethods
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setClassNonCacheMethods(array $classNonCacheMethods)
     {
@@ -315,7 +315,7 @@ class PatternOptions extends AbstractOptions
      *
      * @param  false|int $dirPermission
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setDirPermission($dirPermission)
     {
@@ -356,7 +356,7 @@ class PatternOptions extends AbstractOptions
      *
      * @param  false|int $umask
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setUmask($umask)
     {
@@ -402,7 +402,7 @@ class PatternOptions extends AbstractOptions
      * - CaptureCache
      *
      * @param  bool $fileLocking
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setFileLocking($fileLocking)
     {
@@ -428,7 +428,7 @@ class PatternOptions extends AbstractOptions
      *
      * @param  false|int $filePermission
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setFilePermission($filePermission)
     {
@@ -446,7 +446,7 @@ class PatternOptions extends AbstractOptions
                 );
             } elseif ($filePermission & 0111) {
                 throw new Exception\InvalidArgumentException(
-                    "Invalid file permission: Files shouldn't be executable"
+                    "Invalid file permission: Files shoudn't be executable"
                 );
             }
         }
@@ -469,7 +469,7 @@ class PatternOptions extends AbstractOptions
      * Set value for index filename
      *
      * @param  string $indexFilename
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setIndexFilename($indexFilename)
     {
@@ -492,11 +492,11 @@ class PatternOptions extends AbstractOptions
      *
      * @param  mixed $object
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setObject($object)
     {
-        if (! is_object($object)) {
+        if (!is_object($object)) {
             throw new Exception\InvalidArgumentException(
                 sprintf('%s expects an object; received "%s"', __METHOD__, gettype($object))
             );
@@ -522,7 +522,7 @@ class PatternOptions extends AbstractOptions
      * - ObjectCache
      *
      * @param  bool $objectCacheMagicProperties
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setObjectCacheMagicProperties($objectCacheMagicProperties)
     {
@@ -547,7 +547,7 @@ class PatternOptions extends AbstractOptions
      * Set list of object methods for which to cache return values
      *
      * @param  array $objectCacheMethods
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      * @throws Exception\InvalidArgumentException
      */
     public function setObjectCacheMethods(array $objectCacheMethods)
@@ -575,7 +575,7 @@ class PatternOptions extends AbstractOptions
      * - ObjectCache
      *
      * @param  null|string $objectKey The object key or NULL to use the objects class name
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setObjectKey($objectKey)
     {
@@ -607,7 +607,7 @@ class PatternOptions extends AbstractOptions
      * Set list of object methods for which NOT to cache return values
      *
      * @param  array $objectNonCacheMethods
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      * @throws Exception\InvalidArgumentException
      */
     public function setObjectNonCacheMethods(array $objectNonCacheMethods)
@@ -634,21 +634,21 @@ class PatternOptions extends AbstractOptions
      *
      * @param  string $publicDir
      * @throws Exception\InvalidArgumentException
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setPublicDir($publicDir)
     {
         $publicDir = (string) $publicDir;
 
-        if (! is_dir($publicDir)) {
+        if (!is_dir($publicDir)) {
             throw new Exception\InvalidArgumentException(
                 "Public directory '{$publicDir}' not found or not a directory"
             );
-        } elseif (! is_writable($publicDir)) {
+        } elseif (!is_writable($publicDir)) {
             throw new Exception\InvalidArgumentException(
                 "Public directory '{$publicDir}' not writable"
             );
-        } elseif (! is_readable($publicDir)) {
+        } elseif (!is_readable($publicDir)) {
             throw new Exception\InvalidArgumentException(
                 "Public directory '{$publicDir}' not readable"
             );
@@ -681,7 +681,7 @@ class PatternOptions extends AbstractOptions
      * - OutputCache
      *
      * @param  string|array|Storage $storage
-     * @return PatternOptions Provides a fluent interface
+     * @return PatternOptions
      */
     public function setStorage($storage)
     {
@@ -731,7 +731,7 @@ class PatternOptions extends AbstractOptions
     {
         $methods   = $this->recursiveStrtolower($methods);
         $intersect = array_intersect(['__set', '__get', '__unset', '__isset'], $methods);
-        if (! empty($intersect)) {
+        if (!empty($intersect)) {
             throw new Exception\InvalidArgumentException(
                 "Magic properties are handled by option 'cache_magic_properties'"
             );
@@ -752,7 +752,7 @@ class PatternOptions extends AbstractOptions
             $storage = StorageFactory::factory($storage);
         } elseif (is_string($storage)) {
             $storage = StorageFactory::adapterFactory($storage);
-        } elseif (! ($storage instanceof Storage)) {
+        } elseif (!($storage instanceof Storage)) {
             throw new Exception\InvalidArgumentException(
                 'The storage must be an instanceof Zend\Cache\Storage\StorageInterface '
                 . 'or an array passed to Zend\Cache\Storage::factory '

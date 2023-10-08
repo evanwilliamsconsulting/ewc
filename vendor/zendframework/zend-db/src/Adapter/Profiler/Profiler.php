@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -26,8 +26,8 @@ class Profiler implements ProfilerInterface
 
     /**
      * @param string|StatementContainerInterface $target
-     * @return self Provides a fluent interface
      * @throws \Zend\Db\Adapter\Exception\InvalidArgumentException
+     * @return Profiler
      */
     public function profilerStart($target)
     {
@@ -44,9 +44,7 @@ class Profiler implements ProfilerInterface
         } elseif (is_string($target)) {
             $profileInformation['sql'] = $target;
         } else {
-            throw new Exception\InvalidArgumentException(
-                __FUNCTION__ . ' takes either a StatementContainer or a string'
-            );
+            throw new Exception\InvalidArgumentException(__FUNCTION__ . ' takes either a StatementContainer or a string');
         }
 
         $this->profiles[$this->currentIndex] = $profileInformation;
@@ -55,14 +53,12 @@ class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return self Provides a fluent interface
+     * @return Profiler
      */
     public function profilerFinish()
     {
-        if (! isset($this->profiles[$this->currentIndex])) {
-            throw new Exception\RuntimeException(
-                'A profile must be started before ' . __FUNCTION__ . ' can be called.'
-            );
+        if (!isset($this->profiles[$this->currentIndex])) {
+            throw new Exception\RuntimeException('A profile must be started before ' . __FUNCTION__ . ' can be called.');
         }
         $current = &$this->profiles[$this->currentIndex];
         $current['end'] = microtime(true);

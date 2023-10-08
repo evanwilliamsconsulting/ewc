@@ -14,11 +14,17 @@
 
 class PHPTAL_Tokenizer
 {
-    private $regex, $names, $offset, $str;
+    private string $regex;
+    private array $names;
+    private int $offset;
+    private string $str;
 
-    private $current_token, $current_value;
+    private ?string $current_token = null;
+    private ?string $current_value = null;
 
-    function __construct($str, array $tokens)
+    private int $end;
+
+    function __construct(string $str, array $tokens)
     {
         $this->offset = 0;
         $this->str = $str;
@@ -47,7 +53,9 @@ class PHPTAL_Tokenizer
         }
 
         //if (!preg_match_all($this->regex, $this->str, $m, PREG_SET_ORDER, $this->offset)) throw new Exception("FAIL {$this->regex} at {$this->offset}");
-        if (!preg_match($this->regex, $this->str, $m, null, $this->offset)) throw new Exception("FAIL {$this->regex} didn't match '{$this->str}' at {$this->offset}");
+        if (!preg_match($this->regex, $this->str, $m, 0, $this->offset)) {
+            throw new Exception("FAIL {$this->regex} didn't match '{$this->str}' at {$this->offset}");
+        }
 
         $this->offset += strlen($m[0]); // in bytes
 

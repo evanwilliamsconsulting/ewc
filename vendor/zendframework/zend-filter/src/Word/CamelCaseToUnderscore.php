@@ -11,6 +11,10 @@ namespace Zend\Filter\Word;
 
 class CamelCaseToUnderscore extends CamelCaseToSeparator
 {
+    /**
+     * Constructor
+     *
+     */
     public function __construct()
     {
         parent::__construct('_');

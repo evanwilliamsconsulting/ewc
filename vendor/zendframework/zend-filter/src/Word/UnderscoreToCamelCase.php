@@ -11,6 +11,10 @@ namespace Zend\Filter\Word;
 
 class UnderscoreToCamelCase extends SeparatorToCamelCase
 {
+    /**
+     * Constructor
+     *
+     */
     public function __construct()
     {
         parent::__construct('_');

@@ -10,7 +10,7 @@
 /**
  * EN-Revision: 16.Jun.2015
  */
-return [
+return array(
     // Zend\Authentication\Validator\Authentication
     "Invalid identity" => "Invalid identity",
     "Identity is ambiguous" => "Identity is ambiguous",
@@ -216,7 +216,7 @@ return [
 
     // Zend\Validator\GreaterThan
     "The input is not greater than '%min%'" => "The input is not greater than '%min%'",
-    "The input is not greater than or equal to '%min%'" => "The input is not greater than or equal to '%min%'",
+    "The input is not greater or equal than '%min%'" => "The input is not greater or equal than '%min%'",
 
     // Zend\Validator\Hex
     "Invalid type given. String expected" => "Invalid type given. String expected",
@@ -305,4 +305,4 @@ return [
     // Zend\Validator\Uri
     "Invalid type given. String expected" => "Invalid type given. String expected",
     "The input does not appear to be a valid Uri" => "The input does not appear to be a valid Uri",
-];
+);

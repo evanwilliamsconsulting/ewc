@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\I18n\View\Helper;
@@ -37,14 +39,14 @@ class DateFormat extends AbstractHelper
      *
      * @var array
      */
-    protected $formatters = [];
+    protected $formatters = array();
 
     /**
      * @throws Exception\ExtensionNotLoadedException if ext/intl is not present
      */
     public function __construct()
     {
-        if (! extension_loaded('intl')) {
+        if (!extension_loaded('intl')) {
             throw new Exception\ExtensionNotLoadedException(sprintf(
                 '%s component requires the intl PHP extension',
                 __NAMESPACE__
@@ -56,10 +58,10 @@ class DateFormat extends AbstractHelper
      * Format a date
      *
      * @param  DateTime|int|array $date
-     * @param  int                $dateType
-     * @param  int                $timeType
-     * @param  string|null        $locale
-     * @param  string|null        $pattern
+     * @param  int                    $dateType
+     * @param  int                    $timeType
+     * @param  string                 $locale
+     * @param  string|null            $pattern
      * @return string
      */
     public function __invoke(
@@ -74,9 +76,9 @@ class DateFormat extends AbstractHelper
         }
 
         $timezone    = $this->getTimezone();
-        $formatterId = md5($dateType . "\0" . $timeType . "\0" . $locale . "\0" . $pattern . "\0" . $timezone);
+        $formatterId = md5($dateType . "\0" . $timeType . "\0" . $locale ."\0" . $pattern);
 
-        if (! isset($this->formatters[$formatterId])) {
+        if (!isset($this->formatters[$formatterId])) {
             $this->formatters[$formatterId] = new IntlDateFormatter(
                 $locale,
                 $dateType,
@@ -94,7 +96,7 @@ class DateFormat extends AbstractHelper
      * Set locale to use instead of the default
      *
      * @param  string $locale
-     * @return $this
+     * @return DateFormat
      */
     public function setLocale($locale)
     {
@@ -105,7 +107,7 @@ class DateFormat extends AbstractHelper
     /**
      * Get the locale to use
      *
-     * @return string
+     * @return string|null
      */
     public function getLocale()
     {
@@ -120,7 +122,7 @@ class DateFormat extends AbstractHelper
      * Set timezone to use instead of the default
      *
      * @param  string $timezone
-     * @return $this
+     * @return DateFormat
      */
     public function setTimezone($timezone)
     {
@@ -139,11 +141,11 @@ class DateFormat extends AbstractHelper
     /**
      * Get the timezone to use
      *
-     * @return string
+     * @return string|null
      */
     public function getTimezone()
     {
-        if (! $this->timezone) {
+        if (!$this->timezone) {
             return date_default_timezone_get();
         }
 

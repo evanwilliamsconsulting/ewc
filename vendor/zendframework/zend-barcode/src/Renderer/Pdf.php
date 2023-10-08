@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-barcode for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-barcode/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Barcode\Renderer;
@@ -14,10 +16,6 @@ use ZendPdf\PdfDocument;
 
 /**
  * Class for rendering the barcode in PDF resource
- *
- * @deprecated since 2.8.0; to be removed in 3.0.0.
- *     This renderer is using the now abandoned ZendPdf library.
- *     As such, this renderer is now deprecated.
  */
 class Pdf extends AbstractRenderer
 {
@@ -43,15 +41,15 @@ class Pdf extends AbstractRenderer
      * Set a PDF resource to draw the barcode inside
      *
      * @param PdfDocument $pdf
-     * @param int $page
-     * @return self Provides a fluent interface
+     * @param int     $page
+     * @return Pdf
      */
     public function setResource(PdfDocument $pdf, $page = 0)
     {
         $this->resource = $pdf;
         $this->page     = intval($page);
 
-        if (! count($this->resource->pages)) {
+        if (!count($this->resource->pages)) {
             $this->page = 0;
             $this->resource->pages[] = new Page(
                 Page::SIZE_A4

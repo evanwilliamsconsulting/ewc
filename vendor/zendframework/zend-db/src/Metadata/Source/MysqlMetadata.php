@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -54,9 +54,7 @@ class MysqlMetadata extends AbstractSource
             ['V', 'IS_UPDATABLE'],
         ];
 
-        array_walk($isColumns, function (&$c) use ($p) {
-            $c = $p->quoteIdentifierChain($c);
-        });
+        array_walk($isColumns, function (&$c) use ($p) { $c = $p->quoteIdentifierChain($c); });
 
         $sql = 'SELECT ' . implode(', ', $isColumns)
              . ' FROM ' . $p->quoteIdentifierChain(['INFORMATION_SCHEMA', 'TABLES']) . 'T'
@@ -114,9 +112,7 @@ class MysqlMetadata extends AbstractSource
             ['C', 'COLUMN_TYPE'],
         ];
 
-        array_walk($isColumns, function (&$c) use ($p) {
-            $c = $p->quoteIdentifierChain($c);
-        });
+        array_walk($isColumns, function (&$c) use ($p) { $c = $p->quoteIdentifierChain($c); });
 
         $sql = 'SELECT ' . implode(', ', $isColumns)
              . ' FROM ' . $p->quoteIdentifierChain(['INFORMATION_SCHEMA', 'TABLES']) . 'T'
@@ -145,13 +141,7 @@ class MysqlMetadata extends AbstractSource
             $matches = [];
             if (preg_match('/^(?:enum|set)\((.+)\)$/i', $row['COLUMN_TYPE'], $matches)) {
                 $permittedValues = $matches[1];
-                if (preg_match_all(
-                    "/\\s*'((?:[^']++|'')*+)'\\s*(?:,|\$)/",
-                    $permittedValues,
-                    $matches,
-                    PREG_PATTERN_ORDER
-                )
-                ) {
+                if (preg_match_all("/\\s*'((?:[^']++|'')*+)'\\s*(?:,|\$)/", $permittedValues, $matches, PREG_PATTERN_ORDER)) {
                     $permittedValues = str_replace("''", "'", $matches[1]);
                 } else {
                     $permittedValues = [$permittedValues];

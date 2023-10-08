@@ -20,11 +20,11 @@
 namespace DoctrineModule\Service;
 
 use DoctrineModule\Version;
-use Interop\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperSet;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * CLI Application ServiceManager factory responsible for instantiating a Symfony CLI application
@@ -51,14 +51,14 @@ class CliFactory implements FactoryInterface
     protected $commands = array();
 
     /**
-     * @param  ContainerInterface $container
+     * @param  ServiceLocatorInterface                  $sm
      * @return \Zend\EventManager\EventManagerInterface
      */
-    public function getEventManager(ContainerInterface $container)
+    public function getEventManager(ServiceLocatorInterface $sm)
     {
         if (null === $this->events) {
             /* @var $events \Zend\EventManager\EventManagerInterface */
-            $events = $container->get('EventManager');
+            $events = $sm->get('EventManager');
 
             $events->addIdentifiers(array(__CLASS__, 'doctrine'));
 
@@ -72,7 +72,7 @@ class CliFactory implements FactoryInterface
      * {@inheritDoc}
      * @return Application
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $sl)
     {
         $cli = new Application;
         $cli->setName('DoctrineModule Command Line Interface');
@@ -82,17 +82,8 @@ class CliFactory implements FactoryInterface
         $cli->setAutoExit(false);
 
         // Load commands using event
-        $this->getEventManager($container)->trigger('loadCli.post', $cli, array('ServiceManager' => $container));
+        $this->getEventManager($sl)->trigger('loadCli.post', $cli, array('ServiceManager' => $sl));
 
         return $cli;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return Application
-     */
-    public function createService(ServiceLocatorInterface $container)
-    {
-        return $this($container, Application::class);
     }
 }

@@ -9,8 +9,6 @@
 
 namespace Zend\Session;
 
-use Traversable;
-use Zend\EventManager\Event;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Stdlib\ArrayUtils;
 
@@ -31,20 +29,6 @@ class SessionManager extends AbstractManager
     ];
 
     /**
-     * @var array Default session manager options
-     */
-    protected $defaultOptions = [
-        'attach_default_validators' => true,
-    ];
-
-    /**
-     * @var array Default validators
-     */
-    protected $defaultValidators = [
-        Validator\Id::class,
-    ];
-
-    /**
      * @var string value returned by session_name()
      */
     protected $name;
@@ -61,21 +45,14 @@ class SessionManager extends AbstractManager
      * @param  Storage\StorageInterface|null         $storage
      * @param  SaveHandler\SaveHandlerInterface|null $saveHandler
      * @param  array                                 $validators
-     * @param  array                                 $options
      * @throws Exception\RuntimeException
      */
     public function __construct(
         Config\ConfigInterface $config = null,
         Storage\StorageInterface $storage = null,
         SaveHandler\SaveHandlerInterface $saveHandler = null,
-        array $validators = [],
-        array $options = []
+        array $validators = []
     ) {
-        $options = array_merge($this->defaultOptions, $options);
-        if ($options['attach_default_validators']) {
-            $validators = array_merge($this->defaultValidators, $validators);
-        }
-
         parent::__construct($config, $storage, $saveHandler, $validators);
         register_shutdown_function([$this, 'writeClose']);
     }
@@ -127,19 +104,13 @@ class SessionManager extends AbstractManager
         $oldSessionData = [];
         if (isset($_SESSION)) {
             $oldSessionData = $_SESSION;
-
-            // convert session data to plain array that’ll be acceptable as
-            // ArrayUtils::merge parameter
-            if ($oldSessionData instanceof Storage\StorageInterface) {
-                $oldSessionData = $oldSessionData->toArray();
-            } elseif ($oldSessionData instanceof Traversable) {
-                $oldSessionData = iterator_to_array($oldSessionData);
-            }
         }
 
         session_start();
 
-        if (! empty($oldSessionData) && is_array($oldSessionData)) {
+        if ($oldSessionData instanceof \Traversable
+            || (! empty($oldSessionData) && is_array($oldSessionData))
+        ) {
             $_SESSION = ArrayUtils::merge($oldSessionData, $_SESSION, true);
         }
 
@@ -148,7 +119,7 @@ class SessionManager extends AbstractManager
         // Since session is starting, we need to potentially repopulate our
         // session storage
         if ($storage instanceof Storage\SessionStorage && $_SESSION !== $storage) {
-            if (! $preserveStorage) {
+            if (!$preserveStorage) {
                 $storage->fromArray($_SESSION);
             }
             $_SESSION = $storage;
@@ -158,7 +129,7 @@ class SessionManager extends AbstractManager
 
         $this->initializeValidatorChain();
 
-        if (! $this->isValid()) {
+        if (!$this->isValid()) {
             throw new Exception\RuntimeException('Session validation failed');
         }
     }
@@ -190,7 +161,7 @@ class SessionManager extends AbstractManager
      */
     public function destroy(array $options = null)
     {
-        if (! $this->sessionExists()) {
+        if (!$this->sessionExists()) {
             return;
         }
 
@@ -231,7 +202,7 @@ class SessionManager extends AbstractManager
         // flushed to the session handler. As such, we now mark the storage
         // object isImmutable.
         $storage  = $this->getStorage();
-        if (! $storage->isImmutable()) {
+        if (!$storage->isImmutable()) {
             $_SESSION = $storage->toArray(true);
             session_write_close();
             $storage->fromArray($_SESSION);
@@ -257,7 +228,7 @@ class SessionManager extends AbstractManager
             );
         }
 
-        if (! preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
             throw new Exception\InvalidArgumentException(
                 'Name provided contains invalid characters; must be alphanumeric only'
             );
@@ -298,9 +269,7 @@ class SessionManager extends AbstractManager
     public function setId($id)
     {
         if ($this->sessionExists()) {
-            throw new Exception\RuntimeException(
-                'Session has already been started, to change the session ID call regenerateId()'
-            );
+            throw new Exception\RuntimeException('Session has already been started, to change the session ID call regenerateId()');
         }
         session_id($id);
         return $this;
@@ -329,10 +298,7 @@ class SessionManager extends AbstractManager
      */
     public function regenerateId($deleteOldSession = true)
     {
-        if ($this->sessionExists()) {
-            session_regenerate_id((bool) $deleteOldSession);
-        }
-
+        session_regenerate_id((bool) $deleteOldSession);
         return $this;
     }
 
@@ -406,23 +372,13 @@ class SessionManager extends AbstractManager
     public function isValid()
     {
         $validator = $this->getValidatorChain();
-
-        $event = new Event();
-        $event->setName('session.validate');
-        $event->setTarget($this);
-        $event->setParams($this);
-
-        $falseResult = function ($test) {
+        $responses = $validator->trigger('session.validate', $this, [$this], function ($test) {
             return false === $test;
-        };
-
-        $responses = $validator->triggerEventUntil($falseResult, $event);
-
+        });
         if ($responses->stopped()) {
             // If execution was halted, validation failed
             return false;
         }
-
         // Otherwise, we're good to go
         return true;
     }
@@ -437,7 +393,7 @@ class SessionManager extends AbstractManager
     public function expireSessionCookie()
     {
         $config = $this->getConfig();
-        if (! $config->getUseCookies()) {
+        if (!$config->getUseCookies()) {
             return;
         }
         setcookie(
@@ -463,7 +419,7 @@ class SessionManager extends AbstractManager
     protected function setSessionCookieLifetime($ttl)
     {
         $config = $this->getConfig();
-        if (! $config->getUseCookies()) {
+        if (!$config->getUseCookies()) {
             return;
         }
 

@@ -10,25 +10,24 @@
 namespace Zend\View\Helper;
 
 use stdClass;
+use Zend\View;
 use Zend\View\Exception;
 
-// @codingStandardsIgnoreStart
 /**
  * Zend_Layout_View_Helper_HeadLink
  *
  * @see http://www.w3.org/TR/xhtml1/dtds.html
  *
  * Creates the following virtual methods:
- * @method HeadLink appendStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = [])
- * @method HeadLink offsetSetStylesheet($index, $href, $media = 'screen', $conditionalStylesheet = '', $extras = [])
- * @method HeadLink prependStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = [])
- * @method HeadLink setStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = [])
- * @method HeadLink appendAlternate($href, $type, $title, $extras = [])
- * @method HeadLink offsetSetAlternate($index, $href, $type, $title, $extras = [])
- * @method HeadLink prependAlternate($href, $type, $title, $extras = [])
- * @method HeadLink setAlternate($href, $type, $title, $extras = [])
+ * @method HeadLink appendStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = array())
+ * @method HeadLink offsetSetStylesheet($index, $href, $media = 'screen', $conditionalStylesheet = '', $extras = array())
+ * @method HeadLink prependStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = array())
+ * @method HeadLink setStylesheet($href, $media = 'screen', $conditionalStylesheet = '', $extras = array())
+ * @method HeadLink appendAlternate($href, $type, $title, $extras = array())
+ * @method HeadLink offsetSetAlternate($index, $href, $type, $title, $extras = array())
+ * @method HeadLink prependAlternate($href, $type, $title, $extras = array())
+ * @method HeadLink setAlternate($href, $type, $title, $extras = array())
  */
-// @codingStandardsIgnoreEnd
 class HeadLink extends Placeholder\Container\AbstractStandalone
 {
     /**
@@ -47,12 +46,15 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
         'sizes',
         'type',
         'title',
-        'extras',
-        'itemprop',
-        'crossorigin',
-        'integrity',
-        'as',
+        'extras'
     ];
+
+    /**
+     * Registry key for placeholder
+     *
+     * @var string
+     */
+    protected $regKey = 'Zend_View_Helper_HeadLink';
 
     /**
      * Constructor
@@ -140,11 +142,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     public function __call($method, $args)
     {
-        if (preg_match(
-            '/^(?P<action>set|(ap|pre)pend|offsetSet)(?P<type>Stylesheet|Alternate|Prev|Next)$/',
-            $method,
-            $matches
-        )) {
+        if (preg_match('/^(?P<action>set|(ap|pre)pend|offsetSet)(?P<type>Stylesheet|Alternate|Prev|Next)$/', $method, $matches)) {
             $argc   = count($args);
             $action = $matches['action'];
             $type   = $matches['type'];
@@ -192,7 +190,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     protected function isValid($value)
     {
-        if (! $value instanceof stdClass) {
+        if (!$value instanceof stdClass) {
             return false;
         }
 
@@ -215,7 +213,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     public function append($value)
     {
-        if (! $this->isValid($value)) {
+        if (!$this->isValid($value)) {
             throw new Exception\InvalidArgumentException(
                 'append() expects a data token; please use one of the custom append*() methods'
             );
@@ -234,7 +232,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     public function offsetSet($index, $value)
     {
-        if (! $this->isValid($value)) {
+        if (!$this->isValid($value)) {
             throw new Exception\InvalidArgumentException(
                 'offsetSet() expects a data token; please use one of the custom offsetSet*() methods'
             );
@@ -252,7 +250,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     public function prepend($value)
     {
-        if (! $this->isValid($value)) {
+        if (!$this->isValid($value)) {
             throw new Exception\InvalidArgumentException(
                 'prepend() expects a data token; please use one of the custom prepend*() methods'
             );
@@ -270,7 +268,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
      */
     public function set($value)
     {
-        if (! $this->isValid($value)) {
+        if (!$this->isValid($value)) {
             throw new Exception\InvalidArgumentException(
                 'set() expects a data token; please use one of the custom set*() methods'
             );
@@ -294,17 +292,13 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
             if (isset($attributes[$itemKey])) {
                 if (is_array($attributes[$itemKey])) {
                     foreach ($attributes[$itemKey] as $key => $value) {
-                        $link .= sprintf(
-                            ' %s="%s"',
-                            $key,
-                            ($this->autoEscape) ? $this->escapeAttribute($value) : $value
-                        );
+                        $link .= sprintf(' %s="%s"', $key, ($this->autoEscape) ? $this->escape($value) : $value);
                     }
                 } else {
                     $link .= sprintf(
                         ' %s="%s"',
                         $itemKey,
-                        ($this->autoEscape) ? $this->escapeAttribute($attributes[$itemKey]) : $attributes[$itemKey]
+                        ($this->autoEscape) ? $this->escape($attributes[$itemKey]) : $attributes[$itemKey]
                     );
                 }
             }
@@ -321,7 +315,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
         }
 
         if (isset($attributes['conditionalStylesheet'])
-            && ! empty($attributes['conditionalStylesheet'])
+            && !empty($attributes['conditionalStylesheet'])
             && is_string($attributes['conditionalStylesheet'])
         ) {
             // inner wrap with comment end and start if !IE
@@ -384,7 +378,7 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
             return false;
         }
 
-        if ($args) {
+        if (0 < count($args)) {
             $media = array_shift($args);
             if (is_array($media)) {
                 $media = implode(',', $media);
@@ -392,20 +386,18 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
                 $media = (string) $media;
             }
         }
-        if ($args) {
+        if (0 < count($args)) {
             $conditionalStylesheet = array_shift($args);
-            if (! empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
+            if (!empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
                 $conditionalStylesheet = (string) $conditionalStylesheet;
             } else {
                 $conditionalStylesheet = null;
             }
         }
 
-        if ($args && is_array($args[0])) {
+        if (0 < count($args) && is_array($args[0])) {
             $extras = array_shift($args);
             $extras = (array) $extras;
-        } else {
-            $extras = [];
         }
 
         $attributes = compact('rel', 'type', 'href', 'media', 'conditionalStylesheet', 'extras');
@@ -451,15 +443,13 @@ class HeadLink extends Placeholder\Container\AbstractStandalone
         $type  = array_shift($args);
         $title = array_shift($args);
 
-        if ($args && is_array($args[0])) {
+        if (0 < count($args) && is_array($args[0])) {
             $extras = array_shift($args);
             $extras = (array) $extras;
 
             if (isset($extras['media']) && is_array($extras['media'])) {
                 $extras['media'] = implode(',', $extras['media']);
             }
-        } else {
-            $extras = [];
         }
 
         $href  = (string) $href;

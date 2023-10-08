@@ -68,10 +68,10 @@ class ServerIntrospection
             $methods = $this->listMethods();
         }
 
-        $multicallParams = [];
+        $multicallParams = array();
         foreach ($methods as $method) {
-            $multicallParams[] = ['methodName' => 'system.methodSignature',
-                                       'params'     => [$method]];
+            $multicallParams[] = array('methodName' => 'system.methodSignature',
+                                       'params'     => array($method));
         }
 
         $serverSignatures = $this->system->multicall($multicallParams);
@@ -88,7 +88,7 @@ class ServerIntrospection
         }
 
         // Create a new signatures array with the methods name as keys and the signature as value
-        $signatures = [];
+        $signatures = array();
         foreach ($serverSignatures as $i => $signature) {
             $signatures[$methods[$i]] = $signature;
         }
@@ -109,7 +109,7 @@ class ServerIntrospection
             $methods = $this->listMethods();
         }
 
-        $signatures = [];
+        $signatures = array();
         foreach ($methods as $method) {
             $signatures[$method] = $this->getMethodSignature($method);
         }
@@ -127,7 +127,7 @@ class ServerIntrospection
     public function getMethodSignature($method)
     {
         $signature = $this->system->methodSignature($method);
-        if (! is_array($signature)) {
+        if (!is_array($signature)) {
             $error = 'Invalid signature for method "' . $method . '"';
             throw new Exception\IntrospectException($error);
         }

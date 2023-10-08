@@ -10,13 +10,7 @@
 /**
  * EN-Revision: 16.Jul.2013
  */
-return [
-    // Zend\Authentication\Validator\Authentication
-    "Invalid identity" => "Neveljavna identiteta",
-    "Identity is ambiguous" => "Identiteta je dvoumna",
-    "Invalid password" => "Neveljavno geslo",
-    "Authentication failed" => "Neuspešna avtentikacija",
-
+return array(
     // Zend\I18n\Validator\Alnum
     "Invalid type given. String, integer or float expected" => "Podan neveljaven tip. Predviden je niz, celo število ali število s premično vejico",
     "The input contains characters which are non alphabetic and no digits" => "Vnos vsebuje znake, ki niso abecedni ali številni",
@@ -31,11 +25,11 @@ return [
     "Invalid type given. String expected" => "Podan je neveljaven tip. Pričakovan je niz",
     "The input does not appear to be a valid datetime" => "Vnos ni veljaven datum in čas",
 
-    // Zend\I18n\Validator\IsFloat
+    // Zend\I18n\Validator\Float
     "Invalid type given. String, integer or float expected" => "Podan je neveljaven tip. Niz, celo število ali število s premično vejico",
     "The input does not appear to be a float" => "Vnos ni število s premično vejico",
 
-    // Zend\I18n\Validator\IsInt
+    // Zend\I18n\Validator\Int
     "Invalid type given. String or integer expected" => "Podan je neveljaven tip. Pričakuje se niz ali celo število",
     "The input does not appear to be an integer" => "Vnos ni celo število",
 
@@ -59,11 +53,6 @@ return [
     "The input is not between '%min%' and '%max%', inclusively" => "Vnos ni med '%min%' in '%max%', izključujoče",
     "The input is not strictly between '%min%' and '%max%'" => "Vnos ni točno med '%min%' in '%max%'",
 
-    // Zend\Validator\Bitwise
-    "The input has no common bit set with '%control%'" => "Vnos nima nastavljenega skupnega bita z/s '%control%'",
-    "The input doesn't have the same bits set as '%control%'" => "Vnos nima nastavljenih enakih bitov kot '%control%'",
-    "The input has common bit set with '%control%'" => "Vnos ima nastavljen skupni bit z/s '%control%'",
-
     // Zend\Validator\Callback
     "The input is not valid" => "Vnos ni veljaven",
     "An exception has been raised within the callback" => "Med povratnim klicem je prišlo do izjeme",
@@ -86,9 +75,6 @@ return [
     "The input does not fit the date format '%format%'" => "Vnos ne ustreza obliki datuma '%format%'",
 
     // Zend\Validator\DateStep
-    "Invalid type given. String, integer, array or DateTime expected" => "Podan neveljaven tip. Pričakuje se niz, celo število, polje ali DateTime",
-    "The input does not appear to be a valid date" => "Vnos izgleda, da ni veljaven datum",
-    "The input does not fit the date format '%format%'" => "Vnos se ne ujema z obliko datuma '%format%'",
     "The input is not a valid step" => "Vnos ni veljaven korak",
 
     // Zend\Validator\Db\AbstractDb
@@ -216,7 +202,7 @@ return [
 
     // Zend\Validator\GreaterThan
     "The input is not greater than '%min%'" => "Vnos ni večji od '%min%'",
-    "The input is not greater than or equal to '%min%'" => "Vnos ni večji ali enak '%min%'",
+    "The input is not greater or equal than '%min%'" => "Vnos ni večji ali enak '%min%'",
 
     // Zend\Validator\Hex
     "Invalid type given. String expected" => "Podan je neveljaven tip. Pričakuje se niz",
@@ -297,12 +283,7 @@ return [
     "The input is less than %min% characters long" => "Vnos je manjši od števila znakov %min%",
     "The input is more than %max% characters long" => "Vnos je daljši od števila znakov %max%",
 
-    // Zend\Validator\Timezone
-    "Invalid timezone given." => "Podano neveljavno časovno območje.",
-    "Invalid timezone location given." => "Podana neveljavna lokacija časovnega območja.",
-    "Invalid timezone abbreviation given." => "Podana neveljavna okrajšava časovnega območja.",
-
     // Zend\Validator\Uri
     "Invalid type given. String expected" => "Podan je neveljaven tip. Pričakuje se niz",
     "The input does not appear to be a valid Uri" => "Vnos ni veljaven enotni identifikator vira (Uri)",
-];
+);

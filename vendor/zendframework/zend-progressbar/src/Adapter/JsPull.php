@@ -48,7 +48,7 @@ class JsPull extends AbstractAdapter
      */
     public function notify($current, $max, $percent, $timeTaken, $timeRemaining, $text)
     {
-        $arguments = [
+        $arguments = array(
             'current'       => $current,
             'max'           => $max,
             'percent'       => ($percent * 100),
@@ -56,7 +56,7 @@ class JsPull extends AbstractAdapter
             'timeRemaining' => $timeRemaining,
             'text'          => $text,
             'finished'      => false
-        ];
+        );
 
         $data = Json::encode($arguments);
 
@@ -71,7 +71,7 @@ class JsPull extends AbstractAdapter
      */
     public function finish()
     {
-        $data = Json::encode(['finished' => true]);
+        $data = Json::encode(array('finished' => true));
 
         $this->_outputData($data);
     }
@@ -84,10 +84,8 @@ class JsPull extends AbstractAdapter
      * @param  string $data
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _outputData($data)
     {
-        // @codingStandardsIgnoreEnd
         echo $data;
 
         if ($this->exitAfterSend) {

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -51,9 +51,9 @@ class Result implements
     protected $nextComplete = false;
 
     /**
-     * @var mixed
+     * @var bool
      */
-    protected $currentData = null;
+    protected $currentData = false;
 
     /**
      *
@@ -72,15 +72,12 @@ class Result implements
      * @param mixed $resource
      * @param mixed $generatedValue
      * @param bool|null $isBuffered
-     * @return self Provides a fluent interface
      * @throws Exception\InvalidArgumentException
+     * @return Result
      */
     public function initialize($resource, $generatedValue, $isBuffered = null)
     {
-        if (! $resource instanceof \mysqli
-            && ! $resource instanceof \mysqli_result
-            && ! $resource instanceof \mysqli_stmt
-        ) {
+        if (!$resource instanceof \mysqli && !$resource instanceof \mysqli_result && !$resource instanceof \mysqli_stmt) {
             throw new Exception\InvalidArgumentException('Invalid resource provided.');
         }
 
@@ -206,7 +203,7 @@ class Result implements
         }
 
         if (($r = $this->resource->fetch()) === null) {
-            if (! $this->isBuffered) {
+            if (!$this->isBuffered) {
                 $this->resource->close();
             }
             return false;
@@ -279,10 +276,11 @@ class Result implements
      */
     public function rewind()
     {
-        if (0 !== $this->position && false === $this->isBuffered) {
-            throw new Exception\RuntimeException('Unbuffered results cannot be rewound for multiple iterations');
+        if ($this->position !== 0) {
+            if ($this->isBuffered === false) {
+                throw new Exception\RuntimeException('Unbuffered results cannot be rewound for multiple iterations');
+            }
         }
-
         $this->resource->data_seek(0); // works for both mysqli_result & mysqli_stmt
         $this->currentComplete = false;
         $this->position = 0;

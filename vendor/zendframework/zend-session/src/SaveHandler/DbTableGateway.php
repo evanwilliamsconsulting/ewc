@@ -90,24 +90,21 @@ class DbTableGateway implements SaveHandlerInterface
      * Read session data
      *
      * @param string $id
-     * @param bool $destroyExpired Optional; true by default
      * @return string
      */
-    public function read($id, $destroyExpired = true)
+    public function read($id)
     {
-        $row = $this->tableGateway->select([
+        $rows = $this->tableGateway->select([
             $this->options->getIdColumn()   => $id,
             $this->options->getNameColumn() => $this->sessionName,
-        ])->current();
+        ]);
 
-        if ($row) {
+        if ($row = $rows->current()) {
             if ($row->{$this->options->getModifiedColumn()} +
                 $row->{$this->options->getLifetimeColumn()} > time()) {
-                return (string) $row->{$this->options->getDataColumn()};
+                return $row->{$this->options->getDataColumn()};
             }
-            if ($destroyExpired) {
-                $this->destroy($id);
-            }
+            $this->destroy($id);
         }
         return '';
     }
@@ -129,9 +126,9 @@ class DbTableGateway implements SaveHandlerInterface
         $rows = $this->tableGateway->select([
             $this->options->getIdColumn()   => $id,
             $this->options->getNameColumn() => $this->sessionName,
-        ])->current();
+        ]);
 
-        if ($rows) {
+        if ($rows->current()) {
             return (bool) $this->tableGateway->update($data, [
                 $this->options->getIdColumn()   => $id,
                 $this->options->getNameColumn() => $this->sessionName,
@@ -152,10 +149,6 @@ class DbTableGateway implements SaveHandlerInterface
      */
     public function destroy($id)
     {
-        if (! (bool) $this->read($id, false)) {
-            return true;
-        }
-
         return (bool) $this->tableGateway->delete([
             $this->options->getIdColumn()   => $id,
             $this->options->getNameColumn() => $this->sessionName,

@@ -11,6 +11,9 @@ namespace Zend\Filter\Word;
 
 class DashToUnderscore extends SeparatorToSeparator
 {
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct('-', '_');

@@ -20,7 +20,7 @@ namespace DoctrineModule\Service\Authentication;
 
 use DoctrineModule\Authentication\Storage\ObjectRepository;
 use DoctrineModule\Service\AbstractFactory;
-use Interop\Container\ContainerInterface;
+use Zend\Authentication\Storage\Session as SessionStorage;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -35,31 +35,23 @@ class StorageFactory extends AbstractFactory
 {
     /**
      * {@inheritDoc}
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        /* @var $options \DoctrineModule\Options\Authentication */
-        $options = $this->getOptions($container, 'authentication');
-
-        if (is_string($objectManager = $options->getObjectManager())) {
-            $options->setObjectManager($container->get($objectManager));
-        }
-
-        if (is_string($storage = $options->getStorage())) {
-            $options->setStorage($container->get($storage));
-        }
-
-        return new ObjectRepository($options);
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * @return \DoctrineModule\Authentication\Storage\ObjectRepository
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container, ObjectRepository::class);
+        /* @var $options \DoctrineModule\Options\Authentication */
+        $options = $this->getOptions($serviceLocator, 'authentication');
+
+        if (is_string($objectManager = $options->getObjectManager())) {
+            $options->setObjectManager($serviceLocator->get($objectManager));
+        }
+
+        if (is_string($storage = $options->getStorage())) {
+            $options->setStorage($serviceLocator->get($storage));
+        }
+
+        return new ObjectRepository($options);
     }
 
     /**

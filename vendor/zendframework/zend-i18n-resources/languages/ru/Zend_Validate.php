@@ -72,7 +72,7 @@ return [
     "An exception has been raised while validating the input" => "Произошла ошибка во время проверки значения номера кредитной карточки",
 
     // Zend\Validator\Csrf
-    "The form submitted did not originate from the expected site" => "Время действия формы истекло или отправленная форма не принадлежит данному сайту. Попробуйте повторить операцию еще раз",
+    "The form submitted did not originate from the expected site" => "Время действия формы истекло или отправленная форма не принадлежит данному сайту. Попробуйте повторить опреацию еще раз",
 
     // Zend\Validator\Date
     "Invalid type given. String, integer, array or DateTime expected" => "Недопустимый тип данных. Значение должно быть строкой, целым числом, массивом или объектом DateTime",
@@ -210,7 +210,7 @@ return [
 
     // Zend\Validator\GreaterThan
     "The input is not greater than '%min%'" => "Значение не превышает '%min%'",
-    "The input is not greater than or equal to '%min%'" => "Значение не превышает или не равно '%min%'",
+    "The input is not greater or equal than '%min%'" => "Значение не превышает или не равно '%min%'",
 
     // Zend\Validator\Hex
     "Invalid type given. String expected" => "Недопустимый тип данных. Значение должно быть строкой",
@@ -236,7 +236,7 @@ return [
     "The input has failed the IBAN check" => "Значение не прошло проверку IBAN",
 
     // Zend\Validator\Identical
-    "The two given tokens do not match" => "Значения не совпадают",
+    "The two given tokens do not match" => "Значения не совпдают",
     "No token was provided to match against" => "Не было указано значение для проверки на идентичность",
 
     // Zend\Validator\InArray

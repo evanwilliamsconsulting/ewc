@@ -1,15 +1,17 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-return [
+return array(
     'code' => '972',
-    'patterns' => [
-        'national' => [
-            'general' => '/^(?:[17]\\d{6,9}|[2-589]\\d{3}(?:\\d{3,6})?|6\\d{3})$/',
+    'patterns' => array(
+        'national' => array(
+            'general' => '/^[17]\\d{6,9}|[2-589]\\d{3}(?:\\d{3,6})?|6\\d{3}$/',
             'fixed' => '/^[2-489]\\d{7}$/',
             'mobile' => '/^5(?:[02347-9]\\d{2}|5(?:2[23]|3[34]|4[45]|5[5689]|6[67]|7[78]|8[89])|6[2-9]\\d)\\d{5}$/',
             'tollfree' => '/^1(?:80[019]\\d{3}|255)\\d{3}$/',
@@ -20,8 +22,8 @@ return [
             'voicemail' => '/^1599\\d{6}$/',
             'shortcode' => '/^1\\d{3}$/',
             'emergency' => '/^1(?:0[012]|12)$/',
-        ],
-        'possible' => [
+        ),
+        'possible' => array(
             'general' => '/^\\d{4,10}$/',
             'fixed' => '/^\\d{7,8}$/',
             'mobile' => '/^\\d{9}$/',
@@ -33,6 +35,6 @@ return [
             'voicemail' => '/^\\d{10}$/',
             'shortcode' => '/^\\d{4}$/',
             'emergency' => '/^\\d{3}$/',
-        ],
-    ],
-];
+        ),
+    ),
+);

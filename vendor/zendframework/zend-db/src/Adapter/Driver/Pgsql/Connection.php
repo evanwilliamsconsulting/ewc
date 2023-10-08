@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -47,7 +47,7 @@ class Connection extends AbstractConnection
      * Set resource
      *
      * @param resource $resource
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setResource($resource)
     {
@@ -61,7 +61,7 @@ class Connection extends AbstractConnection
      * Set driver
      *
      * @param  Pgsql $driver
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setDriver(Pgsql $driver)
     {
@@ -72,7 +72,7 @@ class Connection extends AbstractConnection
 
     /**
      * @param int|null $type
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setType($type)
     {
@@ -84,9 +84,7 @@ class Connection extends AbstractConnection
         }
 
         if ($invalidConectionType) {
-            throw new Exception\InvalidArgumentException(
-                'Connection type is not valid. (See: http://php.net/manual/en/function.pg-connect.php)'
-            );
+            throw new Exception\InvalidArgumentException('Connection type is not valid. (See: http://php.net/manual/en/function.pg-connect.php)');
         }
         $this->type = $type;
         return $this;
@@ -99,7 +97,7 @@ class Connection extends AbstractConnection
      */
     public function getCurrentSchema()
     {
-        if (! $this->isConnected()) {
+        if (!$this->isConnected()) {
             $this->connect();
         }
 
@@ -125,9 +123,7 @@ class Connection extends AbstractConnection
         $connection = $this->getConnectionString();
         set_error_handler(function ($number, $string) {
             throw new Exception\RuntimeException(
-                __METHOD__ . ': Unable to connect to database',
-                null,
-                new Exception\ErrorException($string, $number)
+                __METHOD__ . ': Unable to connect to database', null, new Exception\ErrorException($string, $number)
             );
         });
         $this->resource = pg_connect($connection);
@@ -138,18 +134,6 @@ class Connection extends AbstractConnection
                 '%s: Unable to connect to database',
                 __METHOD__
             ));
-        }
-
-        $p = $this->connectionParameters;
-
-        if (! empty($p['charset'])) {
-            if (-1 === pg_set_client_encoding($this->resource, $p['charset'])) {
-                throw new Exception\RuntimeException(sprintf(
-                    "%s: Unable to set client encoding '%s'",
-                    __METHOD__,
-                    $p['charset']
-                ));
-            }
         }
 
         return $this;
@@ -181,7 +165,7 @@ class Connection extends AbstractConnection
             throw new Exception\RuntimeException('Nested transactions are not supported');
         }
 
-        if (! $this->isConnected()) {
+        if (!$this->isConnected()) {
             $this->connect();
         }
 
@@ -196,11 +180,11 @@ class Connection extends AbstractConnection
      */
     public function commit()
     {
-        if (! $this->isConnected()) {
+        if (!$this->isConnected()) {
             $this->connect();
         }
 
-        if (! $this->inTransaction()) {
+        if (!$this->inTransaction()) {
             return; // We ignore attempts to commit non-existing transaction
         }
 
@@ -215,11 +199,11 @@ class Connection extends AbstractConnection
      */
     public function rollback()
     {
-        if (! $this->isConnected()) {
+        if (!$this->isConnected()) {
             throw new Exception\RuntimeException('Must be connected before you can rollback');
         }
 
-        if (! $this->inTransaction()) {
+        if (!$this->inTransaction()) {
             throw new Exception\RuntimeException('Must call beginTransaction() before you can rollback');
         }
 
@@ -237,7 +221,7 @@ class Connection extends AbstractConnection
      */
     public function execute($sql)
     {
-        if (! $this->isConnected()) {
+        if (!$this->isConnected()) {
             $this->connect();
         }
 
@@ -271,10 +255,7 @@ class Connection extends AbstractConnection
         if ($name === null) {
             return;
         }
-        $result = pg_query(
-            $this->resource,
-            'SELECT CURRVAL(\'' . str_replace('\'', '\\\'', $name) . '\') as "currval"'
-        );
+        $result = pg_query($this->resource, 'SELECT CURRVAL(\'' . str_replace('\'', '\\\'', $name) . '\') as "currval"');
 
         return pg_fetch_result($result, 0, 'currval');
     }

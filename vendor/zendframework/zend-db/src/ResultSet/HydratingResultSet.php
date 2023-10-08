@@ -3,16 +3,15 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Db\ResultSet;
 
 use ArrayObject;
-use Zend\Hydrator\ArraySerializable;
-use Zend\Hydrator\ArraySerializableHydrator;
-use Zend\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\ArraySerializable;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class HydratingResultSet extends AbstractResultSet
 {
@@ -22,7 +21,7 @@ class HydratingResultSet extends AbstractResultSet
     protected $hydrator = null;
 
     /**
-     * @var null|object
+     * @var null
      */
     protected $objectPrototype = null;
 
@@ -34,10 +33,7 @@ class HydratingResultSet extends AbstractResultSet
      */
     public function __construct(HydratorInterface $hydrator = null, $objectPrototype = null)
     {
-        $defaultHydratorClass = class_exists(ArraySerializableHydrator::class)
-            ? ArraySerializableHydrator::class
-            : ArraySerializable::class;
-        $this->setHydrator($hydrator ?: new $defaultHydratorClass());
+        $this->setHydrator(($hydrator) ?: new ArraySerializable);
         $this->setObjectPrototype(($objectPrototype) ?: new ArrayObject);
     }
 
@@ -45,12 +41,12 @@ class HydratingResultSet extends AbstractResultSet
      * Set the row object prototype
      *
      * @param  object $objectPrototype
-     * @return self Provides a fluent interface
      * @throws Exception\InvalidArgumentException
+     * @return ResultSet
      */
     public function setObjectPrototype($objectPrototype)
     {
-        if (! is_object($objectPrototype)) {
+        if (!is_object($objectPrototype)) {
             throw new Exception\InvalidArgumentException(
                 'An object must be set as the object prototype, a ' . gettype($objectPrototype) . ' was provided.'
             );
@@ -73,7 +69,7 @@ class HydratingResultSet extends AbstractResultSet
      * Set the hydrator to use for each row object
      *
      * @param HydratorInterface $hydrator
-     * @return self Provides a fluent interface
+     * @return HydratingResultSet
      */
     public function setHydrator(HydratorInterface $hydrator)
     {
@@ -123,7 +119,7 @@ class HydratingResultSet extends AbstractResultSet
     {
         $return = [];
         foreach ($this as $row) {
-            $return[] = $this->hydrator->extract($row);
+            $return[] = $this->getHydrator()->extract($row);
         }
         return $return;
     }

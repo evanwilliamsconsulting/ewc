@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -20,20 +20,14 @@ class SelectDecorator extends Select implements PlatformDecoratorInterface
     /**
      * @var bool
      */
-    protected $isSelectContainDistinct = false;
+    protected $isSelectContainDistinct= false;
 
     /**
      * @var Select
      */
     protected $subject = null;
 
-     /**
-     * @var bool
-     */
-    protected $supportsLimitOffset = false;
-
-
-   /**
+    /**
      * @return bool
      */
     public function getIsSelectContainDistinct()
@@ -55,22 +49,6 @@ class SelectDecorator extends Select implements PlatformDecoratorInterface
     public function setSubject($select)
     {
         $this->subject = $select;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getSupportsLimitOffset()
-    {
-        return $this->supportsLimitOffset;
-    }
-
-    /**
-     * @param bool $supportsLimitOffset
-     */
-    public function setSupportsLimitOffset($supportsLimitOffset)
-    {
-        $this->supportsLimitOffset = $supportsLimitOffset;
     }
 
     /**
@@ -98,31 +76,9 @@ class SelectDecorator extends Select implements PlatformDecoratorInterface
      * @param  array              $sqls
      * @param  array              $parameters
      */
-    protected function processLimitOffset(
-        PlatformInterface $platform,
-        DriverInterface $driver = null,
-        ParameterContainer $parameterContainer = null,
-        &$sqls,
-        &$parameters
-    ) {
+    protected function processLimitOffset(PlatformInterface $platform, DriverInterface $driver = null, ParameterContainer $parameterContainer = null, &$sqls, &$parameters)
+    {
         if ($this->limit === null && $this->offset === null) {
-            return;
-        }
-
-        if ($this->supportsLimitOffset) {
-            // Note: db2_prepare/db2_execute fails with positional parameters, for LIMIT & OFFSET
-            $limit = (int) $this->limit;
-            if (! $limit) {
-                return;
-            }
-
-            $offset = (int) $this->offset;
-            if ($offset) {
-                array_push($sqls, sprintf("LIMIT %s OFFSET %s", $limit, $offset));
-                return;
-            }
-
-            array_push($sqls, sprintf("LIMIT %s", $limit));
             return;
         }
 
@@ -160,9 +116,7 @@ class SelectDecorator extends Select implements PlatformDecoratorInterface
             $offsetParamName       = $driver->formatParameterName('offset');
 
             array_push($sqls, sprintf(
-                // @codingStandardsIgnoreStart
                 ") AS ZEND_IBMDB2_SERVER_LIMIT_OFFSET_EMULATION WHERE ZEND_IBMDB2_SERVER_LIMIT_OFFSET_EMULATION.ZEND_DB_ROWNUM BETWEEN %s AND %s",
-                // @codingStandardsIgnoreEnd
                 $offsetParamName,
                 $limitParamName
             ));
@@ -182,9 +136,7 @@ class SelectDecorator extends Select implements PlatformDecoratorInterface
             }
 
             array_push($sqls, sprintf(
-                // @codingStandardsIgnoreStart
                 ") AS ZEND_IBMDB2_SERVER_LIMIT_OFFSET_EMULATION WHERE ZEND_IBMDB2_SERVER_LIMIT_OFFSET_EMULATION.ZEND_DB_ROWNUM BETWEEN %d AND %d",
-                // @codingStandardsIgnoreEnd
                 $offset,
                 (int) $this->limit + (int) $this->offset
             ));

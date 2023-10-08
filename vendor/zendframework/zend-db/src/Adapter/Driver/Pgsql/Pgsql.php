@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -50,13 +50,9 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
      * @param null|Result $resultPrototype
      * @param array $options
      */
-    public function __construct(
-        $connection,
-        Statement $statementPrototype = null,
-        Result $resultPrototype = null,
-        $options = null
-    ) {
-        if (! $connection instanceof Connection) {
+    public function __construct($connection, Statement $statementPrototype = null, Result $resultPrototype = null, $options = null)
+    {
+        if (!$connection instanceof Connection) {
             $connection = new Connection($connection);
         }
 
@@ -65,10 +61,6 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
         $this->registerResultPrototype(($resultPrototype) ?: new Result());
     }
 
-    /**
-     * @param Profiler\ProfilerInterface $profiler
-     * @return self Provides a fluent interface
-     */
     public function setProfiler(Profiler\ProfilerInterface $profiler)
     {
         $this->profiler = $profiler;
@@ -93,7 +85,7 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register connection
      *
      * @param Connection $connection
-     * @return self Provides a fluent interface
+     * @return Pgsql
      */
     public function registerConnection(Connection $connection)
     {
@@ -106,7 +98,7 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register statement prototype
      *
      * @param Statement $statement
-     * @return self Provides a fluent interface
+     * @return Pgsql
      */
     public function registerStatementPrototype(Statement $statement)
     {
@@ -119,7 +111,7 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register result prototype
      *
      * @param Result $result
-     * @return self Provides a fluent interface
+     * @return Pgsql
      */
     public function registerResultPrototype(Result $result)
     {
@@ -150,10 +142,8 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
      */
     public function checkEnvironment()
     {
-        if (! extension_loaded('pgsql')) {
-            throw new Exception\RuntimeException(
-                'The PostgreSQL (pgsql) extension is required for this adapter but the extension is not loaded'
-            );
+        if (!extension_loaded('pgsql')) {
+            throw new Exception\RuntimeException('The PostgreSQL (pgsql) extension is required for this adapter but the extension is not loaded');
         }
     }
 
@@ -181,7 +171,7 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
             $statement->setSql($sqlOrResource);
         }
 
-        if (! $this->connection->isConnected()) {
+        if (!$this->connection->isConnected()) {
             $this->connection->connect();
         }
 
@@ -205,7 +195,7 @@ class Pgsql implements DriverInterface, Profiler\ProfilerAwareInterface
     /**
      * Get prepare Type
      *
-     * @return string
+     * @return array
      */
     public function getPrepareType()
     {

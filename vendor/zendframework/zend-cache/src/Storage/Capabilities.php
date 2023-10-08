@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -38,18 +38,14 @@ class Capabilities
     protected $baseCapabilities;
 
     /**
-     * "lock-on-expire" support in seconds.
-     *
-     *      0 = Expired items will never be retrieved
-     *     >0 = Time in seconds an expired item could be retrieved
-     *     -1 = Expired items could be retrieved forever
+     * Expire read
      *
      * If it's NULL the capability isn't set and the getter
      * returns the base capability or the default value.
      *
      * @var null|bool
      */
-    protected $lockOnExpire;
+    protected $expiredRead;
 
     /**
      * Max. key length
@@ -122,7 +118,7 @@ class Capabilities
     protected $supportedDatatypes;
 
     /**
-     * Supported metadata
+     * Supported metdata
      *
      * If it's NULL the capability isn't set and the getter
      * returns the base capability or the default value.
@@ -226,13 +222,13 @@ class Capabilities
 
         // check/normalize datatype values
         foreach ($datatypes as $type => &$toType) {
-            if (! in_array($type, $allTypes)) {
+            if (!in_array($type, $allTypes)) {
                 throw new Exception\InvalidArgumentException("Unknown datatype '{$type}'");
             }
 
             if (is_string($toType)) {
                 $toType = strtolower($toType);
-                if (! in_array($toType, $allTypes)) {
+                if (!in_array($toType, $allTypes)) {
                     throw new Exception\InvalidArgumentException("Unknown datatype '{$toType}'");
                 }
             } else {
@@ -270,7 +266,7 @@ class Capabilities
     public function setSupportedMetadata(stdClass $marker, array $metadata)
     {
         foreach ($metadata as $name) {
-            if (! is_string($name)) {
+            if (!is_string($name)) {
                 throw new Exception\InvalidArgumentException('$metadata must be an array of strings');
             }
         }
@@ -407,16 +403,10 @@ class Capabilities
      * Get if expired items are readable
      *
      * @return bool
-     * @deprecated This capability has been deprecated and will be removed in the future.
-     *             Please use getStaticTtl() instead
      */
     public function getExpiredRead()
     {
-        trigger_error(
-            'This capability has been deprecated and will be removed in the future. Please use static_ttl instead',
-            E_USER_DEPRECATED
-        );
-        return ! $this->getCapability('staticTtl', true);
+        return $this->getCapability('expiredRead', false);
     }
 
     /**
@@ -425,44 +415,14 @@ class Capabilities
      * @param  stdClass $marker
      * @param  bool $flag
      * @return Capabilities Fluent interface
-     * @deprecated This capability has been deprecated and will be removed in the future.
-     *             Please use setStaticTtl() instead
      */
     public function setExpiredRead(stdClass $marker, $flag)
     {
-        trigger_error(
-            'This capability has been deprecated and will be removed in the future. Please use static_ttl instead',
-            E_USER_DEPRECATED
-        );
-        return $this->setCapability($marker, 'staticTtl', (bool) $flag);
+        return $this->setCapability($marker, 'expiredRead', (bool) $flag);
     }
 
     /**
-     * Get "lock-on-expire" support in seconds.
-     *
-     * @return int 0  = Expired items will never be retrieved
-     *             >0 = Time in seconds an expired item could be retrieved
-     *             -1 = Expired items could be retrieved forever
-     */
-    public function getLockOnExpire()
-    {
-        return $this->getCapability('lockOnExpire', 0);
-    }
-
-    /**
-     * Set "lock-on-expire" support in seconds.
-     *
-     * @param  stdClass $marker
-     * @param  int      $timeout
-     * @return Capabilities Fluent interface
-     */
-    public function setLockOnExpire(stdClass $marker, $timeout)
-    {
-        return $this->setCapability($marker, 'lockOnExpire', (int) $timeout);
-    }
-
-    /**
-     * Get maximum key length
+     * Get maximum key lenth
      *
      * @return int -1 means unknown, 0 means infinite
      */

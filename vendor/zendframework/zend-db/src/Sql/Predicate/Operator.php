@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -107,7 +107,7 @@ class Operator extends AbstractExpression implements PredicateInterface
      *
      * @param  int|float|bool|string $left
      *
-     * @return self Provides a fluent interface
+     * @return Operator
      */
     public function setLeft($left)
     {
@@ -136,13 +136,13 @@ class Operator extends AbstractExpression implements PredicateInterface
      *
      * @param  string $type TYPE_IDENTIFIER or TYPE_VALUE {@see allowedTypes}
      *
-     * @return self Provides a fluent interface
+     * @return Operator
      *
      * @throws Exception\InvalidArgumentException
      */
     public function setLeftType($type)
     {
-        if (! in_array($type, $this->allowedTypes)) {
+        if (!in_array($type, $this->allowedTypes)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid type "%s" provided; must be of type "%s" or "%s"',
                 $type,
@@ -170,7 +170,7 @@ class Operator extends AbstractExpression implements PredicateInterface
      * Set operator string
      *
      * @param  string $operator
-     * @return self Provides a fluent interface
+     * @return Operator
      */
     public function setOperator($operator)
     {
@@ -194,7 +194,7 @@ class Operator extends AbstractExpression implements PredicateInterface
      *
      * @param  int|float|bool|string $right
      *
-     * @return self Provides a fluent interface
+     * @return Operator
      */
     public function setRight($right)
     {
@@ -222,12 +222,12 @@ class Operator extends AbstractExpression implements PredicateInterface
      * Set parameter type for right side of operator
      *
      * @param  string $type TYPE_IDENTIFIER or TYPE_VALUE {@see allowedTypes}
-     * @return self Provides a fluent interface
      * @throws Exception\InvalidArgumentException
+     * @return Operator
      */
     public function setRightType($type)
     {
-        if (! in_array($type, $this->allowedTypes)) {
+        if (!in_array($type, $this->allowedTypes)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Invalid type "%s" provided; must be of type "%s" or "%s"',
                 $type,

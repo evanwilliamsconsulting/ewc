@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -160,7 +160,7 @@ class ConstraintObject
      * Set table name
      *
      * @param  string $tableName
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setTableName($tableName)
     {
@@ -190,7 +190,7 @@ class ConstraintObject
 
     public function hasColumns()
     {
-        return (! empty($this->columns));
+        return (!empty($this->columns));
     }
 
     /**
@@ -207,7 +207,7 @@ class ConstraintObject
      * Set Columns.
      *
      * @param string[] $columns
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setColumns(array $columns)
     {
@@ -229,7 +229,7 @@ class ConstraintObject
      * Set Referenced Table Schema.
      *
      * @param string $referencedTableSchema
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setReferencedTableSchema($referencedTableSchema)
     {
@@ -251,7 +251,7 @@ class ConstraintObject
      * Set Referenced Table Name.
      *
      * @param string $referencedTableName
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setReferencedTableName($referencedTableName)
     {
@@ -273,7 +273,7 @@ class ConstraintObject
      * Set Referenced Columns.
      *
      * @param string[] $referencedColumns
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setReferencedColumns(array $referencedColumns)
     {
@@ -295,7 +295,7 @@ class ConstraintObject
      * Set Match Option.
      *
      * @param string $matchOption
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setMatchOption($matchOption)
     {
@@ -317,7 +317,7 @@ class ConstraintObject
      * Set Update Rule.
      *
      * @param string $updateRule
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setUpdateRule($updateRule)
     {
@@ -339,7 +339,7 @@ class ConstraintObject
      * Set Delete Rule.
      *
      * @param string $deleteRule
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setDeleteRule($deleteRule)
     {
@@ -361,7 +361,7 @@ class ConstraintObject
      * Set Check Clause.
      *
      * @param string $checkClause
-     * @return self Provides a fluent interface
+     * @return ConstraintObject
      */
     public function setCheckClause($checkClause)
     {

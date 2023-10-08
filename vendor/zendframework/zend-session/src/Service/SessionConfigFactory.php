@@ -9,46 +9,40 @@
 
 namespace Zend\Session\Service;
 
-use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Session\Config\ConfigInterface;
-use Zend\Session\Config\SessionConfig;
 
 class SessionConfigFactory implements FactoryInterface
 {
     /**
-     * Create session configuration object (v3 usage).
+     * Create session configuration object
      *
      * Uses "session_config" section of configuration to seed a ConfigInterface
      * instance. By default, Zend\Session\Config\SessionConfig will be used, but
      * you may also specify a specific implementation variant using the
      * "config_class" subkey.
      *
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param null|array $options
+     * @param  ServiceLocatorInterface    $services
      * @return ConfigInterface
      * @throws ServiceNotCreatedException if session_config is missing, or an
-     *     invalid config_class is used
+     *         invalid config_class is used
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $services)
     {
-        $config = $container->get('config');
-        if (! isset($config['session_config']) || ! is_array($config['session_config'])) {
+        $config = $services->get('Config');
+        if (!isset($config['session_config']) || !is_array($config['session_config'])) {
             throw new ServiceNotCreatedException(
                 'Configuration is missing a "session_config" key, or the value of that key is not an array'
             );
         }
-
-        $class  = SessionConfig::class;
+        $class  = 'Zend\Session\Config\SessionConfig';
         $config = $config['session_config'];
         if (isset($config['config_class'])) {
-            if (! class_exists($config['config_class'])) {
+            if (!class_exists($config['config_class'])) {
                 throw new ServiceNotCreatedException(sprintf(
-                    'Invalid configuration class "%s" specified in "config_class" session configuration; '
-                    . 'must be a valid class',
+                    'Invalid configuration class "%s" specified in "config_class" session configuration; must be a valid class',
                     $config['config_class']
                 ));
             }
@@ -57,31 +51,14 @@ class SessionConfigFactory implements FactoryInterface
         }
 
         $sessionConfig = new $class();
-        if (! $sessionConfig instanceof ConfigInterface) {
+        if (!$sessionConfig instanceof ConfigInterface) {
             throw new ServiceNotCreatedException(sprintf(
-                'Invalid configuration class "%s" specified in "config_class" session configuration; must implement %s',
-                $class,
-                ConfigInterface::class
+                'Invalid configuration class "%s" specified in "config_class" session configuration; must implement Zend\Session\Config\ConfigInterface',
+                $class
             ));
         }
         $sessionConfig->setOptions($config);
 
         return $sessionConfig;
-    }
-
-    /**
-     * Create and return a config instance (v2 usage).
-     *
-     * @param ServiceLocatorInterface $services
-     * @param null|string $canonicalName
-     * @param string $requestedName
-     * @return ConfigInterface
-     */
-    public function createService(
-        ServiceLocatorInterface $services,
-        $canonicalName = null,
-        $requestedName = ConfigInterface::class
-    ) {
-        return $this($services, $requestedName);
     }
 }

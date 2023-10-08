@@ -63,7 +63,7 @@ This has several benefits:
 - The API is much simpler than the usual ``ResultSetMapping`` API.
 
 One downside is that the builder API does not yet support entities
-with inheritance hierarchies.
+with inheritance hierachies.
 
 .. code-block:: php
 
@@ -92,7 +92,7 @@ a mapping from DQL alias (key) to SQL alias (value)
 
     <?php
 
-    $selectClause = $rsm->generateSelectClause(array(
+    $selectClause = $builder->generateSelectClause(array(
         'u' => 't1',
         'g' => 't2'
     ));

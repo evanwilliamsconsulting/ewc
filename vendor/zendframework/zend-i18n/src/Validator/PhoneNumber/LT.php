@@ -1,14 +1,16 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-return [
+return array(
     'code' => '370',
-    'patterns' => [
-        'national' => [
+    'patterns' => array(
+        'national' => array(
             'general' => '/^[3-9]\\d{7}$/',
             'fixed' => '/^(?:3[1478]|4[124-6]|52)\\d{6}$/',
             'mobile' => '/^6\\d{7}$/',
@@ -17,11 +19,11 @@ return [
             'personal' => '/^700\\d{5}$/',
             'shared' => '/^808\\d{5}$/',
             'uan' => '/^70[67]\\d{5}$/',
-            'emergency' => '/^(?:0(?:11?|22?|33?)|1(?:0[123]|12))$/',
-        ],
-        'possible' => [
+            'emergency' => '/^0(?:11?|22?|33?)|1(?:0[123]|12)$/',
+        ),
+        'possible' => array(
             'general' => '/^\\d{8}$/',
             'emergency' => '/^\\d{2,3}$/',
-        ],
-    ],
-];
+        ),
+    ),
+);

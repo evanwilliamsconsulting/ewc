@@ -1,8 +1,10 @@
 <?php
 /**
- * @link      https://github.com/zendframework/zend-modulemanager for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-modulemanager/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\ModuleManager\Listener;
@@ -34,7 +36,7 @@ class ModuleDependencyCheckerListener
             $dependencies = $module->getModuleDependencies();
 
             foreach ($dependencies as $dependencyModule) {
-                if (! isset($this->loaded[$dependencyModule])) {
+                if (!isset($this->loaded[$dependencyModule])) {
                     throw new Exception\MissingDependencyModuleException(
                         sprintf(
                             'Module "%s" depends on module "%s", which was not initialized before it',

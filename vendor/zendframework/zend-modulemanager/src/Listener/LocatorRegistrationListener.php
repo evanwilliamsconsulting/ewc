@@ -1,20 +1,20 @@
 <?php
 /**
- * @link      https://github.com/zendframework/zend-modulemanager for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-modulemanager/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\ModuleManager\Listener;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
 use Zend\ModuleManager\Feature\LocatorRegisteredInterface;
 use Zend\ModuleManager\ModuleEvent;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
 
 /**
  * Locator registration listener
@@ -22,12 +22,15 @@ use Zend\ServiceManager\ServiceManager;
 class LocatorRegistrationListener extends AbstractListener implements
     ListenerAggregateInterface
 {
-    use ListenerAggregateTrait;
-
     /**
      * @var array
      */
     protected $modules = [];
+
+    /**
+     * @var array
+     */
+    protected $callbacks = [];
 
     /**
      * loadModule
@@ -40,7 +43,7 @@ class LocatorRegistrationListener extends AbstractListener implements
      */
     public function onLoadModule(ModuleEvent $e)
     {
-        if (! $e->getModule() instanceof LocatorRegisteredInterface) {
+        if (!$e->getModule() instanceof LocatorRegisteredInterface) {
             return;
         }
         $this->modules[] = $e->getModule();
@@ -59,29 +62,23 @@ class LocatorRegistrationListener extends AbstractListener implements
         $moduleManager = $e->getTarget();
         $events        = $moduleManager->getEventManager()->getSharedManager();
 
-        if (! $events) {
+        if (!$events) {
             return;
         }
 
         // Shared instance for module manager
-        $events->attach(
-            'Zend\Mvc\Application',
-            ModuleManager::EVENT_BOOTSTRAP,
-            function (MvcEvent $e) use ($moduleManager) {
-                $moduleClassName      = get_class($moduleManager);
-                $moduleClassNameArray = explode('\\', $moduleClassName);
-                $moduleClassNameAlias = end($moduleClassNameArray);
-                $application          = $e->getApplication();
-                /* @var $services ServiceManager */
-                $services             = $application->getServiceManager();
-                if (! $services->has($moduleClassName)) {
-                        $services->setAlias($moduleClassName, $moduleClassNameAlias);
-                }
-            },
-            1000
-        );
+        $events->attach('Zend\Mvc\Application', ModuleManager::EVENT_BOOTSTRAP, function (MvcEvent $e) use ($moduleManager) {
+            $moduleClassName = get_class($moduleManager);
+            $moduleClassNameArray = explode('\\', $moduleClassName);
+            $moduleClassNameAlias = end($moduleClassNameArray);
+            $application     = $e->getApplication();
+            $services        = $application->getServiceManager();
+            if (!$services->has($moduleClassName)) {
+                $services->setAlias($moduleClassName, $moduleClassNameAlias);
+            }
+        }, 1000);
 
-        if (! $this->modules) {
+        if (0 === count($this->modules)) {
             return;
         }
 
@@ -103,12 +100,11 @@ class LocatorRegistrationListener extends AbstractListener implements
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
-        /* @var $services ServiceManager */
         $services    = $application->getServiceManager();
 
         foreach ($this->modules as $module) {
             $moduleClassName = get_class($module);
-            if (! $services->has($moduleClassName)) {
+            if (!$services->has($moduleClassName)) {
                 $services->setService($moduleClassName, $module);
             }
         }
@@ -117,9 +113,22 @@ class LocatorRegistrationListener extends AbstractListener implements
     /**
      * {@inheritDoc}
      */
-    public function attach(EventManagerInterface $events, $priority = 1)
+    public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(ModuleEvent::EVENT_LOAD_MODULE, [$this, 'onLoadModule']);
-        $this->listeners[] = $events->attach(ModuleEvent::EVENT_LOAD_MODULES, [$this, 'onLoadModules'], -1000);
+        $this->callbacks[] = $events->attach(ModuleEvent::EVENT_LOAD_MODULE, [$this, 'onLoadModule']);
+        $this->callbacks[] = $events->attach(ModuleEvent::EVENT_LOAD_MODULES, [$this, 'onLoadModules'], -1000);
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function detach(EventManagerInterface $events)
+    {
+        foreach ($this->callbacks as $index => $callback) {
+            if ($events->detach($callback)) {
+                unset($this->callbacks[$index]);
+            }
+        }
     }
 }

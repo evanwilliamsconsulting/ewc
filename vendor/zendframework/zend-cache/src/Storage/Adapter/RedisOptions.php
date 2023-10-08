@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -13,16 +13,6 @@ use Zend\Cache\Exception;
 
 class RedisOptions extends AdapterOptions
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Prioritized properties ordered by prio to be set first
-     * in case a bulk of options sets set at once
-     *
-     * @var string[]
-     */
-    protected $__prioritizedProperties__ = ['resource_manager', 'resource_id', 'server'];
-    // @codingStandardsIgnoreEnd
-
     /**
      * The namespace separator
      * @var string
@@ -73,7 +63,7 @@ class RedisOptions extends AdapterOptions
      * Set namespace separator
      *
      * @param  string $namespaceSeparator
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setNamespaceSeparator($namespaceSeparator)
     {
@@ -99,7 +89,7 @@ class RedisOptions extends AdapterOptions
      * Set the redis resource manager to use
      *
      * @param null|RedisResourceManager $resourceManager
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setResourceManager(RedisResourceManager $resourceManager = null)
     {
@@ -117,7 +107,7 @@ class RedisOptions extends AdapterOptions
      */
     public function getResourceManager()
     {
-        if (! $this->resourceManager) {
+        if (!$this->resourceManager) {
             $this->resourceManager = new RedisResourceManager();
         }
         return $this->resourceManager;
@@ -137,7 +127,7 @@ class RedisOptions extends AdapterOptions
      * Set the redis resource id
      *
      * @param string $resourceId
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setResourceId($resourceId)
     {
@@ -163,7 +153,7 @@ class RedisOptions extends AdapterOptions
      * Set the persistent id
      *
      * @param string $persistentId
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setPersistentId($persistentId)
     {
@@ -176,7 +166,7 @@ class RedisOptions extends AdapterOptions
     * Set redis options
     *
     * @param array $libOptions
-    * @return RedisOptions Provides a fluent interface
+    * @return RedisOptions
     * @link http://github.com/nicolasff/phpredis#setoption
     */
     public function setLibOptions(array $libOptions)
@@ -207,7 +197,7 @@ class RedisOptions extends AdapterOptions
      *
      * @param string|array $server
      *
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setServer($server)
     {
@@ -230,7 +220,7 @@ class RedisOptions extends AdapterOptions
      *
      * @param int $database Database number
      *
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setDatabase($database)
     {
@@ -253,7 +243,7 @@ class RedisOptions extends AdapterOptions
      *
      * @param string $password Password
      *
-     * @return RedisOptions Provides a fluent interface
+     * @return RedisOptions
      */
     public function setPassword($password)
     {

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -67,12 +67,10 @@ class Serializer extends AbstractPlugin
      */
     public function onReadItemPost(PostEvent $event)
     {
-        $result = $event->getResult();
-        if ($result !== null) {
-            $serializer = $this->getOptions()->getSerializer();
-            $result     = $serializer->unserialize($result);
-            $event->setResult($result);
-        }
+        $serializer = $this->getOptions()->getSerializer();
+        $result     = $event->getResult();
+        $result     = $serializer->unserialize($result);
+        $event->setResult($result);
     }
 
     /**
@@ -158,7 +156,7 @@ class Serializer extends AbstractPlugin
         $keyValuePairs = $storage->getItems(array_keys($params['keyValuePairs']));
         foreach ($params['keyValuePairs'] as $key => & $value) {
             if (isset($keyValuePairs[$key])) {
-                $keyValuePairs[$key] += $value;
+                $keyValuePairs[$key]+= $value;
             } else {
                 $keyValuePairs[$key] = $value;
             }
@@ -212,7 +210,7 @@ class Serializer extends AbstractPlugin
         $keyValuePairs = $storage->getItems(array_keys($params['keyValuePairs']));
         foreach ($params['keyValuePairs'] as $key => &$value) {
             if (isset($keyValuePairs[$key])) {
-                $keyValuePairs[$key] -= $value;
+                $keyValuePairs[$key]-= $value;
             } else {
                 $keyValuePairs[$key] = -$value;
             }
@@ -238,7 +236,7 @@ class Serializer extends AbstractPlugin
         $baseCapabilities = $event->getResult();
         $index = spl_object_hash($baseCapabilities);
 
-        if (! isset($this->capabilities[$index])) {
+        if (!isset($this->capabilities[$index])) {
             $this->capabilities[$index] = new Capabilities(
                 $baseCapabilities->getAdapter(),
                 new stdClass(), // marker

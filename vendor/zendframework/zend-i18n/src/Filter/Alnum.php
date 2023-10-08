@@ -1,25 +1,26 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\I18n\Filter;
 
 use Locale;
 use Traversable;
-use Zend\Stdlib\StringUtils;
 
 class Alnum extends AbstractLocale
 {
     /**
      * @var array
      */
-    protected $options = [
+    protected $options = array(
         'locale'            => null,
         'allow_white_space' => false,
-    ];
+    );
 
     /**
      * Sets default option values for this instance
@@ -44,7 +45,7 @@ class Alnum extends AbstractLocale
      * Sets the allowWhiteSpace option
      *
      * @param  bool $flag
-     * @return $this
+     * @return Alnum Provides a fluent interface
      */
     public function setAllowWhiteSpace($flag = true)
     {
@@ -72,17 +73,17 @@ class Alnum extends AbstractLocale
      */
     public function filter($value)
     {
-        if (! is_scalar($value) && ! is_array($value)) {
+        if (!is_scalar($value) && !is_array($value)) {
             return $value;
         }
 
         $whiteSpace = $this->options['allow_white_space'] ? '\s' : '';
         $language   = Locale::getPrimaryLanguage($this->getLocale());
 
-        if (! StringUtils::hasPcreUnicodeSupport()) {
+        if (!static::hasPcreUnicodeSupport()) {
             // POSIX named classes are not supported, use alternative a-zA-Z0-9 match
             $pattern = '/[^a-zA-Z0-9' . $whiteSpace . ']/';
-        } elseif (in_array($language, ['ja', 'ko', 'zh'], true)) {
+        } elseif ($language == 'ja'|| $language == 'ko' || $language == 'zh') {
             // Use english alphabet
             $pattern = '/[^a-zA-Z0-9'  . $whiteSpace . ']/u';
         } else {

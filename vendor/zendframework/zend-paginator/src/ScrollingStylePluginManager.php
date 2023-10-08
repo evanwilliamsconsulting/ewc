@@ -10,8 +10,6 @@
 namespace Zend\Paginator;
 
 use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Plugin manager implementation for scrolling style adapters
@@ -27,70 +25,33 @@ class ScrollingStylePluginManager extends AbstractPluginManager
      *
      * @var array
      */
-    protected $aliases = [
-        'all'     => ScrollingStyle\All::class,
-        'All'     => ScrollingStyle\All::class,
-        'elastic' => ScrollingStyle\Elastic::class,
-        'Elastic' => ScrollingStyle\Elastic::class,
-        'jumping' => ScrollingStyle\Jumping::class,
-        'Jumping' => ScrollingStyle\Jumping::class,
-        'sliding' => ScrollingStyle\Sliding::class,
-        'Sliding' => ScrollingStyle\Sliding::class,
-    ];
+    protected $invokableClasses = array(
+        'all'     => 'Zend\Paginator\ScrollingStyle\All',
+        'elastic' => 'Zend\Paginator\ScrollingStyle\Elastic',
+        'jumping' => 'Zend\Paginator\ScrollingStyle\Jumping',
+        'sliding' => 'Zend\Paginator\ScrollingStyle\Sliding',
+    );
 
     /**
-     * Default set of adapter factories
+     * Validate the plugin
      *
-     * @var array
-     */
-    protected $factories = [
-        ScrollingStyle\All::class     => InvokableFactory::class,
-        ScrollingStyle\Elastic::class => InvokableFactory::class,
-        ScrollingStyle\Jumping::class => InvokableFactory::class,
-        ScrollingStyle\Sliding::class => InvokableFactory::class,
-
-        // v2 normalized names
-        'zendpaginatorscrollingstyleall'     => InvokableFactory::class,
-        'zendpaginatorscrollingstyleelastic' => InvokableFactory::class,
-        'zendpaginatorscrollingstylejumping' => InvokableFactory::class,
-        'zendpaginatorscrollingstylesliding' => InvokableFactory::class,
-    ];
-
-    protected $instanceOf = ScrollingStyle\ScrollingStyleInterface::class;
-
-    /**
-     * Validate a plugin (v3)
+     * Checks that the adapter loaded is an instance of ScrollingStyle\ScrollingStyleInterface.
      *
-     * @param mixed $plugin
-     * @throws InvalidServiceException
-     */
-    public function validate($plugin)
-    {
-        if (! $plugin instanceof $this->instanceOf) {
-            throw new InvalidServiceException(sprintf(
-                'Plugin of type %s is invalid; must implement %s',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
-                Adapter\AdapterInterface::class
-            ));
-        }
-    }
-
-    /**
-     * Validate a plugin (v2)
-     *
-     * @param mixed $plugin
-     * @throws Exception\InvalidArgumentException
+     * @param  mixed $plugin
+     * @return void
+     * @throws Exception\InvalidArgumentException if invalid
      */
     public function validatePlugin($plugin)
     {
-        try {
-            $this->validate($plugin);
-        } catch (InvalidServiceException $e) {
-            throw new Exception\InvalidArgumentException(
-                $e->getMessage(),
-                $e->getCode(),
-                $e
-            );
+        if ($plugin instanceof ScrollingStyle\ScrollingStyleInterface) {
+            // we're okay
+            return;
         }
+
+        throw new Exception\InvalidArgumentException(sprintf(
+            'Plugin of type %s is invalid; must implement %s\ScrollingStyle\ScrollingStyleInterface',
+            (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+            __NAMESPACE__
+        ));
     }
 }

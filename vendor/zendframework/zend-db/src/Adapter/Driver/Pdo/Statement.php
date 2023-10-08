@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -69,7 +69,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * Set driver
      *
      * @param  Pdo $driver
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setDriver(Pdo $driver)
     {
@@ -79,7 +79,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param Profiler\ProfilerInterface $profiler
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setProfiler(Profiler\ProfilerInterface $profiler)
     {
@@ -99,7 +99,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * Initialize
      *
      * @param  \PDO $connectionResource
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function initialize(\PDO $connectionResource)
     {
@@ -111,7 +111,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * Set resource
      *
      * @param  \PDOStatement $pdoStatement
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setResource(\PDOStatement $pdoStatement)
     {
@@ -133,7 +133,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * Set sql
      *
      * @param string $sql
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setSql($sql)
     {
@@ -153,7 +153,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param ParameterContainer $parameterContainer
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setParameterContainer(ParameterContainer $parameterContainer)
     {
@@ -208,12 +208,12 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      */
     public function execute($parameters = null)
     {
-        if (! $this->isPrepared) {
+        if (!$this->isPrepared) {
             $this->prepare();
         }
 
         /** START Standard ParameterContainer Merging Block */
-        if (! $this->parameterContainer instanceof ParameterContainer) {
+        if (!$this->parameterContainer instanceof ParameterContainer) {
             if ($parameters instanceof ParameterContainer) {
                 $this->parameterContainer = $parameters;
                 $parameters = null;
@@ -269,6 +269,8 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
         foreach ($parameters as $name => &$value) {
             if (is_bool($value)) {
                 $type = \PDO::PARAM_BOOL;
+            } elseif (is_int($value)) {
+                $type = \PDO::PARAM_INT;
             } else {
                 $type = \PDO::PARAM_STR;
             }
@@ -287,7 +289,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
             }
 
             // parameter is named or positional, value is reference
-            $parameter = is_int($name) ? ($name + 1) : $this->driver->formatParameterName($name);
+            $parameter = is_int($name) ? ($name + 1) : $name;
             $this->resource->bindParam($parameter, $value, $type);
         }
     }

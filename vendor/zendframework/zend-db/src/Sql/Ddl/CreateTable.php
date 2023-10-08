@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -11,7 +11,6 @@ namespace Zend\Db\Sql\Ddl;
 
 use Zend\Db\Adapter\Platform\PlatformInterface;
 use Zend\Db\Sql\AbstractSql;
-use Zend\Db\Sql\TableIdentifier;
 
 class CreateTable extends AbstractSql implements SqlInterface
 {
@@ -59,7 +58,7 @@ class CreateTable extends AbstractSql implements SqlInterface
     protected $table = '';
 
     /**
-     * @param string|TableIdentifier $table
+     * @param string $table
      * @param bool   $isTemporary
      */
     public function __construct($table = '', $isTemporary = false)
@@ -70,7 +69,7 @@ class CreateTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  bool $temporary
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setTemporary($temporary)
     {
@@ -88,7 +87,7 @@ class CreateTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  string $name
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setTable($name)
     {
@@ -98,7 +97,7 @@ class CreateTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  Column\ColumnInterface $column
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addColumn(Column\ColumnInterface $column)
     {
@@ -108,7 +107,7 @@ class CreateTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  Constraint\ConstraintInterface $constraint
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addConstraint(Constraint\ConstraintInterface $constraint)
     {
@@ -140,7 +139,7 @@ class CreateTable extends AbstractSql implements SqlInterface
     {
         return [
             $this->isTemporary ? 'TEMPORARY ' : '',
-            $this->resolveTable($this->table, $adapterPlatform),
+            $adapterPlatform->quoteIdentifier($this->table),
         ];
     }
 
@@ -183,7 +182,7 @@ class CreateTable extends AbstractSql implements SqlInterface
      */
     protected function processConstraints(PlatformInterface $adapterPlatform = null)
     {
-        if (! $this->constraints) {
+        if (!$this->constraints) {
             return;
         }
 

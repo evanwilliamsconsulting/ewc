@@ -4,7 +4,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -74,15 +74,10 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
     protected $prepareOptions = [];
 
     /**
-     * @var array
-     */
-    protected $parameterReferenceValues = [];
-
-    /**
      * Set driver
      *
      * @param  Sqlsrv $driver
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setDriver(Sqlsrv $driver)
     {
@@ -92,7 +87,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param Profiler\ProfilerInterface $profiler
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setProfiler(Profiler\ProfilerInterface $profiler)
     {
@@ -116,8 +111,8 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * (there will need to already be a bound param set if it applies to this query)
      *
      * @param resource $resource
-     * @return self Provides a fluent interface
      * @throws Exception\InvalidArgumentException
+     * @return Statement
      */
     public function initialize($resource)
     {
@@ -139,7 +134,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
      * Set parameter container
      *
      * @param ParameterContainer $parameterContainer
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setParameterContainer(ParameterContainer $parameterContainer)
     {
@@ -157,7 +152,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param $resource
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setResource($resource)
     {
@@ -177,7 +172,7 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param string $sql
-     * @return self Provides a fluent interface
+     * @return Statement
      */
     public function setSql($sql)
     {
@@ -198,8 +193,8 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
     /**
      * @param string $sql
      * @param array $options
-     * @return self Provides a fluent interface
      * @throws Exception\RuntimeException
+     * @return Statement
      */
     public function prepare($sql = null, array $options = [])
     {
@@ -211,8 +206,8 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
 
         $pRef = &$this->parameterReferences;
         for ($position = 0, $count = substr_count($sql, '?'); $position < $count; $position++) {
-            if (! isset($this->prepareParams[$position])) {
-                $pRef[$position] = [&$this->parameterReferenceValues[$position], SQLSRV_PARAM_IN, null, null];
+            if (!isset($this->prepareParams[$position])) {
+                $pRef[$position] = ['', SQLSRV_PARAM_IN, null, null];
             } else {
                 $pRef[$position] = &$this->prepareParams[$position];
             }
@@ -243,12 +238,12 @@ class Statement implements StatementInterface, Profiler\ProfilerAwareInterface
     public function execute($parameters = null)
     {
         /** END Standard ParameterContainer Merging Block */
-        if (! $this->isPrepared) {
+        if (!$this->isPrepared) {
             $this->prepare();
         }
 
         /** START Standard ParameterContainer Merging Block */
-        if (! $this->parameterContainer instanceof ParameterContainer) {
+        if (!$this->parameterContainer instanceof ParameterContainer) {
             if ($parameters instanceof ParameterContainer) {
                 $this->parameterContainer = $parameters;
                 $parameters = null;

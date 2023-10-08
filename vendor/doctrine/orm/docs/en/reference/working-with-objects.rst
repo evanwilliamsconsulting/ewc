@@ -25,13 +25,6 @@ Work that have not yet been persisted are lost.
     Not calling ``EntityManager#flush()`` will lead to all changes
     during that request being lost.
 
-.. note::
-
-    Doctrine does NEVER touch the public API of methods in your entity 
-    classes (like getters and setters) nor the constructor method.
-    Instead, it uses reflection to get/set data from/to your entity objects.
-    When Doctrine fetches data from DB and saves it back,
-    any code put in your get/set methods won't be implicitly taken into account.
 
 Entities and the Identity Map
 -----------------------------
@@ -245,16 +238,10 @@ as follows:
    persist operation. However, the persist operation is cascaded to
    entities referenced by X, if the relationships from X to these
    other entities are mapped with cascade=PERSIST or cascade=ALL (see
-   ":ref:`transitive-persistence`").
+   "Transitive Persistence").
 -  If X is a removed entity, it becomes managed.
 -  If X is a detached entity, an exception will be thrown on
    flush.
-
-.. caution::
-
-    Do not pass detached entities to the persist operation. The persist operation always
-    considers entities that are not yet known to the ``EntityManager`` as new entities
-    (refer to the ``STATE_NEW`` constant inside the ``UnitOfWork``).
 
 Removing entities
 -----------------
@@ -292,12 +279,12 @@ as follows:
 -  If X is a new entity, it is ignored by the remove operation.
    However, the remove operation is cascaded to entities referenced by
    X, if the relationship from X to these other entities is mapped
-   with cascade=REMOVE or cascade=ALL (see ":ref:`transitive-persistence`").
+   with cascade=REMOVE or cascade=ALL (see "Transitive Persistence").
 -  If X is a managed entity, the remove operation causes it to
    become removed. The remove operation is cascaded to entities
    referenced by X, if the relationships from X to these other
    entities is mapped with cascade=REMOVE or cascade=ALL (see
-   ":ref:`transitive-persistence`").
+   "Transitive Persistence").
 -  If X is a detached entity, an InvalidArgumentException will be
    thrown.
 -  If X is a removed entity, it is ignored by the remove operation.
@@ -321,7 +308,7 @@ in multiple ways with very different performance impacts.
 1. If an association is marked as ``CASCADE=REMOVE`` Doctrine 2
    will fetch this association. If its a Single association it will
    pass this entity to
-   ``EntityManager#remove()``. If the association is a collection, Doctrine will loop over all    its elements and pass them to``EntityManager#remove()``.
+   ´EntityManager#remove()``. If the association is a collection, Doctrine will loop over all    its elements and pass them to``EntityManager#remove()\`.
    In both cases the cascade remove semantics are applied recursively.
    For large object graphs this removal strategy can be very costly.
 2. Using a DQL ``DELETE`` statement allows you to delete multiple
@@ -335,13 +322,6 @@ in multiple ways with very different performance impacts.
    completely by-passes any foreign key ``onDelete=CASCADE`` option,
    because Doctrine will fetch and remove all associated entities
    explicitly nevertheless.
-
-.. note::
-
-    Calling ``remove`` on an entity will remove the object from the identiy
-    map and therefore detach it. Querying the same entity again, for example 
-    via a lazy loaded relation, will return a new object. 
-
 
 Detaching entities
 ------------------
@@ -370,14 +350,14 @@ as follows:
    become detached. The detach operation is cascaded to entities
    referenced by X, if the relationships from X to these other
    entities is mapped with cascade=DETACH or cascade=ALL (see
-   ":ref:`transitive-persistence`"). Entities which previously referenced X
+   "Transitive Persistence"). Entities which previously referenced X
    will continue to reference X.
 -  If X is a new or detached entity, it is ignored by the detach
    operation.
 -  If X is a removed entity, the detach operation is cascaded to
    entities referenced by X, if the relationships from X to these
    other entities is mapped with cascade=DETACH or cascade=ALL (see
-   ":ref:`transitive-persistence`"). Entities which previously referenced X
+   "Transitive Persistence"). Entities which previously referenced X
    will continue to reference X.
 
 There are several situations in which an entity is detached
@@ -436,7 +416,8 @@ as follows:
 -  If X is a managed entity, it is ignored by the merge operation,
    however, the merge operation is cascaded to entities referenced by
    relationships from X if these relationships have been mapped with
-   the cascade element value MERGE or ALL (see ":ref:`transitive-persistence`").
+   the cascade element value MERGE or ALL (see "Transitive
+   Persistence").
 -  For all entities Y referenced by relationships from X having the
    cascade element value MERGE or ALL, Y is merged recursively as Y'.
    For all such Y referenced by X, X' is set to reference Y'. (Note
@@ -718,6 +699,8 @@ You can also load by owning side associations through the repository:
     $number = $em->find('MyProject\Domain\Phonenumber', 1234);
     $user = $em->getRepository('MyProject\Domain\User')->findOneBy(array('phone' => $number->getId()));
 
+Be careful that this only works by passing the ID of the associated entity, not yet by passing the associated entity itself.
+
 The ``EntityRepository#findBy()`` method additionally accepts orderings, limit and offset as second to fourth parameters:
 
 .. code-block:: php
@@ -746,14 +729,6 @@ examples are equivalent:
     // A single user by its nickname (__call magic)
     $user = $em->getRepository('MyProject\Domain\User')->findOneByNickname('romanb');
 
-Additionally, you can just count the result of the provided conditions when you don't really need the data:
-
-.. code-block:: php
-
-    <?php
-    // Check there is no user with nickname
-    $availableNickname = 0 === $em->getRepository('MyProject\Domain\User')->count(['nickname' => 'nonexistent']);
-
 By Criteria
 ~~~~~~~~~~~
 
@@ -763,7 +738,8 @@ The Repository implement the ``Doctrine\Common\Collections\Selectable``
 interface. That means you can build ``Doctrine\Common\Collections\Criteria``
 and pass them to the ``matching($criteria)`` method.
 
-See section `Filtering collections` of chapter :doc:`Working with Associations <working-with-associations>`
+See the :ref:`Working with Associations: Filtering collections
+<filtering-collections>`.
 
 By Eager Loading
 ~~~~~~~~~~~~~~~~
@@ -813,9 +789,7 @@ DQL and its syntax as well as the Doctrine class can be found in
 :doc:`the dedicated chapter <dql-doctrine-query-language>`.
 For programmatically building up queries based on conditions that
 are only known at runtime, Doctrine provides the special
-``Doctrine\ORM\QueryBuilder`` class. While this a powerful tool,
-it also brings more complexity to your code compared to plain DQL,
-so you should only use it when you need it. More information on
+``Doctrine\ORM\QueryBuilder`` class. More information on
 constructing queries with a QueryBuilder can be found
 :doc:`in Query Builder chapter <query-builder>`.
 

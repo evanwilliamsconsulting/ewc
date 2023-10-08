@@ -27,8 +27,8 @@ use InvalidArgumentException;
 use RuntimeException;
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Hydrator\AbstractHydrator;
-use Zend\Hydrator\Filter\FilterProviderInterface;
+use Zend\Stdlib\Hydrator\AbstractHydrator;
+use Zend\Stdlib\Hydrator\Filter\FilterProviderInterface;
 
 /**
  * This hydrator has been completely refactored for DoctrineModule 0.7.0. It provides an easy and powerful way
@@ -258,7 +258,7 @@ class DoctrineObject extends AbstractHydrator
                 $target = $metadata->getAssociationTargetClass($field);
 
                 if ($metadata->isSingleValuedAssociation($field)) {
-                    if (! is_callable([$object, $setter])) {
+                    if (! method_exists($object, $setter)) {
                         continue;
                     }
 
@@ -275,7 +275,7 @@ class DoctrineObject extends AbstractHydrator
                     $this->toMany($object, $field, $target, $value);
                 }
             } else {
-                if (! is_callable([$object, $setter])) {
+                if (! method_exists($object, $setter)) {
                     continue;
                 }
 
@@ -421,6 +421,7 @@ class DoctrineObject extends AbstractHydrator
 
         // If the collection contains identifiers, fetch the objects from database
         foreach ($values as $value) {
+
             if ($value instanceof $target) {
                 // assumes modifications have already taken place in object
                 $collection[] = $value;
@@ -437,7 +438,7 @@ class DoctrineObject extends AbstractHydrator
                     switch (gettype($value)) {
                         case 'object':
                             $getter = 'get' . ucfirst($field);
-                            if (is_callable([$value, $getter])) {
+                            if (method_exists($value, $getter)) {
                                 $find[$field] = $value->$getter();
                             } elseif (property_exists($value, $field)) {
                                 $find[$field] = $value->$field;

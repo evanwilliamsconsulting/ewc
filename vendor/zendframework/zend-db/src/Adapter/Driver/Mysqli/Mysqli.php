@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -51,13 +51,9 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
      * @param null|Result $resultPrototype
      * @param array $options
      */
-    public function __construct(
-        $connection,
-        Statement $statementPrototype = null,
-        Result $resultPrototype = null,
-        array $options = []
-    ) {
-        if (! $connection instanceof Connection) {
+    public function __construct($connection, Statement $statementPrototype = null, Result $resultPrototype = null, array $options = [])
+    {
+        if (!$connection instanceof Connection) {
             $connection = new Connection($connection);
         }
 
@@ -70,7 +66,7 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param Profiler\ProfilerInterface $profiler
-     * @return self Provides a fluent interface
+     * @return Mysqli
      */
     public function setProfiler(Profiler\ProfilerInterface $profiler)
     {
@@ -96,7 +92,7 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register connection
      *
      * @param  Connection $connection
-     * @return self Provides a fluent interface
+     * @return Mysqli
      */
     public function registerConnection(Connection $connection)
     {
@@ -167,10 +163,8 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
      */
     public function checkEnvironment()
     {
-        if (! extension_loaded('mysqli')) {
-            throw new Exception\RuntimeException(
-                'The Mysqli extension is required for this adapter but the extension is not loaded'
-            );
+        if (!extension_loaded('mysqli')) {
+            throw new Exception\RuntimeException('The Mysqli extension is required for this adapter but the extension is not loaded');
         }
     }
 
@@ -206,7 +200,7 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
             if (is_string($sqlOrResource)) {
                 $statement->setSql($sqlOrResource);
             }
-            if (! $this->connection->isConnected()) {
+            if (!$this->connection->isConnected()) {
                 $this->connection->connect();
             }
             $statement->initialize($this->connection->getResource());
@@ -231,7 +225,7 @@ class Mysqli implements DriverInterface, Profiler\ProfilerAwareInterface
     /**
      * Get prepare type
      *
-     * @return string
+     * @return array
      */
     public function getPrepareType()
     {

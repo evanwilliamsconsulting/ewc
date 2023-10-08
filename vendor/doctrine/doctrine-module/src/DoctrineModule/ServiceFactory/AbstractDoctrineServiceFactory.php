@@ -19,7 +19,6 @@
 
 namespace DoctrineModule\ServiceFactory;
 
-use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -37,17 +36,17 @@ class AbstractDoctrineServiceFactory implements AbstractFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function canCreate(ContainerInterface $container, $requestedName)
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        return false !== $this->getFactoryMapping($container, $requestedName);
+        return false !== $this->getFactoryMapping($serviceLocator, $requestedName);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $mappings = $this->getFactoryMapping($container, $requestedName);
+        $mappings = $this->getFactoryMapping($serviceLocator, $requestedName);
 
         if (! $mappings) {
             throw new ServiceNotFoundException();
@@ -57,34 +56,16 @@ class AbstractDoctrineServiceFactory implements AbstractFactoryInterface
         /* @var $factory \DoctrineModule\Service\AbstractFactory */
         $factory = new $factoryClass($mappings['serviceName']);
 
-        return $factory->createService($container);
+        return $factory->createService($serviceLocator);
     }
 
     /**
-     * {@inheritDoc}
-     * @deprecated
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $container, $name, $requestedName)
-    {
-        return $this->canCreate($container, $requestedName);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @deprecated
-     */
-    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
-    {
-        return $this($serviceLocator, $requestedName);
-    }
-
-    /**
-     * @param ContainerInterface $serviceLocator
-     * @param string             $name
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param string                                       $name
      *
-     * @return array|bool
+     * @return bool|array
      */
-    private function getFactoryMapping(ContainerInterface $serviceLocator, $name)
+    private function getFactoryMapping(ServiceLocatorInterface $serviceLocator, $name)
     {
         $matches = array();
 

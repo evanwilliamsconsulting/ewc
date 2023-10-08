@@ -22,10 +22,10 @@ abstract class AbstractAdapter
      *
      * @var array
      */
-    protected $skipOptions = [
+    protected $skipOptions = array(
         'options',
         'config',
-    ];
+    );
 
     /**
      * Create a new adapter

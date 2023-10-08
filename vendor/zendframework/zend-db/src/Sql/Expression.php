@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -44,7 +44,7 @@ class Expression extends AbstractExpression
 
         if ($types) { // should be deprecated and removed version 3.0.0
             if (is_array($parameters)) {
-                foreach ($parameters as $i => $parameter) {
+                foreach ($parameters as $i=>$parameter) {
                     $parameters[$i] = [
                         $parameter => isset($types[$i]) ? $types[$i] : self::TYPE_VALUE,
                     ];
@@ -56,19 +56,19 @@ class Expression extends AbstractExpression
             }
         }
 
-        if ($parameters !== null) {
+        if ($parameters) {
             $this->setParameters($parameters);
         }
     }
 
     /**
      * @param $expression
-     * @return self Provides a fluent interface
+     * @return Expression
      * @throws Exception\InvalidArgumentException
      */
     public function setExpression($expression)
     {
-        if (! is_string($expression) || $expression == '') {
+        if (!is_string($expression) || $expression == '') {
             throw new Exception\InvalidArgumentException('Supplied expression must be a string.');
         }
         $this->expression = $expression;
@@ -85,12 +85,12 @@ class Expression extends AbstractExpression
 
     /**
      * @param $parameters
-     * @return self Provides a fluent interface
+     * @return Expression
      * @throws Exception\InvalidArgumentException
      */
     public function setParameters($parameters)
     {
-        if (! is_scalar($parameters) && ! is_array($parameters)) {
+        if (!is_scalar($parameters) && !is_array($parameters)) {
             throw new Exception\InvalidArgumentException('Expression parameters must be a scalar or array.');
         }
         $this->parameters = $parameters;
@@ -108,7 +108,7 @@ class Expression extends AbstractExpression
     /**
      * @deprecated
      * @param array $types
-     * @return self Provides a fluent interface
+     * @return Expression
      */
     public function setTypes(array $types)
     {
@@ -135,7 +135,7 @@ class Expression extends AbstractExpression
         $parametersCount = count($parameters);
         $expression = str_replace('%', '%%', $this->expression);
 
-        if ($parametersCount === 0) {
+        if ($parametersCount == 0) {
             return [
                 str_ireplace(self::PLACEHOLDER, '', $expression)
             ];
@@ -143,18 +143,9 @@ class Expression extends AbstractExpression
 
         // assign locally, escaping % signs
         $expression = str_replace(self::PLACEHOLDER, '%s', $expression, $count);
-
-        // test number of replacements without considering same variable begin used many times first, which is
-        // faster, if the test fails then resort to regex which are slow and used rarely
         if ($count !== $parametersCount) {
-            preg_match_all('/\:\w*/', $expression, $matches);
-            if ($parametersCount !== count(array_unique($matches[0]))) {
-                throw new Exception\RuntimeException(
-                    'The number of replacements in the expression does not match the number of parameters'
-                );
-            }
+            throw new Exception\RuntimeException('The number of replacements in the expression does not match the number of parameters');
         }
-
         foreach ($parameters as $parameter) {
             list($values[], $types[]) = $this->normalizeArgument($parameter, self::TYPE_VALUE);
         }

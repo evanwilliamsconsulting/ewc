@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -53,7 +53,6 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      * @param null|Statement $statementPrototype
      * @param null|Result $resultPrototype
      * @param array $options
-     * @param string $features
      */
     public function __construct(
         $connection,
@@ -62,7 +61,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
         array $options = [],
         $features = self::FEATURES_DEFAULT
     ) {
-        if (! $connection instanceof Connection) {
+        if (!$connection instanceof Connection) {
             $connection = new Connection($connection);
         }
 
@@ -83,7 +82,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
 
     /**
      * @param Profiler\ProfilerInterface $profiler
-     * @return self Provides a fluent interface
+     * @return Oci8
      */
     public function setProfiler(Profiler\ProfilerInterface $profiler)
     {
@@ -109,7 +108,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register connection
      *
      * @param  Connection $connection
-     * @return self Provides a fluent interface
+     * @return Oci8
      */
     public function registerConnection(Connection $connection)
     {
@@ -122,7 +121,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register statement prototype
      *
      * @param Statement $statementPrototype
-     * @return self Provides a fluent interface
+     * @return Oci8
      */
     public function registerStatementPrototype(Statement $statementPrototype)
     {
@@ -143,7 +142,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      * Register result prototype
      *
      * @param Result $resultPrototype
-     * @return self Provides a fluent interface
+     * @return Oci8
      */
     public function registerResultPrototype(Result $resultPrototype)
     {
@@ -164,7 +163,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      *
      * @param string $name
      * @param AbstractFeature $feature
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addFeature($name, $feature)
     {
@@ -179,7 +178,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
     /**
      * Setup the default features for Pdo
      *
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setupDefaultFeatures()
     {
@@ -217,7 +216,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
      */
     public function checkEnvironment()
     {
-        if (! extension_loaded('oci8')) {
+        if (!extension_loaded('oci8')) {
             throw new Exception\RuntimeException(
                 'The Oci8 extension is required for this adapter but the extension is not loaded'
             );
@@ -249,7 +248,7 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
                     'Oci8 only accepts an SQL string or an oci8 resource in ' . __FUNCTION__
                 );
             }
-            if (! $this->connection->isConnected()) {
+            if (!$this->connection->isConnected()) {
                 $this->connection->connect();
             }
             $statement->initialize($this->connection->getResource());
@@ -270,12 +269,12 @@ class Oci8 implements DriverInterface, Profiler\ProfilerAwareInterface
         if ($context && ($rowCounter = $this->getFeature('RowCounter')) && oci_num_fields($resource) > 0) {
             $rowCount = $rowCounter->getRowCountClosure($context);
         }
-        $result->initialize($resource, null, $rowCount);
+        $result->initialize($resource, $rowCount);
         return $result;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getPrepareType()
     {

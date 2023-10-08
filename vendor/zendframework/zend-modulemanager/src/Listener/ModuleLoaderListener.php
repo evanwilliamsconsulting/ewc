@@ -1,8 +1,10 @@
 <?php
 /**
- * @link      https://github.com/zendframework/zend-modulemanager for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-modulemanager/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\ModuleManager\Listener;
@@ -18,7 +20,7 @@ use Zend\ModuleManager\ModuleEvent;
 class ModuleLoaderListener extends AbstractListener implements ListenerAggregateInterface
 {
     /**
-     * @var ModuleAutoloader
+     * @var array
      */
     protected $moduleLoader;
 
@@ -56,7 +58,7 @@ class ModuleLoaderListener extends AbstractListener implements ListenerAggregate
     /**
      * {@inheritDoc}
      */
-    public function attach(EventManagerInterface $events, $priority = 1)
+    public function attach(EventManagerInterface $events)
     {
         $this->callbacks[] = $events->attach(
             ModuleEvent::EVENT_LOAD_MODULES,
@@ -89,7 +91,8 @@ class ModuleLoaderListener extends AbstractListener implements ListenerAggregate
      */
     protected function hasCachedClassMap()
     {
-        if ($this->options->getModuleMapCacheEnabled()
+        if (
+            $this->options->getModuleMapCacheEnabled()
             && file_exists($this->options->getModuleMapCacheFile())
         ) {
             return true;

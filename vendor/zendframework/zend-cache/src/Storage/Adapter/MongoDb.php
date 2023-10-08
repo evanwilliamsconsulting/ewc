@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -54,10 +54,8 @@ class MongoDb extends AbstractAdapter implements FlushableInterface
      */
     public function __construct($options = null)
     {
-        if (! class_exists('Mongo') || ! class_exists('MongoClient')) {
-            throw new Exception\ExtensionNotLoadedException(
-                'MongoDb extension not loaded or Mongo polyfill not included'
-            );
+        if (!class_exists('Mongo') || !class_exists('MongoClient')) {
+            throw new Exception\ExtensionNotLoadedException('MongoDb extension not loaded or Mongo polyfill not included');
         }
 
         parent::__construct($options);
@@ -137,7 +135,8 @@ class MongoDb extends AbstractAdapter implements FlushableInterface
             }
 
             if ($result['expires']->sec < time()) {
-                $this->internalRemoveItem($normalizedKey);
+                $this->internalRemoveItem($key);
+
                 return;
             }
         }
@@ -242,8 +241,12 @@ class MongoDb extends AbstractAdapter implements FlushableInterface
                 'supportedMetadata'  => [
                     '_id',
                 ],
-                'minTtl'             => 1,
+                'minTtl'             => 0,
+                'maxTtl'             => 0,
                 'staticTtl'          => true,
+                'ttlPrecision'       => 1,
+                'useRequestTime'     => false,
+                'expiredRead'        => false,
                 'maxKeyLength'       => 255,
                 'namespaceIsPrefix'  => true,
             ]

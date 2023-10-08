@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -35,10 +35,6 @@ class FeatureSet
         }
     }
 
-    /**
-     * @param AbstractTableGateway $tableGateway
-     * @return self Provides a fluent interface
-     */
     public function setTableGateway(AbstractTableGateway $tableGateway)
     {
         $this->tableGateway = $tableGateway;
@@ -60,10 +56,6 @@ class FeatureSet
         return $feature;
     }
 
-    /**
-     * @param array $features
-     * @return self Provides a fluent interface
-     */
     public function addFeatures(array $features)
     {
         foreach ($features as $feature) {
@@ -72,10 +64,6 @@ class FeatureSet
         return $this;
     }
 
-    /**
-     * @param AbstractFeature $feature
-     * @return self Provides a fluent interface
-     */
     public function addFeature(AbstractFeature $feature)
     {
         if ($this->tableGateway instanceof TableGatewayInterface) {
@@ -137,36 +125,22 @@ class FeatureSet
     }
 
     /**
-     * Is the method requested available in one of the added features
      * @param string $method
      * @return bool
      */
     public function canCallMagicCall($method)
     {
-        if (! empty($this->features)) {
-            foreach ($this->features as $feature) {
-                if (method_exists($feature, $method)) {
-                    return true;
-                }
-            }
-        }
         return false;
     }
 
     /**
-     * Call method of on added feature as though it were a local method
      * @param string $method
      * @param array $arguments
      * @return mixed
      */
     public function callMagicCall($method, $arguments)
     {
-        foreach ($this->features as $feature) {
-            if (method_exists($feature, $method)) {
-                return $feature->$method($arguments);
-            }
-        }
-
-        return;
+        $return = null;
+        return $return;
     }
 }

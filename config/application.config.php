@@ -8,7 +8,6 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
-	'ZendDeveloperTools',
         'Application',
     	'Publish',
 	'DoctrineModule',
@@ -33,8 +32,8 @@ return array(
 	    // 2DO: EJW Site Relative Paths should be used
             //'/opt/lampp/htdocs/evtechnote/config/autoload/global.php',
             //'/usr/local/apache2/htdocs/evtechnote/config/autoload/global.php',
-            //'/usr/local/apache2/ewc/config/autoload/global.php',
-            '/usr/local/ewc/config/autoload/global.php',
+            '/usr/local/apache2/ewc/config/autoload/global.php',
+            //'/usr/local/ewc/config/autoload/global.php',
         ),
 
         // Whether or not to enable a configuration cache.

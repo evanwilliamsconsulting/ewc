@@ -29,7 +29,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     public function __construct($encoding = 'UTF-8')
     {
         $this->setEncoding($encoding);
-        $this->init();
+        $this->_init();
     }
 
     /**
@@ -37,7 +37,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      *
      * @return void
      */
-    abstract protected function init();
+    abstract protected function _init();
 
     /**
      * Start XML element
@@ -50,9 +50,9 @@ abstract class AbstractGenerator implements GeneratorInterface
      */
     public function openElement($name, $value = null)
     {
-        $this->openXmlElement($name);
+        $this->_openElement($name);
         if ($value !== null) {
-            $this->writeTextData($value);
+            $this->_writeTextData($value);
         }
 
         return $this;
@@ -68,7 +68,7 @@ abstract class AbstractGenerator implements GeneratorInterface
      */
     public function closeElement($name)
     {
-        $this->closeXmlElement($name);
+        $this->_closeElement($name);
 
         return $this;
     }
@@ -103,7 +103,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     public function flush()
     {
         $xml = $this->saveXml();
-        $this->init();
+        $this->_init();
         return $xml;
     }
 
@@ -133,19 +133,19 @@ abstract class AbstractGenerator implements GeneratorInterface
      *
      * @param string $name XML element name
      */
-    abstract protected function openXmlElement($name);
+    abstract protected function _openElement($name);
 
     /**
      * Write XML text data into the currently opened XML element
      *
      * @param string $text
      */
-    abstract protected function writeTextData($text);
+    abstract protected function _writeTextData($text);
 
     /**
      * End XML element
      *
      * @param string $name
      */
-    abstract protected function closeXmlElement($name);
+    abstract protected function _closeElement($name);
 }

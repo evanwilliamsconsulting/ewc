@@ -10,7 +10,6 @@
 namespace Zend\Dom;
 
 use DOMDocument;
-use DOMNode;
 
 /**
  * Query DOM structures based on CSS selectors and/or XPath
@@ -54,7 +53,7 @@ class Query
      * XPath namespaces
      * @var array
      */
-    protected $xpathNamespaces = [];
+    protected $xpathNamespaces = array();
 
     /**
      * XPath PHP Functions
@@ -207,13 +206,12 @@ class Query
      * Perform a CSS selector query
      *
      * @param  string $query
-     * @param  DOMNode $contextNode
      * @return NodeList
      */
-    public function execute($query, DOMNode $contextNode = null)
+    public function execute($query)
     {
         $xpathQuery = Document\Query::cssToXpath($query);
-        return $this->queryXpath($xpathQuery, $query, $contextNode);
+        return $this->queryXpath($xpathQuery, $query);
     }
 
     /**
@@ -221,11 +219,10 @@ class Query
      *
      * @param  string|array $xpathQuery
      * @param  string|null  $query      CSS selector query
-     * @param  DOMNode $contextNode $contextNode
      * @throws Exception\RuntimeException
      * @return NodeList
      */
-    public function queryXpath($xpathQuery, $query = null, DOMNode $contextNode = null)
+    public function queryXpath($xpathQuery, $query = null)
     {
         if (null === ($document = $this->getDocument())) {
             throw new Exception\RuntimeException('Cannot query; no document registered');
@@ -258,19 +255,19 @@ class Query
                 break;
         }
         $errors = libxml_get_errors();
-        if (! empty($errors)) {
+        if (!empty($errors)) {
             $this->documentErrors = $errors;
             libxml_clear_errors();
         }
         libxml_disable_entity_loader(false);
         libxml_use_internal_errors(false);
 
-        if (! $success) {
+        if (!$success) {
             throw new Exception\RuntimeException(sprintf('Error parsing document (type == %s)', $type));
         }
 
-        $nodeList   = $this->getNodeList($domDoc, $xpathQuery, $contextNode);
-        return new NodeList($query, $xpathQuery, $domDoc, $nodeList, $contextNode);
+        $nodeList   = $this->getNodeList($domDoc, $xpathQuery);
+        return new NodeList($query, $xpathQuery, $domDoc, $nodeList);
     }
 
     /**
@@ -300,11 +297,10 @@ class Query
      *
      * @param  DOMDocument $document
      * @param  string|array $xpathQuery
-     * @param  DOMNode $contextNode
      * @return \DOMNodeList
      * @throws \ErrorException If query cannot be executed
      */
-    protected function getNodeList($document, $xpathQuery, DOMNode $contextNode = null)
+    protected function getNodeList($document, $xpathQuery)
     {
         $xpath      = new DOMXPath($document);
         foreach ($this->xpathNamespaces as $prefix => $namespaceUri) {
@@ -313,12 +309,12 @@ class Query
         if ($this->xpathPhpFunctions) {
             $xpath->registerNamespace("php", "http://php.net/xpath");
             ($this->xpathPhpFunctions === true) ?
-                $xpath->registerPhpFunctions()
-                : $xpath->registerPhpFunctions($this->xpathPhpFunctions);
+                $xpath->registerPHPFunctions()
+                : $xpath->registerPHPFunctions($this->xpathPhpFunctions);
         }
         $xpathQuery = (string) $xpathQuery;
 
-        $nodeList = $xpath->queryWithErrorException($xpathQuery, $contextNode);
+        $nodeList = $xpath->queryWithErrorException($xpathQuery);
         return $nodeList;
     }
 }

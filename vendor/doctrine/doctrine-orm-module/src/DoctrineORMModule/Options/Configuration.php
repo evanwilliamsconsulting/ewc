@@ -4,7 +4,6 @@ namespace DoctrineORMModule\Options;
 
 use Doctrine\ORM\Mapping\EntityListenerResolver;
 use Doctrine\ORM\Mapping\NamingStrategy;
-use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Repository\RepositoryFactory;
 use Zend\Stdlib\Exception\InvalidArgumentException;
 
@@ -89,7 +88,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $entityNamespaces = [];
+    protected $entityNamespaces = array();
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -97,7 +96,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $datetimeFunctions = [];
+    protected $datetimeFunctions = array();
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -105,7 +104,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $stringFunctions = [];
+    protected $stringFunctions = array();
 
     /**
      * Keys must be function names and values the FQCN of the implementing class.
@@ -113,7 +112,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $numericFunctions = [];
+    protected $numericFunctions = array();
 
     /**
      * Keys must be the name of the custom filter and the value must be
@@ -121,14 +120,14 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $filters = [];
+    protected $filters = array();
 
     /**
      * Keys must be the name of the query and values the DQL query string.
      *
      * @var array
      */
-    protected $namedQueries = [];
+    protected $namedQueries = array();
 
     /**
      * Keys must be the name of the query and the value is an array containing
@@ -136,7 +135,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $namedNativeQueries = [];
+    protected $namedNativeQueries = array();
 
     /**
      * Keys must be the name of the custom hydration method and the value must be
@@ -144,7 +143,7 @@ class Configuration extends DBALConfiguration
      *
      * @var array
      */
-    protected $customHydrationModes = [];
+    protected $customHydrationModes = array();
 
     /**
      * Naming strategy or name of the naming strategy service to be set in ORM
@@ -154,13 +153,6 @@ class Configuration extends DBALConfiguration
      */
     protected $namingStrategy;
 
-    /**
-     * Quote strategy or name of the quote strategy service to be set in ORM
-     * configuration (if any)
-     *
-     * @var string|null|QuoteStrategy
-     */
-    protected $quoteStrategy;
 
     /**
      * Default repository class
@@ -201,13 +193,6 @@ class Configuration extends DBALConfiguration
      * @var SecondLevelCacheConfiguration|null
      */
     protected $secondLevelCache;
-
-    /**
-     * Configuration option for the filter schema assets expression
-     *
-     * @var string|null
-     */
-    protected $filterSchemaAssetsExpression;
 
     /**
      * @param  array $datetimeFunctions
@@ -549,39 +534,6 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  string|null|QuoteStrategy $quoteStrategy
-     * @return self
-     * @throws InvalidArgumentException   when the provided quote strategy does not fit the expected type
-     */
-    public function setQuoteStrategy($quoteStrategy)
-    {
-        if (null === $quoteStrategy
-            || is_string($quoteStrategy)
-            || $quoteStrategy instanceof QuoteStrategy
-        ) {
-            $this->quoteStrategy = $quoteStrategy;
-
-            return $this;
-        }
-
-        throw new InvalidArgumentException(
-            sprintf(
-                'quoteStrategy must be either a string, a Doctrine\ORM\Mapping\QuoteStrategy '
-                . 'instance or null, %s given',
-                is_object($quoteStrategy) ? get_class($quoteStrategy) : gettype($quoteStrategy)
-            )
-        );
-    }
-
-    /**
-     * @return string|null|QuoteStrategy
-     */
-    public function getQuoteStrategy()
-    {
-        return $this->quoteStrategy;
-    }
-
-    /**
      * @param  string|null|RepositoryFactory $repositoryFactory
      * @return self
      * @throws InvalidArgumentException   when the provided repository factory does not fit the expected type
@@ -620,13 +572,10 @@ class Configuration extends DBALConfiguration
      * @see \Doctrine\ORM\Configuration::setClassMetadataFactoryName()
      *
      * @param string $factoryName
-     * @return self
      */
     public function setClassMetadataFactoryName($factoryName)
     {
         $this->classMetadataFactoryName = (string) $factoryName;
-
-        return $this;
     }
 
     /**
@@ -671,13 +620,11 @@ class Configuration extends DBALConfiguration
 
     /**
      * @param  array $secondLevelCache
-     * @return self
+     * @return void
      */
     public function setSecondLevelCache(array $secondLevelCache)
     {
         $this->secondLevelCache = new SecondLevelCacheConfiguration($secondLevelCache);
-
-        return $this;
     }
 
     /**
@@ -689,35 +636,14 @@ class Configuration extends DBALConfiguration
     }
 
     /**
-     * @param  string $filterSchemaAssetsExpression
-     * @return self
-     */
-    public function setFilterSchemaAssetsExpression($filterSchemaAssetsExpression)
-    {
-        $this->filterSchemaAssetsExpression = $filterSchemaAssetsExpression;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFilterSchemaAssetsExpression()
-    {
-        return $this->filterSchemaAssetsExpression;
-    }
-
-    /**
      * Sets default repository class.
      *
      * @param  string $className
-     * @return self
+     * @return void
      */
     public function setDefaultRepositoryClassName($className)
     {
         $this->defaultRepositoryClassName = (string) $className;
-
-        return $this;
     }
 
     /**

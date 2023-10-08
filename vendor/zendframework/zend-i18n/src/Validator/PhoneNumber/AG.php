@@ -1,14 +1,16 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-i18n for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-i18n/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-return [
+return array(
     'code' => '1',
-    'patterns' => [
-        'national' => [
+    'patterns' => array(
+        'national' => array(
             'general' => '/^[2589]\d{9}$/',
             'fixed' => '/^268(?:4(?:6[0-38]|84)|56[0-2])\d{4}$/',
             'mobile' => '/^268(?:464|7(?:2[0-9]|64|7[0-689]|8[02-68]))\d{4}$/',
@@ -18,8 +20,8 @@ return [
             'personal' => '/^5(?:00|33|44)[2-9]\d{6}$/',
             'voip' => '/^26848[01]\d{4}$/',
             'emergency' => '/^9(?:11|99)$/',
-        ],
-        'possible' => [
+        ),
+        'possible' => array(
             'general' => '/^\d{7}(?:\d{3})?$/',
             'mobile' => '/^\d{10}$/',
             'pager' => '/^\d{10}$/',
@@ -28,6 +30,6 @@ return [
             'personal' => '/^\d{10}$/',
             'voip' => '/^\d{10}$/',
             'emergency' => '/^\d{3}$/',
-        ],
-    ],
-];
+        ),
+    ),
+);

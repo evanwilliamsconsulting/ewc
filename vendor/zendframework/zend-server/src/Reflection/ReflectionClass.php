@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-server for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-server/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Server\Reflection;
@@ -22,13 +24,13 @@ class ReflectionClass
      * {@link __set()}
      * @var array
      */
-    protected $config = [];
+    protected $config = array();
 
     /**
      * Array of {@link \Zend\Server\Reflection\Method}s
      * @var array
      */
-    protected $methods = [];
+    protected $methods = array();
 
     /**
      * Namespace
@@ -43,12 +45,6 @@ class ReflectionClass
     protected $reflection;
 
     /**
-     * Reflection class name (needed for serialization)
-     * @var string
-     */
-    protected $name;
-
-    /**
      * Constructor
      *
      * Create array of dispatchable methods, each a
@@ -61,7 +57,6 @@ class ReflectionClass
     public function __construct(PhpReflectionClass $reflection, $namespace = null, $argv = false)
     {
         $this->reflection = $reflection;
-        $this->name = $reflection->getName();
         $this->setNamespace($namespace);
 
         foreach ($reflection->getMethods() as $method) {
@@ -88,7 +83,7 @@ class ReflectionClass
     public function __call($method, $args)
     {
         if (method_exists($this->reflection, $method)) {
-            return call_user_func_array([$this->reflection, $method], $args);
+            return call_user_func_array(array($this->reflection, $method), $args);
         }
 
         throw new Exception\BadMethodCallException('Invalid reflection method');
@@ -161,7 +156,7 @@ class ReflectionClass
             return;
         }
 
-        if (! is_string($namespace) || ! preg_match('/[a-z0-9_\.]+/i', $namespace)) {
+        if (!is_string($namespace) || !preg_match('/[a-z0-9_\.]+/i', $namespace)) {
             throw new Exception\InvalidArgumentException('Invalid namespace');
         }
 
@@ -178,14 +173,6 @@ class ReflectionClass
      */
     public function __wakeup()
     {
-        $this->reflection = new PhpReflectionClass($this->name);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function __sleep()
-    {
-        return ['config', 'methods', 'namespace', 'name'];
+        $this->reflection = new PhpReflectionClass($this->getName());
     }
 }

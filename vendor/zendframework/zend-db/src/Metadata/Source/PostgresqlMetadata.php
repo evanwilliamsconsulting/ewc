@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -55,9 +55,7 @@ class PostgresqlMetadata extends AbstractSource
             ['v', 'is_updatable'],
         ];
 
-        array_walk($isColumns, function (&$c) use ($p) {
-            $c = $p->quoteIdentifierChain($c);
-        });
+        array_walk($isColumns, function (&$c) use ($p) { $c = $p->quoteIdentifierChain($c); });
 
         $sql = 'SELECT ' . implode(', ', $isColumns)
             . ' FROM ' . $p->quoteIdentifierChain(['information_schema', 'tables']) . ' t'
@@ -117,9 +115,7 @@ class PostgresqlMetadata extends AbstractSource
             'numeric_scale',
         ];
 
-        array_walk($isColumns, function (&$c) use ($platform) {
-            $c = $platform->quoteIdentifier($c);
-        });
+        array_walk($isColumns, function (&$c) use ($platform) { $c = $platform->quoteIdentifier($c); });
 
         $sql = 'SELECT ' . implode(', ', $isColumns)
             . ' FROM ' . $platform->quoteIdentifier('information_schema')

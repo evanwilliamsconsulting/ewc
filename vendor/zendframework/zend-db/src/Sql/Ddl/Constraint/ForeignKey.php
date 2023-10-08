@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -52,14 +52,8 @@ class ForeignKey extends AbstractConstraint
      * @param null|string       $onDeleteRule
      * @param null|string       $onUpdateRule
      */
-    public function __construct(
-        $name,
-        $columns,
-        $referenceTable,
-        $referenceColumn,
-        $onDeleteRule = null,
-        $onUpdateRule = null
-    ) {
+    public function __construct($name, $columns, $referenceTable, $referenceColumn, $onDeleteRule = null, $onUpdateRule = null)
+    {
         $this->setName($name);
         $this->setColumns($columns);
         $this->setReferenceTable($referenceTable);
@@ -76,7 +70,7 @@ class ForeignKey extends AbstractConstraint
 
     /**
      * @param  string $referenceTable
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setReferenceTable($referenceTable)
     {
@@ -94,7 +88,7 @@ class ForeignKey extends AbstractConstraint
 
     /**
      * @param  null|string|array $referenceColumn
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setReferenceColumn($referenceColumn)
     {
@@ -113,7 +107,7 @@ class ForeignKey extends AbstractConstraint
 
     /**
      * @param  string $onDeleteRule
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setOnDeleteRule($onDeleteRule)
     {
@@ -132,7 +126,7 @@ class ForeignKey extends AbstractConstraint
 
     /**
      * @param  string $onUpdateRule
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setOnUpdateRule($onUpdateRule)
     {

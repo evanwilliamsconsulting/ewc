@@ -20,12 +20,10 @@
 namespace DoctrineModule\Service;
 
 use DoctrineModule\Controller\CliController;
-use Interop\Container\ContainerInterface;
-use Interop\Container\Exception\ContainerException;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Symfony\Component\Console\Application;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 
 /**
  * Factory responsible of instantiating an {@see \DoctrineModule\Controller\CliController}
@@ -37,32 +35,16 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class CliControllerFactory implements FactoryInterface
 {
     /**
-     * Create an object
-     *
-     * @param  ContainerInterface $container
-     * @param  string             $requestedName
-     * @param  null|array         $options
-     *
-     * @return object
-     * @throws ServiceNotFoundException if unable to resolve the service.
-     * @throws ServiceNotCreatedException if an exception is raised when creating a service.
-     * @throws ContainerException if any other error occurs
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        /* @var $application \Symfony\Component\Console\Application */
-        $application = $container->get('doctrine.cli');
-
-        return new CliController($application);
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @return \DoctrineModule\Controller\CliController
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return $this($container->getServiceLocator(), CliController::class);
+        /* @var $serviceLocator \Zend\ServiceManager\AbstractPluginManager */
+        /* @var $application \Symfony\Component\Console\Application */
+        $application = $serviceLocator->getServiceLocator()->get('doctrine.cli');
+
+        return new CliController($application);
     }
 }

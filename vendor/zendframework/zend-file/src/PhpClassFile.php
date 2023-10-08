@@ -19,12 +19,12 @@ class PhpClassFile extends SplFileInfo
     /**
      * @var array
      */
-    protected $classes = [];
+    protected $classes = array();
 
     /**
      * @var array
      */
-    protected $namespaces = [];
+    protected $namespaces = array();
 
     /**
      * Get classes

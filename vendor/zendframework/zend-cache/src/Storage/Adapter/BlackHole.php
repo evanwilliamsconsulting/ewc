@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -71,12 +71,12 @@ class BlackHole implements
      * Set options.
      *
      * @param array|\Traversable|AdapterOptions $options
-     * @return BlackHole Provides a fluent interface
+     * @return StorageInterface Fluent interface
      */
     public function setOptions($options)
     {
         if ($this->options !== $options) {
-            if (! $options instanceof AdapterOptions) {
+            if (!$options instanceof AdapterOptions) {
                 $options = new AdapterOptions($options);
             }
 
@@ -96,7 +96,7 @@ class BlackHole implements
      */
     public function getOptions()
     {
-        if (! $this->options) {
+        if (!$this->options) {
             $this->setOptions(new AdapterOptions());
         }
         return $this->options;

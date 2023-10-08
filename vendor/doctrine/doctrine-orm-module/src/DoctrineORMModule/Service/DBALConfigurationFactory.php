@@ -1,9 +1,24 @@
 <?php
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license. For more information, see
+ * <http://www.doctrine-project.org>.
+ */
 
 namespace DoctrineORMModule\Service;
 
-use DoctrineORMModule\Options\Configuration as DoctrineORMModuleConfiguration;
-use Interop\Container\ContainerInterface;
 use RuntimeException;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Types\Type;
@@ -34,38 +49,28 @@ class DBALConfigurationFactory implements FactoryInterface
 
     /**
      * {@inheritDoc}
-     *
      * @return \Doctrine\DBAL\Configuration
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config  = new Configuration();
-        $this->setupDBALConfiguration($container, $config);
+        $this->setupDBALConfiguration($serviceLocator, $config);
 
         return $config;
     }
 
     /**
-     * {@inheritDoc}
-     * @return \Doctrine\DBAL\Configuration
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param Configuration           $config
      */
-    public function createService(ServiceLocatorInterface $container)
+    public function setupDBALConfiguration(ServiceLocatorInterface $serviceLocator, Configuration $config)
     {
-        return $this($container, \Doctrine\DBAL\Configuration::class);
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @param Configuration      $config
-     */
-    public function setupDBALConfiguration(ContainerInterface $container, Configuration $config)
-    {
-        $options = $this->getOptions($container);
-        $config->setResultCacheImpl($container->get($options->resultCache));
+        $options = $this->getOptions($serviceLocator);
+        $config->setResultCacheImpl($serviceLocator->get($options->resultCache));
 
         $sqlLogger = $options->sqlLogger;
-        if (is_string($sqlLogger) and $container->has($sqlLogger)) {
-            $sqlLogger = $container->get($sqlLogger);
+        if (is_string($sqlLogger) and $serviceLocator->has($sqlLogger)) {
+            $sqlLogger = $serviceLocator->get($sqlLogger);
         }
         $config->setSQLLogger($sqlLogger);
 
@@ -79,15 +84,15 @@ class DBALConfigurationFactory implements FactoryInterface
     }
 
     /**
-     * @param  ContainerInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return mixed
      * @throws RuntimeException
      */
-    public function getOptions(ContainerInterface $serviceLocator)
+    public function getOptions(ServiceLocatorInterface $serviceLocator)
     {
-        $options = $serviceLocator->get('config');
+        $options = $serviceLocator->get('Config');
         $options = $options['doctrine'];
-        $options = $options['configuration'][$this->name] ?? null;
+        $options = isset($options['configuration'][$this->name]) ? $options['configuration'][$this->name] : null;
 
         if (null === $options) {
             throw new RuntimeException(
@@ -108,6 +113,6 @@ class DBALConfigurationFactory implements FactoryInterface
      */
     protected function getOptionsClass()
     {
-        return DoctrineORMModuleConfiguration::class;
+        return 'DoctrineModule\Options\Configuration';
     }
 }

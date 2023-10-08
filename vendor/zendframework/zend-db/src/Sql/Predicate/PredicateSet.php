@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -44,11 +44,11 @@ class PredicateSet implements PredicateInterface, Countable
      *
      * @param  PredicateInterface $predicate
      * @param  string $combination
-     * @return self Provides a fluent interface
+     * @return PredicateSet
      */
     public function addPredicate(PredicateInterface $predicate, $combination = null)
     {
-        if ($combination === null || ! in_array($combination, [self::OP_AND, self::OP_OR])) {
+        if ($combination === null || !in_array($combination, [self::OP_AND, self::OP_OR])) {
             $combination = $this->defaultCombination;
         }
 
@@ -66,8 +66,7 @@ class PredicateSet implements PredicateInterface, Countable
      *
      * @param PredicateInterface|\Closure|string|array $predicates
      * @param string $combination
-     * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException
+     * @return PredicateSet
      */
     public function addPredicates($predicates, $combination = self::OP_AND)
     {
@@ -84,9 +83,9 @@ class PredicateSet implements PredicateInterface, Countable
         }
         if (is_string($predicates)) {
             // String $predicate should be passed as an expression
-            $predicate = (strpos($predicates, Expression::PLACEHOLDER) !== false)
+            $predicates = (strpos($predicates, Expression::PLACEHOLDER) !== false)
                 ? new Expression($predicates) : new Literal($predicates);
-            $this->addPredicate($predicate, $combination);
+            $this->addPredicate($predicates, $combination);
             return $this;
         }
         if (is_array($predicates)) {
@@ -96,31 +95,30 @@ class PredicateSet implements PredicateInterface, Countable
                     if (strpos($pkey, '?') !== false) {
                         // First, process strings that the abstraction replacement character ?
                         // as an Expression predicate
-                        $predicate = new Expression($pkey, $pvalue);
-                    } elseif ($pvalue === null) {
-                        // Otherwise, if still a string, do something intelligent with the PHP type provided
+                        $predicates = new Expression($pkey, $pvalue);
+                    } elseif ($pvalue === null) { // Otherwise, if still a string, do something intelligent with the PHP type provided
                         // map PHP null to SQL IS NULL expression
-                        $predicate = new IsNull($pkey);
+                        $predicates = new IsNull($pkey);
                     } elseif (is_array($pvalue)) {
                         // if the value is an array, assume IN() is desired
-                        $predicate = new In($pkey, $pvalue);
+                        $predicates = new In($pkey, $pvalue);
                     } elseif ($pvalue instanceof PredicateInterface) {
                         throw new Exception\InvalidArgumentException(
                             'Using Predicate must not use string keys'
                         );
                     } else {
                         // otherwise assume that array('foo' => 'bar') means "foo" = 'bar'
-                        $predicate = new Operator($pkey, Operator::OP_EQ, $pvalue);
+                        $predicates = new Operator($pkey, Operator::OP_EQ, $pvalue);
                     }
                 } elseif ($pvalue instanceof PredicateInterface) {
                     // Predicate type is ok
-                    $predicate = $pvalue;
+                    $predicates = $pvalue;
                 } else {
                     // must be an array of expressions (with int-indexed array)
-                    $predicate = (strpos($pvalue, Expression::PLACEHOLDER) !== false)
+                    $predicates = (strpos($pvalue, Expression::PLACEHOLDER) !== false)
                         ? new Expression($pvalue) : new Literal($pvalue);
                 }
-                $this->addPredicate($predicate, $combination);
+                $this->addPredicate($predicates, $combination);
             }
         }
         return $this;
@@ -140,7 +138,7 @@ class PredicateSet implements PredicateInterface, Countable
      * Add predicate using OR operator
      *
      * @param  PredicateInterface $predicate
-     * @return self Provides a fluent interface
+     * @return PredicateSet
      */
     public function orPredicate(PredicateInterface $predicate)
     {
@@ -152,7 +150,7 @@ class PredicateSet implements PredicateInterface, Countable
      * Add predicate using AND operator
      *
      * @param  PredicateInterface $predicate
-     * @return self Provides a fluent interface
+     * @return PredicateSet
      */
     public function andPredicate(PredicateInterface $predicate)
     {
@@ -182,8 +180,8 @@ class PredicateSet implements PredicateInterface, Countable
                 $parts[] = ')';
             }
 
-            if (isset($this->predicates[$i + 1])) {
-                $parts[] = sprintf(' %s ', $this->predicates[$i + 1][0]);
+            if (isset($this->predicates[$i+1])) {
+                $parts[] = sprintf(' %s ', $this->predicates[$i+1][0]);
             }
         }
         return $parts;

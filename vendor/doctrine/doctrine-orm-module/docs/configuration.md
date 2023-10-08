@@ -1,197 +1,191 @@
 ### How to Register Custom DQL Functions
 
 ```php
-return [
-    'doctrine' => [
-        'configuration' => [
-            'orm_default' => [
-                'numeric_functions' => [
-                    'ROUND' => 'path\to\my\query\round',
-                ],
-            ],
-        ],
-    ],
-];
+return array(
+    'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'numeric_functions' => array(
+                    'ROUND' => 'path\to\my\query\round'
+                )
+            )
+        ),
+    ),
+)
 ```
 
 ### How to register type mapping
 
 ```php
-return [
-    'doctrine' => [
-        'connection' => [
-            'orm_default' => [
-                'doctrine_type_mappings' => [
-                    'enum' => 'string',
-                ],
-            ],
-        ],
-    ],
-];
+'doctrine' => array(
+    'connection' => array(
+        'orm_default' => array(
+            'doctrine_type_mappings' => array(
+                'enum' => 'string'
+            ),
+        )
+    )
+),
 ```
 
 ### How to add new type
 
 ```php
-return [
-    'doctrine' => [
-        'configuration' => [
-            'orm_default' => [
-                'types' => [
-                    'mytype' => 'Application\Types\MyType',
-                ],
-            ],
-        ],
-    ],
-];
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'types' => array(
+                'mytype' => 'Application\Types\MyType'
+            )
+        )
+    ),
+),
 ```
 
 ```php
-return [
-    'doctrine' => [
-        'connection' => [
-            'orm_default' => [
-                'doctrine_type_mappings' => [
-                    'mytype' => 'mytype',
-                ],
-            ],
-        ],
-    ],
-];
+'connection' => array(
+    'orm_default' => array(
+        'doctrine_type_mappings' => array(
+            'mytype' => 'mytype'
+        ),
+    )
+),
 ```
 
 ### Option to set the doctrine type comment (DC2Type:myType) for custom types
 
 ```php
-return [
-    'doctrine' => [
-        'connection' => [
-            'orm_default' => [
-                'doctrineCommentedTypes' => [
-                    'mytype',
-                ],
-            ],
-        ],
-    ],
-];
+'doctrine' => array(
+    'connection' => array(
+        'orm_default' => array(
+            'doctrineCommentedTypes' => array(
+                'mytype'
+            ),
+        ),
+    ),
+),
 ```
 
 ### How to Define Relationships with Abstract Classes and Interfaces (ResolveTargetEntityListener)
 
 ```php
-return [
-    'doctrine' => [
-        'entity_resolver' => [
-            'orm_default' => [
-                'resolvers' => [
-                    'Acme\\InvoiceModule\\Model\\InvoiceSubjectInterface',
-                    'Acme\\CustomerModule\\Entity\\Customer',
-                ],
-            ],
-        ],
-    ],
-];
+'doctrine' => array(
+    'entity_resolver' => array(
+        'orm_default' => array(
+            'resolvers' => array(
+                'Acme\\InvoiceModule\\Model\\InvoiceSubjectInterface', 'Acme\\CustomerModule\\Entity\\Customer'
+            )
+        )
+    )
+)
 ```
 
 ### Set a custom default repository
 
 ```php
-return [
-    'doctrine' => [
-        'configuration' => [
-            'orm_default' => [
-                'default_repository_class_name' => 'MyCustomRepository',
-            ],
-        ],
-    ],
-];
+'doctrine' => array(
+    'configuration' => array(
+        'orm_default' => array(
+            'default_repository_class_name' => 'MyCustomRepository'
+        )
+    )
+)
 ```
 
 ### How to Use Two Connections
 
 ```php
-return [
-    'doctrine' => [
-        'connection' => [
-            'orm_crawler' => [
-                'driverClass'   => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'eventmanager'  => 'orm_crawler',
-                'configuration' => 'orm_crawler',
-                'params'        => [
+'doctrine' => array(
+        'connection' => array(
+            'orm_crawler' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'root',
                     'password' => 'root',
                     'dbname'   => 'crawler',
-                    'driverOptions' => [
-                        1002 => 'SET NAMES utf8',
-                    ],
-                ],
-            ],
-        ],
+                    'driverOptions' => array(
+                        1002 => 'SET NAMES utf8'
+                    ),
+                )
+            )
+        ),
 
-        'configuration' => [
-            'orm_crawler' => [
+        'configuration' => array(
+            'orm_crawler' => array(
                 'metadata_cache'    => 'array',
                 'query_cache'       => 'array',
                 'result_cache'      => 'array',
                 'hydration_cache'   => 'array',
-                'driver'            => 'orm_crawler_chain',
+                'driver'            => 'orm_crawler',
                 'generate_proxies'  => true,
                 'proxy_dir'         => 'data/DoctrineORMModule/Proxy',
                 'proxy_namespace'   => 'DoctrineORMModule\Proxy',
-                'filters'           => [],
-            ],
-        ],
+                'filters'           => array()
+            )
+        ),
 
-        'driver' => [
-            'orm_crawler_annotation' => [
+        'driver' => array(
+            'Crawler_Driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [
-                    __DIR__ . '/../src/Crawler/Entity',
-                ],
-            ],
-            'orm_crawler_chain' => [
+                'paths' => array(
+                    __DIR__ . '/../src/Crawler/Entity'
+                )
+            ),
+            'orm_crawler' => array(
                 'class'   => 'Doctrine\ORM\Mapping\Driver\DriverChain',
-                'drivers' => [
-                    'Crawler\Entity' =>  'orm_crawler_annotation',
-                ],
-            ],
-        ],
+                'drivers' => array(
+                    'Crawler\Entity' =>  'Crawler_Driver'
+                )
+            ),
+        ),
 
-        'entitymanager' => [
-            'orm_crawler' => [
+        'entitymanager' => array(
+            'orm_crawler' => array(
                 'connection'    => 'orm_crawler',
-                'configuration' => 'orm_crawler',
-            ],
-        ],
+                'configuration' => 'orm_crawler'
+            )
+        ),
 
-        'eventmanager' => [
-            'orm_crawler' => [],
-        ],
+        'eventmanager' => array(
+            'orm_crawler' => array()
+        ),
 
-        'sql_logger_collector' => [
-            'orm_crawler' => [],
-        ],
+        'sql_logger_collector' => array(
+            'orm_crawler' => array(),
+        ),
 
-        'entity_resolver' => [
-            'orm_crawler' => [],
-        ],
-    ],
-];
+        'entity_resolver' => array(
+            'orm_crawler' => array()
+        ),
+
+    ),
 ```
 
-The `DoctrineModule\ServiceFactory\AbstractDoctrineServiceFactory` will create the following objects as needed:
-* 'doctrine.connection.orm_crawler'
-* 'doctrine.configuration.orm_crawler'
-* 'doctrine.entitymanager.orm_crawler'
-* 'doctrine.driver.orm_crawler'
-* 'doctrine.eventmanager.orm_crawler'
-* 'doctrine.entity_resolver.orm_crawler'
-* 'doctrine.sql_logger_collector.orm_crawler'
+Module.php
+```php
+public function getServiceConfig()
+{
+    return array(
+        'factories' => array(
+            'doctrine.connection.orm_crawler'           => new \DoctrineORMModule\Service\DBALConnectionFactory('orm_crawler'),
+            'doctrine.configuration.orm_crawler'        => new \DoctrineORMModule\Service\ConfigurationFactory('orm_crawler'),
+            'doctrine.entitymanager.orm_crawler'        => new \DoctrineORMModule\Service\EntityManagerFactory('orm_crawler'),
 
-You can retrieve them from the service manager via their keys.
+            'doctrine.driver.orm_crawler'               => new \DoctrineModule\Service\DriverFactory('orm_crawler'),
+            'doctrine.eventmanager.orm_crawler'         => new \DoctrineModule\Service\EventManagerFactory('orm_crawler'),
+            'doctrine.entity_resolver.orm_crawler'      => new \DoctrineORMModule\Service\EntityResolverFactory('orm_crawler'),
+            'doctrine.sql_logger_collector.orm_crawler' => new \DoctrineORMModule\Service\SQLLoggerCollectorFactory('orm_crawler'),
+
+            'DoctrineORMModule\Form\Annotation\AnnotationBuilder' => function(\Zend\ServiceManager\ServiceLocatorInterface $sl) {
+                return new \DoctrineORMModule\Form\Annotation\AnnotationBuilder($sl->get('doctrine.entitymanager.orm_crawler'));
+            },
+        ),
+    );
+}
+```
 
 ### How to Use Naming Strategy
 
@@ -200,41 +194,18 @@ You can retrieve them from the service manager via their keys.
 Zend Configuration
 
 ```php
-return [
-    'service_manager' => [
-        'invokables' => [
+return array(
+    'service_manager' => array(
+        'invokables' => array(
             'Doctrine\ORM\Mapping\UnderscoreNamingStrategy' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy',
-        ],
-    ],
-    'doctrine' => [
-        'configuration' => [
-            'orm_default' => [
-                'naming_strategy' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy',
-            ],
-        ],
-    ],
-];
-```
-
-### How to Use Quote Strategy
-
-[Official documentation](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words)
-
-Zend Configuration
-
-```php
-return [
-    'service_manager' => [
-        'invokables' => [
-            'Doctrine\ORM\Mapping\AnsiQuoteStrategy' => 'Doctrine\ORM\Mapping\AnsiQuoteStrategy',
-        ],
-    ],
-    'doctrine' => [
-        'configuration' => [
-            'orm_default' => [
-                'quote_strategy' => 'Doctrine\ORM\Mapping\AnsiQuoteStrategy',
-            ],
-        ],
-    ],
-];
+        ),
+    ),
+    'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'naming_strategy' => 'Doctrine\ORM\Mapping\UnderscoreNamingStrategy'
+            ),
+        ),
+    ),
+);
 ```

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -51,7 +51,7 @@ abstract class AbstractConstraint implements ConstraintInterface
 
     /**
      * @param  string $name
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setName($name)
     {
@@ -69,7 +69,7 @@ abstract class AbstractConstraint implements ConstraintInterface
 
     /**
      * @param  null|string|array $columns
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setColumns($columns)
     {
@@ -80,7 +80,7 @@ abstract class AbstractConstraint implements ConstraintInterface
 
     /**
      * @param  string $column
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addColumn($column)
     {

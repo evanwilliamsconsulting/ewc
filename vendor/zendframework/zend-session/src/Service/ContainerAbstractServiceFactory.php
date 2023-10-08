@@ -9,16 +9,14 @@
 
 namespace Zend\Session\Service;
 
-use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Session\Container;
-use Zend\Session\ManagerInterface;
 
 /**
  * Session container abstract service factory.
  *
- * Allows creating Container instances, using the ManagerInterface
+ * Allows creating Container instances, using the Zend\Service\ManagerInterface
  * if present. Containers are named in a "session_containers" array in the
  * Config service:
  *
@@ -53,20 +51,19 @@ class ContainerAbstractServiceFactory implements AbstractFactoryInterface
     protected $configKey = 'session_containers';
 
     /**
-     * @var ManagerInterface
+     * @var \Zend\Session\ManagerInterface
      */
     protected $sessionManager;
 
     /**
-     * Can we create an instance of the given service? (v3 usage).
-     *
-     * @param ContainerInterface $container
-     * @param string $requestedName
+     * @param  ServiceLocatorInterface $services
+     * @param  string                  $name
+     * @param  string                  $requestedName
      * @return bool
      */
-    public function canCreate(ContainerInterface $container, $requestedName)
+    public function canCreateServiceWithName(ServiceLocatorInterface $services, $name, $requestedName)
     {
-        $config = $this->getConfig($container);
+        $config = $this->getConfig($services);
         if (empty($config)) {
             return false;
         }
@@ -76,62 +73,36 @@ class ContainerAbstractServiceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * Can we create an instance of the given service? (v2 usage)
-     *
-     * @param ServiceLocatorInterface $container
-     * @param string $name
-     * @param string $requestedName
-     * @return bool
-     */
-    public function canCreateServiceWithName(ServiceLocatorInterface $container, $name, $requestedName)
-    {
-        return $this->canCreate($container, $requestedName);
-    }
-
-    /**
-     * Create and return a named container (v3 usage).
-     *
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @return Container
-     */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
-        $manager = $this->getSessionManager($container);
-        return new Container($requestedName, $manager);
-    }
-
-    /**
-     * Create and return a named container (v2 usage).
-     *
-     * @param  ContainerInterface      $container
+     * @param  ServiceLocatorInterface $services
+     * @param  string                  $name
      * @param  string                  $requestedName
      * @return Container
      */
-    public function createServiceWithName(ServiceLocatorInterface $container, $name, $requestedName)
+    public function createServiceWithName(ServiceLocatorInterface $services, $name, $requestedName)
     {
-        return $this($container, $requestedName);
+        $manager = $this->getSessionManager($services);
+        return new Container($requestedName, $manager);
     }
 
     /**
      * Retrieve config from service locator, and cache for later
      *
-     * @param  ContainerInterface $container
+     * @param  ServiceLocatorInterface $services
      * @return false|array
      */
-    protected function getConfig(ContainerInterface $container)
+    protected function getConfig(ServiceLocatorInterface $services)
     {
         if (null !== $this->config) {
             return $this->config;
         }
 
-        if (! $container->has('config')) {
+        if (!$services->has('Config')) {
             $this->config = [];
             return $this->config;
         }
 
-        $config = $container->get('config');
-        if (! isset($config[$this->configKey]) || ! is_array($config[$this->configKey])) {
+        $config = $services->get('Config');
+        if (!isset($config[$this->configKey]) || !is_array($config[$this->configKey])) {
             $this->config = [];
             return $this->config;
         }
@@ -147,17 +118,17 @@ class ContainerAbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Retrieve the session manager instance, if any
      *
-     * @param ContainerInterface $container
-     * @return null|ManagerInterface
+     * @param  ServiceLocatorInterface $services
+     * @return null|\Zend\Session\ManagerInterface
      */
-    protected function getSessionManager(ContainerInterface $container)
+    protected function getSessionManager(ServiceLocatorInterface $services)
     {
         if ($this->sessionManager !== null) {
             return $this->sessionManager;
         }
 
-        if ($container->has(ManagerInterface::class)) {
-            $this->sessionManager = $container->get(ManagerInterface::class);
+        if ($services->has('Zend\Session\ManagerInterface')) {
+            $this->sessionManager = $services->get('Zend\Session\ManagerInterface');
         }
 
         return $this->sessionManager;

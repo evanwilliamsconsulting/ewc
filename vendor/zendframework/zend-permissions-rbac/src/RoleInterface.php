@@ -51,7 +51,7 @@ interface RoleInterface extends RecursiveIterator
     public function setParent($parent);
 
     /**
-     * @return null|RoleInterface|array
+     * @return null|RoleInterface
      */
     public function getParent();
 }

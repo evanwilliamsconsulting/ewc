@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -11,7 +11,6 @@ namespace Zend\Db\Sql\Ddl;
 
 use Zend\Db\Adapter\Platform\PlatformInterface;
 use Zend\Db\Sql\AbstractSql;
-use Zend\Db\Sql\TableIdentifier;
 
 class AlterTable extends AbstractSql implements SqlInterface
 {
@@ -86,7 +85,7 @@ class AlterTable extends AbstractSql implements SqlInterface
     protected $table = '';
 
     /**
-     * @param string|TableIdentifier $table
+     * @param string $table
      */
     public function __construct($table = '')
     {
@@ -95,7 +94,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  string $name
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function setTable($name)
     {
@@ -106,7 +105,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  Column\ColumnInterface $column
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addColumn(Column\ColumnInterface $column)
     {
@@ -118,7 +117,7 @@ class AlterTable extends AbstractSql implements SqlInterface
     /**
      * @param  string $name
      * @param  Column\ColumnInterface $column
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function changeColumn($name, Column\ColumnInterface $column)
     {
@@ -129,7 +128,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  string $name
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function dropColumn($name)
     {
@@ -140,7 +139,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  string $name
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function dropConstraint($name)
     {
@@ -151,7 +150,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     /**
      * @param  Constraint\ConstraintInterface $constraint
-     * @return self Provides a fluent interface
+     * @return self
      */
     public function addConstraint(Constraint\ConstraintInterface $constraint)
     {
@@ -180,7 +179,7 @@ class AlterTable extends AbstractSql implements SqlInterface
 
     protected function processTable(PlatformInterface $adapterPlatform = null)
     {
-        return [$this->resolveTable($this->table, $adapterPlatform)];
+        return [$adapterPlatform->quoteIdentifier($this->table)];
     }
 
     protected function processAddColumns(PlatformInterface $adapterPlatform = null)

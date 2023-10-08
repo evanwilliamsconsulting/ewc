@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -44,7 +44,7 @@ class Result implements Iterator, ResultInterface
     protected $currentComplete = false;
 
     /**
-     * @var bool|array
+     * @var bool
      */
     protected $currentData = false;
 
@@ -64,11 +64,11 @@ class Result implements Iterator, ResultInterface
      * @param resource $resource
      * @param null|int $generatedValue
      * @param null|int $rowCount
-     * @return self Provides a fluent interface
+     * @return Result
      */
     public function initialize($resource, $generatedValue = null, $rowCount = null)
     {
-        if (! is_resource($resource) && get_resource_type($resource) !== 'oci8 statement') {
+        if (!is_resource($resource) && get_resource_type($resource) !== 'oci8 statement') {
             throw new Exception\InvalidArgumentException('Invalid resource provided.');
         }
         $this->resource = $resource;

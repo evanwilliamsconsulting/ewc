@@ -1,21 +1,23 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-mime for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-mime/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Mime;
 
 class Message
 {
-    protected $parts = [];
+    protected $parts = array();
     protected $mime = null;
 
     /**
      * Returns the list of all Zend\Mime\Part in the message
      *
-     * @return Part[]
+     * @return array of \Zend\Mime\Part
      */
     public function getParts()
     {
@@ -26,34 +28,23 @@ class Message
      * Sets the given array of Zend\Mime\Part as the array for the message
      *
      * @param array $parts
-     * @return self
      */
     public function setParts($parts)
     {
         $this->parts = $parts;
-        return $this;
     }
 
     /**
      * Append a new Zend\Mime\Part to the current message
      *
      * @param \Zend\Mime\Part $part
-     * @throws Exception\InvalidArgumentException
-     * @return self
      */
     public function addPart(Part $part)
     {
-        foreach ($this->getParts() as $key => $row) {
-            if ($part == $row) {
-                throw new Exception\InvalidArgumentException(sprintf(
-                    'Provided part %s already defined.',
-                    $part->getId()
-                ));
-            }
-        }
-
+        /**
+         * @todo check for duplicate object handle
+         */
         $this->parts[] = $part;
-        return $this;
     }
 
     /**
@@ -74,12 +65,10 @@ class Message
      * Zend\Mime for generating the boundary.
      *
      * @param \Zend\Mime\Mime $mime
-     * @return self
      */
     public function setMime(Mime $mime)
     {
         $this->mime = $mime;
-        return $this;
     }
 
     /**
@@ -116,7 +105,7 @@ class Message
      */
     public function generateMessage($EOL = Mime::LINEEND)
     {
-        if (! $this->isMultiPart()) {
+        if (!$this->isMultiPart()) {
             if (empty($this->parts)) {
                 return '';
             }
@@ -187,37 +176,35 @@ class Message
      * @throws Exception\RuntimeException
      * @return array
      */
-    // @codingStandardsIgnoreStart
     protected static function _disassembleMime($body, $boundary)
     {
-        // @codingStandardsIgnoreEnd
         $start  = 0;
-        $res    = [];
+        $res    = array();
         // find every mime part limiter and cut out the
         // string before it.
         // the part before the first boundary string is discarded:
         $p = strpos($body, '--' . $boundary."\n", $start);
         if ($p === false) {
             // no parts found!
-            return [];
+            return array();
         }
 
         // position after first boundary line
         $start = $p + 3 + strlen($boundary);
 
         while (($p = strpos($body, '--' . $boundary . "\n", $start)) !== false) {
-            $res[] = substr($body, $start, $p - $start);
+            $res[] = substr($body, $start, $p-$start);
             $start = $p + 3 + strlen($boundary);
         }
 
         // no more parts, find end boundary
         $p = strpos($body, '--' . $boundary . '--', $start);
-        if ($p === false) {
+        if ($p===false) {
             throw new Exception\RuntimeException('Not a valid Mime Message: End Missing');
         }
 
         // the remaining part also needs to be parsed:
-        $res[] = substr($body, $start, $p - $start);
+        $res[] = substr($body, $start, $p-$start);
         return $res;
     }
 
@@ -226,28 +213,19 @@ class Message
      * all the MIME parts set according to the given string
      *
      * @param string $message
-     * @param string $boundary Multipart boundary; if omitted, $message will be
-     *     treated as a single part.
+     * @param string $boundary
      * @param string $EOL EOL string; defaults to {@link Zend\Mime\Mime::LINEEND}
      * @throws Exception\RuntimeException
-     * @return Message
+     * @return \Zend\Mime\Message
      */
-    public static function createFromMessage($message, $boundary = null, $EOL = Mime::LINEEND)
+    public static function createFromMessage($message, $boundary, $EOL = Mime::LINEEND)
     {
-        if ($boundary) {
-            $parts = Decode::splitMessageStruct($message, $boundary, $EOL);
-        } else {
-            Decode::splitMessage($message, $headers, $body, $EOL);
-            $parts = [[
-                'header' => $headers,
-                'body'   => $body,
-            ]];
-        }
+        $parts = Decode::splitMessageStruct($message, $boundary, $EOL);
 
         $res = new static();
         foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
-            $properties = [];
+            $properties = array();
             foreach ($part['header'] as $header) {
                 /** @var \Zend\Mail\Header\HeaderInterface $header */
                 /**

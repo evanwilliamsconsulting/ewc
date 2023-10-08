@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -137,7 +137,7 @@ class ColumnObject
      * Set table name
      *
      * @param string $tableName
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setTableName($tableName)
     {
@@ -175,7 +175,7 @@ class ColumnObject
 
     /**
      * @param int $ordinalPosition to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setOrdinalPosition($ordinalPosition)
     {
@@ -193,7 +193,7 @@ class ColumnObject
 
     /**
      * @param mixed $columnDefault to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setColumnDefault($columnDefault)
     {
@@ -211,7 +211,7 @@ class ColumnObject
 
     /**
      * @param bool $isNullable to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setIsNullable($isNullable)
     {
@@ -237,7 +237,7 @@ class ColumnObject
 
     /**
      * @param string $dataType the $dataType to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setDataType($dataType)
     {
@@ -255,7 +255,7 @@ class ColumnObject
 
     /**
      * @param int $characterMaximumLength the $characterMaximumLength to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setCharacterMaximumLength($characterMaximumLength)
     {
@@ -273,7 +273,7 @@ class ColumnObject
 
     /**
      * @param int $characterOctetLength the $characterOctetLength to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setCharacterOctetLength($characterOctetLength)
     {
@@ -291,7 +291,7 @@ class ColumnObject
 
     /**
      * @param int $numericPrecision the $numericPrevision to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setNumericPrecision($numericPrecision)
     {
@@ -309,7 +309,7 @@ class ColumnObject
 
     /**
      * @param int $numericScale the $numericScale to set
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setNumericScale($numericScale)
     {
@@ -327,7 +327,7 @@ class ColumnObject
 
     /**
      * @param  bool $numericUnsigned
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setNumericUnsigned($numericUnsigned)
     {
@@ -353,7 +353,7 @@ class ColumnObject
 
     /**
      * @param array $erratas
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setErratas(array $erratas)
     {
@@ -378,7 +378,7 @@ class ColumnObject
     /**
      * @param string $errataName
      * @param mixed $errataValue
-     * @return self Provides a fluent interface
+     * @return ColumnObject
      */
     public function setErrata($errataName, $errataValue)
     {

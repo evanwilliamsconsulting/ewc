@@ -1,8 +1,10 @@
 <?php
 /**
- * @see       https://github.com/zendframework/zend-tag for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-tag/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Tag;
@@ -31,17 +33,17 @@ class Item implements TaggableInterface
      *
      * @var string
      */
-    protected $params = [];
+    protected $params = array();
 
     /**
      * Option keys to skip when calling setOptions()
      *
      * @var array
      */
-    protected $skipOptions = [
+    protected $skipOptions = array(
         'options',
         'param'
-    ];
+    );
 
     /**
      * Create a new tag according to the options
@@ -57,7 +59,7 @@ class Item implements TaggableInterface
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (! is_array($options)) {
+        if (!is_array($options)) {
             throw new Exception\InvalidArgumentException('Invalid options provided to constructor');
         }
 
@@ -113,7 +115,7 @@ class Item implements TaggableInterface
      */
     public function setTitle($title)
     {
-        if (! is_string($title)) {
+        if (!is_string($title)) {
             throw new Exception\InvalidArgumentException('Title must be a string');
         }
 
@@ -140,7 +142,7 @@ class Item implements TaggableInterface
      */
     public function setWeight($weight)
     {
-        if (! is_numeric($weight)) {
+        if (!is_numeric($weight)) {
             throw new Exception\InvalidArgumentException('Weight must be numeric');
         }
 

@@ -26,7 +26,6 @@ class FormEmail extends FormInput
         'form'           => true,
         'list'           => true,
         'maxlength'      => true,
-        'minlength'      => true,
         'multiple'       => true,
         'pattern'        => true,
         'placeholder'    => true,

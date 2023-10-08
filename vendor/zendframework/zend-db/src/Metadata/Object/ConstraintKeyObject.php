@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -89,7 +89,7 @@ class ConstraintKeyObject
      * Set column name
      *
      * @param  string $columnName
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setColumnName($columnName)
     {
@@ -111,7 +111,7 @@ class ConstraintKeyObject
      * Set ordinal position
      *
      * @param  int $ordinalPosition
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setOrdinalPosition($ordinalPosition)
     {
@@ -133,7 +133,7 @@ class ConstraintKeyObject
      * Set position in unique constraint
      *
      * @param  bool $positionInUniqueConstraint
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setPositionInUniqueConstraint($positionInUniqueConstraint)
     {
@@ -155,7 +155,7 @@ class ConstraintKeyObject
      * Set referenced table schema
      *
      * @param string $referencedTableSchema
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setReferencedTableSchema($referencedTableSchema)
     {
@@ -177,7 +177,7 @@ class ConstraintKeyObject
      * Set Referenced table name
      *
      * @param  string $referencedTableName
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setReferencedTableName($referencedTableName)
     {
@@ -199,7 +199,7 @@ class ConstraintKeyObject
      * Set referenced column name
      *
      * @param  string $referencedColumnName
-     * @return self Provides a fluent interface
+     * @return ConstraintKeyObject
      */
     public function setReferencedColumnName($referencedColumnName)
     {

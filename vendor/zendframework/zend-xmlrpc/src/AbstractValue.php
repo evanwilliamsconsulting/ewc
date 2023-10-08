@@ -10,7 +10,6 @@
 namespace Zend\XmlRpc;
 
 use DateTime;
-use SimpleXMLElement;
 
 /**
  * Represent a native XML-RPC value entity, used as parameters for the methods
@@ -92,7 +91,7 @@ abstract class AbstractValue
      */
     public static function getGenerator()
     {
-        if (! static::$generator) {
+        if (!static::$generator) {
             if (extension_loaded('xmlwriter')) {
                 static::$generator = new Generator\XmlWriter();
             } else {
@@ -142,7 +141,7 @@ abstract class AbstractValue
      */
     public function saveXml()
     {
-        if (! $this->xml) {
+        if (!$this->xml) {
             $this->generateXml();
             $this->xml = (string) $this->getGenerator();
         }
@@ -156,7 +155,7 @@ abstract class AbstractValue
      */
     public function generateXml()
     {
-        $this->generate();
+        $this->_generateXml();
     }
 
     /**
@@ -179,11 +178,11 @@ abstract class AbstractValue
         switch ($type) {
             case self::AUTO_DETECT_TYPE:
                 // Auto detect the XML-RPC native type from the PHP type of $value
-                return static::phpVarToNativeXmlRpc($value);
+                return static::_phpVarToNativeXmlRpc($value);
 
             case self::XML_STRING:
                 // Parse the XML string given in $value and get the XML-RPC value in it
-                return static::xmlStringToNativeXmlRpc($value);
+                return static::_xmlStringToNativeXmlRpc($value);
 
             case self::XMLRPC_TYPE_I4:
                 // fall through to the next case
@@ -244,7 +243,7 @@ abstract class AbstractValue
             }
             return static::getXmlRpcTypeByValue(get_object_vars($value));
         } elseif (is_array($value)) {
-            if (! empty($value) && is_array($value) && (array_keys($value) !== range(0, count($value) - 1))) {
+            if (!empty($value) && is_array($value) && (array_keys($value) !== range(0, count($value) - 1))) {
                 return self::XMLRPC_TYPE_STRUCT;
             }
             return self::XMLRPC_TYPE_ARRAY;
@@ -274,7 +273,7 @@ abstract class AbstractValue
      * @return AbstractValue
      * @static
      */
-    protected static function phpVarToNativeXmlRpc($value)
+    protected static function _phpVarToNativeXmlRpc($value)
     {
         // @see http://framework.zend.com/issues/browse/ZF-8623
         if ($value instanceof AbstractValue) {
@@ -321,11 +320,11 @@ abstract class AbstractValue
      * @return \Zend\XmlRpc\AbstractValue
      * @static
      */
-    protected static function xmlStringToNativeXmlRpc($xml)
+    protected static function _xmlStringToNativeXmlRpc($xml)
     {
-        static::createSimpleXMLElement($xml);
+        static::_createSimpleXMLElement($xml);
 
-        static::extractTypeAndValue($xml, $type, $value);
+        static::_extractTypeAndValue($xml, $type, $value);
 
         switch ($type) {
             // All valid and known XML-RPC native values
@@ -378,25 +377,25 @@ abstract class AbstractValue
                         . ' type: ARRAY tag must contain DATA tag'
                     );
                 }
-                $values = [];
+                $values = array();
                 // Parse all the elements of the array from the XML string
                 // (simple xml element) to Value objects
                 foreach ($data->value as $element) {
-                    $values[] = static::xmlStringToNativeXmlRpc($element);
+                    $values[] = static::_xmlStringToNativeXmlRpc($element);
                 }
                 $xmlrpcValue = new Value\ArrayValue($values);
                 break;
             case self::XMLRPC_TYPE_STRUCT:
-                $values = [];
+                $values = array();
                 // Parse all the members of the struct from the XML string
                 // (simple xml element) to Value objects
                 foreach ($value->member as $member) {
                     // @todo? If a member doesn't have a <value> tag, we don't add it to the struct
                     // Maybe we want to throw an exception here ?
-                    if (! isset($member->value) or ! isset($member->name)) {
+                    if (!isset($member->value) or !isset($member->name)) {
                         continue;
                     }
-                    $values[(string) $member->name] = static::xmlStringToNativeXmlRpc($member->value);
+                    $values[(string) $member->name] = static::_xmlStringToNativeXmlRpc($member->value);
                 }
                 $xmlrpcValue = new Value\Struct($values);
                 break;
@@ -406,19 +405,19 @@ abstract class AbstractValue
                 );
                 break;
         }
-        $xmlrpcValue->setXML($xml->asXML());
+        $xmlrpcValue->_setXML($xml->asXML());
 
         return $xmlrpcValue;
     }
 
-    protected static function createSimpleXMLElement(&$xml)
+    protected static function _createSimpleXMLElement(&$xml)
     {
-        if ($xml instanceof SimpleXMLElement) {
+        if ($xml instanceof \SimpleXMLElement) {
             return;
         }
 
         try {
-            $xml = new SimpleXMLElement($xml);
+            $xml = new \SimpleXMLElement($xml);
         } catch (\Exception $e) {
             // The given string is not a valid XML
             throw new Exception\ValueException(
@@ -437,18 +436,16 @@ abstract class AbstractValue
      * @param string &$value Value bind variable
      * @return void
      */
-    protected static function extractTypeAndValue(\SimpleXMLElement $xml, &$type, &$value)
+    protected static function _extractTypeAndValue(\SimpleXMLElement $xml, &$type, &$value)
     {
         // Casting is necessary to work with strict-typed systems
-        foreach ((array) $xml as $type => $value) {
-            break;
-        }
-        if (! $type and $value === null) {
-            $namespaces = ['ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions'];
+        $xmlAsArray = (array) $xml;
+        list($type, $value) = each($xmlAsArray);
+        if (!$type and $value === null) {
+            $namespaces = array('ex' => 'http://ws.apache.org/xmlrpc/namespaces/extensions');
             foreach ($namespaces as $namespaceName => $namespaceUri) {
-                foreach ((array)$xml->children($namespaceUri) as $type => $value) {
-                    break;
-                }
+                $namespaceXml = $xml->children($namespaceUri);
+                list($type, $value) = each($namespaceXml);
                 if ($type !== null) {
                     $type = $namespaceName . ':' . $type;
                     break;
@@ -457,10 +454,10 @@ abstract class AbstractValue
         }
 
         // If no type was specified, the default is string
-        if (! $type) {
+        if (!$type) {
             $type = self::XMLRPC_TYPE_STRING;
             if (empty($value) and preg_match('#^<value>.*</value>$#', $xml->asXML())) {
-                $value = str_replace(['<value>', '</value>'], '', $xml->asXML());
+                $value = str_replace(array('<value>', '</value>'), '', $xml->asXML());
             }
         }
     }
@@ -469,7 +466,7 @@ abstract class AbstractValue
      * @param $xml
      * @return void
      */
-    protected function setXML($xml)
+    protected function _setXML($xml)
     {
         $this->xml = $this->getGenerator()->stripDeclaration($xml);
     }

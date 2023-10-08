@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -42,7 +42,7 @@ class Between extends AbstractExpression implements PredicateInterface
      * Set identifier for comparison
      *
      * @param  string $identifier
-     * @return self Provides a fluent interface
+     * @return Between
      */
     public function setIdentifier($identifier)
     {
@@ -64,7 +64,7 @@ class Between extends AbstractExpression implements PredicateInterface
      * Set minimum boundary for comparison
      *
      * @param  int|float|string $minValue
-     * @return self Provides a fluent interface
+     * @return Between
      */
     public function setMinValue($minValue)
     {
@@ -86,7 +86,7 @@ class Between extends AbstractExpression implements PredicateInterface
      * Set maximum boundary for comparison
      *
      * @param  int|float|string $maxValue
-     * @return self Provides a fluent interface
+     * @return Between
      */
     public function setMaxValue($maxValue)
     {
@@ -108,7 +108,7 @@ class Between extends AbstractExpression implements PredicateInterface
      * Set specification string to use in forming SQL predicate
      *
      * @param  string $specification
-     * @return self Provides a fluent interface
+     * @return Between
      */
     public function setSpecification($specification)
     {
@@ -134,8 +134,8 @@ class Between extends AbstractExpression implements PredicateInterface
     public function getExpressionData()
     {
         list($values[], $types[]) = $this->normalizeArgument($this->identifier, self::TYPE_IDENTIFIER);
-        list($values[], $types[]) = $this->normalizeArgument($this->minValue, self::TYPE_VALUE);
-        list($values[], $types[]) = $this->normalizeArgument($this->maxValue, self::TYPE_VALUE);
+        list($values[], $types[]) = $this->normalizeArgument($this->minValue,   self::TYPE_VALUE);
+        list($values[], $types[]) = $this->normalizeArgument($this->maxValue,   self::TYPE_VALUE);
         return [
             [
                 $this->getSpecification(),

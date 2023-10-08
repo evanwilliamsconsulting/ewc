@@ -28,11 +28,11 @@ class Openssl implements EncryptionAlgorithmInterface
      *     'envelope' => resulting envelope keys
      * )
      */
-    protected $keys = [
-        'public'   => [],
-        'private'  => [],
-        'envelope' => [],
-    ];
+    protected $keys = array(
+        'public'   => array(),
+        'private'  => array(),
+        'envelope' => array(),
+    );
 
     /**
      * Internal passphrase
@@ -68,9 +68,9 @@ class Openssl implements EncryptionAlgorithmInterface
      * @param string|array|Traversable $options Options for this adapter
      * @throws Exception\ExtensionNotLoadedException
      */
-    public function __construct($options = [])
+    public function __construct($options = array())
     {
-        if (! extension_loaded('openssl')) {
+        if (!extension_loaded('openssl')) {
             throw new Exception\ExtensionNotLoadedException('This filter needs the openssl extension');
         }
 
@@ -78,8 +78,8 @@ class Openssl implements EncryptionAlgorithmInterface
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (! is_array($options)) {
-            $options = ['public' => $options];
+        if (!is_array($options)) {
+            $options = array('public' => $options);
         }
 
         if (array_key_exists('passphrase', $options)) {
@@ -89,7 +89,7 @@ class Openssl implements EncryptionAlgorithmInterface
 
         if (array_key_exists('compression', $options)) {
             $this->setCompression($options['compression']);
-            unset($options['compression']);
+            unset($options['compress']);
         }
 
         if (array_key_exists('package', $options)) {
@@ -107,16 +107,14 @@ class Openssl implements EncryptionAlgorithmInterface
      * @return self
      * @throws Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setKeys($keys)
     {
-        // @codingStandardsIgnoreEnd
-        if (! is_array($keys)) {
+        if (!is_array($keys)) {
             throw new Exception\InvalidArgumentException('Invalid options argument provided to filter');
         }
 
         foreach ($keys as $type => $key) {
-            if (is_file($key) && is_readable($key)) {
+            if (is_file($key) and is_readable($key)) {
                 $file = fopen($key, 'r');
                 $cert = fread($file, 8192);
                 fclose($file);
@@ -162,7 +160,8 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPublicKey()
     {
-        return $this->keys['public'];
+        $key = $this->keys['public'];
+        return $key;
     }
 
     /**
@@ -181,7 +180,7 @@ class Openssl implements EncryptionAlgorithmInterface
                 }
             }
         } else {
-            $key = ['public' => $key];
+            $key = array('public' => $key);
         }
 
         return $this->_setKeys($key);
@@ -194,14 +193,15 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getPrivateKey()
     {
-        return $this->keys['private'];
+        $key = $this->keys['private'];
+        return $key;
     }
 
     /**
      * Sets private keys
      *
-     * @param  string|array $key Private key
-     * @param  string|null $passphrase
+     * @param  string $key Private key
+     * @param  string $passphrase
      * @return self
      */
     public function setPrivateKey($key, $passphrase = null)
@@ -214,7 +214,7 @@ class Openssl implements EncryptionAlgorithmInterface
                 }
             }
         } else {
-            $key = ['private' => $key];
+            $key = array('private' => $key);
         }
 
         if ($passphrase !== null) {
@@ -231,7 +231,8 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function getEnvelopeKey()
     {
-        return $this->keys['envelope'];
+        $key = $this->keys['envelope'];
+        return $key;
     }
 
     /**
@@ -250,7 +251,7 @@ class Openssl implements EncryptionAlgorithmInterface
                 }
             }
         } else {
-            $key = ['envelope' => $key];
+            $key = array('envelope' => $key);
         }
 
         return $this->_setKeys($key);
@@ -297,7 +298,7 @@ class Openssl implements EncryptionAlgorithmInterface
     public function setCompression($compression)
     {
         if (is_string($this->compression)) {
-            $compression = ['adapter' => $compression];
+            $compression = array('adapter' => $compression);
         }
 
         $this->compression = $compression;
@@ -336,22 +337,22 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function encrypt($value)
     {
-        $encrypted     = [];
-        $encryptedkeys = [];
+        $encrypted     = array();
+        $encryptedkeys = array();
 
-        if (! $this->keys['public']) {
+        if (count($this->keys['public']) == 0) {
             throw new Exception\RuntimeException('Openssl can not encrypt without public keys');
         }
 
-        $keys         = [];
-        $fingerprints = [];
+        $keys         = array();
+        $fingerprints = array();
         $count        = -1;
         foreach ($this->keys['public'] as $key => $cert) {
             $keys[$key] = openssl_pkey_get_public($cert);
             if ($this->package) {
                 $details = openssl_pkey_get_details($keys[$key]);
                 if ($details === false) {
-                    $details = ['key' => 'ZendFramework'];
+                    $details = array('key' => 'ZendFramework');
                 }
 
                 ++$count;
@@ -360,7 +361,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         // compress prior to encryption
-        if (! empty($this->compression)) {
+        if (!empty($this->compression)) {
             $compress = new Compress($this->compression);
             $value    = $compress($value);
         }
@@ -400,14 +401,14 @@ class Openssl implements EncryptionAlgorithmInterface
      */
     public function decrypt($value)
     {
-        $decrypted = '';
+        $decrypted = "";
         $envelope  = current($this->getEnvelopeKey());
 
         if (count($this->keys['private']) !== 1) {
             throw new Exception\RuntimeException('Please give a private key for decryption with Openssl');
         }
 
-        if (! $this->package && empty($envelope)) {
+        if (!$this->package && empty($envelope)) {
             throw new Exception\RuntimeException('Please give an envelope key for decryption with Openssl');
         }
 
@@ -429,7 +430,7 @@ class Openssl implements EncryptionAlgorithmInterface
             for ($i = $count; $i > 0; --$i) {
                 $header = unpack('H32print/nsize', substr($value, $length, 18));
                 $length  += 18;
-                if ($header['print'] === $fingerprint) {
+                if ($header['print'] == $fingerprint) {
                     $envelope = substr($value, $length, $header['size']);
                 }
 
@@ -448,7 +449,7 @@ class Openssl implements EncryptionAlgorithmInterface
         }
 
         // decompress after decryption
-        if (! empty($this->compression)) {
+        if (!empty($this->compression)) {
             $decompress = new Decompress($this->compression);
             $decrypted  = $decompress($decrypted);
         }

@@ -24,10 +24,6 @@ return array(
                 'class'     => 'Doctrine\Common\Cache\ApcCache',
                 'namespace' => 'DoctrineModule',
             ),
-            'apcu' => array(
-                'class'     => 'Doctrine\Common\Cache\ApcuCache',
-                'namespace' => 'DoctrineModule',
-            ),
             'array' => array(
                 'class' => 'Doctrine\Common\Cache\ArrayCache',
                 'namespace' => 'DoctrineModule',

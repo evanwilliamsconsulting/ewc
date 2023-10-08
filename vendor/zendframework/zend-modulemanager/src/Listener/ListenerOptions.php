@@ -1,8 +1,10 @@
 <?php
 /**
- * @link      https://github.com/zendframework/zend-modulemanager for the canonical source repository
- * @copyright Copyright (c) 2005-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-modulemanager/blob/master/LICENSE.md New BSD License
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/zf2 for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\ModuleManager\Listener;
@@ -46,7 +48,7 @@ class ListenerOptions extends AbstractOptions
     protected $configCacheKey;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $cacheDir;
 
@@ -56,7 +58,7 @@ class ListenerOptions extends AbstractOptions
     protected $checkDependencies = true;
 
     /**
-     * @var bool
+     * @var string
      */
     protected $moduleMapCacheEnabled = false;
 
@@ -64,11 +66,6 @@ class ListenerOptions extends AbstractOptions
      * @var string
      */
     protected $moduleMapCacheKey;
-
-    /**
-     * @var bool
-     */
-    protected $useZendLoader = true;
 
     /**
      * Get an array of paths where modules reside
@@ -89,7 +86,7 @@ class ListenerOptions extends AbstractOptions
      */
     public function setModulePaths($modulePaths)
     {
-        if (! is_array($modulePaths) && ! $modulePaths instanceof Traversable) {
+        if (!is_array($modulePaths) && !$modulePaths instanceof Traversable) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Argument passed to %s::%s() must be an array, '
@@ -135,7 +132,7 @@ class ListenerOptions extends AbstractOptions
      */
     public function setConfigGlobPaths($configGlobPaths)
     {
-        if (! is_array($configGlobPaths) && ! $configGlobPaths instanceof Traversable) {
+        if (!is_array($configGlobPaths) && !$configGlobPaths instanceof Traversable) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Argument passed to %s::%s() must be an array, '
@@ -161,7 +158,7 @@ class ListenerOptions extends AbstractOptions
      */
     public function setConfigStaticPaths($configStaticPaths)
     {
-        if (! is_array($configStaticPaths) && ! $configStaticPaths instanceof Traversable) {
+        if (!is_array($configStaticPaths) && !$configStaticPaths instanceof Traversable) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Argument passed to %s::%s() must be an array, '
@@ -198,7 +195,7 @@ class ListenerOptions extends AbstractOptions
      */
     public function setExtraConfig($extraConfig)
     {
-        if (! is_array($extraConfig) && ! $extraConfig instanceof Traversable) {
+        if (!is_array($extraConfig) && !$extraConfig instanceof Traversable) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Argument passed to %s::%s() must be an array, '
@@ -279,7 +276,7 @@ class ListenerOptions extends AbstractOptions
     /**
      * Get the path where cache file(s) are stored
      *
-     * @return string|null
+     * @return string
      */
     public function getCacheDir()
     {
@@ -289,13 +286,16 @@ class ListenerOptions extends AbstractOptions
     /**
      * Set the path where cache files can be stored
      *
-     * @param  string|null $cacheDir the value to be set
+     * @param  string $cacheDir the value to be set
      * @return ListenerOptions
      */
     public function setCacheDir($cacheDir)
     {
-        $this->cacheDir = $cacheDir ? static::normalizePath($cacheDir) : null;
-
+        if (null === $cacheDir) {
+            $this->cacheDir = $cacheDir;
+        } else {
+            $this->cacheDir = static::normalizePath($cacheDir);
+        }
         return $this;
     }
 
@@ -360,7 +360,7 @@ class ListenerOptions extends AbstractOptions
     /**
      * Set whether to check dependencies during module loading or not
      *
-     * @return bool
+     * @return string
      */
     public function getCheckDependencies()
     {
@@ -378,33 +378,6 @@ class ListenerOptions extends AbstractOptions
     {
         $this->checkDependencies = (bool) $checkDependencies;
 
-        return $this;
-    }
-
-    /**
-     * Whether or not to use zend-loader to autoload modules.
-     *
-     * @return bool
-     */
-    public function useZendLoader()
-    {
-        return $this->useZendLoader;
-    }
-
-    /**
-     * Set a flag indicating if the module manager should use zend-loader
-     *
-     * Setting this option to false will disable ModuleAutoloader, requiring
-     * other means of autoloading to be used (e.g., Composer).
-     *
-     * If disabled, the AutoloaderProvider feature will be disabled as well
-     *
-     * @param  bool $flag
-     * @return ListenerOptions
-     */
-    public function setUseZendLoader($flag)
-    {
-        $this->useZendLoader = (bool) $flag;
         return $this;
     }
 

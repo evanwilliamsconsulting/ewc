@@ -23,11 +23,10 @@ class ArrayInput extends Input
      */
     public function setValue($value)
     {
-        if (! is_array($value)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Value must be an array, %s given.',
-                gettype($value)
-            ));
+        if (!is_array($value)) {
+            throw new Exception\InvalidArgumentException(
+                sprintf('Value must be an array, %s given.', gettype($value))
+            );
         }
         return parent::setValue($value);
     }
@@ -77,32 +76,24 @@ class ArrayInput extends Input
             return false;
         }
 
-        if (! $this->continueIfEmpty() && ! $this->allowEmpty()) {
+        if (!$this->continueIfEmpty() && !$this->allowEmpty()) {
             $this->injectNotEmptyValidator();
         }
         $validator = $this->getValidatorChain();
         $values    = $this->getValue();
         $result    = true;
-
-        if ($required && empty($values)) {
-            if ($this->errorMessage === null) {
-                $this->errorMessage = $this->prepareRequiredValidationFailureMessage();
-            }
-            return false;
-        }
-
         foreach ($values as $value) {
             $empty = ($value === null || $value === '' || $value === []);
-            if ($empty && ! $this->isRequired() && ! $this->continueIfEmpty()) {
+            if ($empty && !$this->isRequired() && !$this->continueIfEmpty()) {
                 $result = true;
                 continue;
             }
-            if ($empty && $this->allowEmpty() && ! $this->continueIfEmpty()) {
+            if ($empty && $this->allowEmpty() && !$this->continueIfEmpty()) {
                 $result = true;
                 continue;
             }
             $result = $validator->isValid($value, $context);
-            if (! $result) {
+            if (!$result) {
                 if ($hasFallback) {
                     $this->setValue($this->getFallbackValue());
                     return true;

@@ -11,9 +11,6 @@ namespace Zend\File\Transfer\Exception;
 
 use Zend\File\Exception;
 
-/**
- * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
- */
 class InvalidArgumentException extends Exception\InvalidArgumentException implements ExceptionInterface
 {
 }

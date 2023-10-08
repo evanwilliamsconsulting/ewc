@@ -14,7 +14,6 @@ use Zend\File\Exception\ExceptionInterface as FileException;
 /**
  * Exception class for Zend\File\Transfer
  *
- * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
  */
 interface ExceptionInterface extends FileException
 {
