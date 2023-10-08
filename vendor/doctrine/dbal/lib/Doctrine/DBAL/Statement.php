@@ -230,7 +230,7 @@ class Statement implements \IteratorAggregate, DriverStatement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+    public function setFetchMode($mode, mixed ...$args)
     {
         if ($arg2 === null) {
             return $this->stmt->setFetchMode($fetchMode);

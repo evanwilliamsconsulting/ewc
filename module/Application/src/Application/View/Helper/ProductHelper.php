@@ -11,6 +11,11 @@ use Application\Service\ProductService as ProductService;
  
 class ProductHelper extends AbstractHelper implements ServiceLocatorAwareInterface
 {
+	protected $name;
+	protected $description;
+	protected $sku;
+	protected $price;
+	protected $serviceLocator;
     protected static $state;
 	protected $productObject;
 	protected $product;
@@ -87,7 +92,7 @@ class ProductHelper extends AbstractHelper implements ServiceLocatorAwareInterfa
 		$this->description = $productObject->getDescription();
 		$this->sku = $productObject->getSku();
 		$this->price = $productObject->getPrice();
-		$timestamp = explode(' ',$productObject->getOriginal());
+		$timestamp = explode(' ',$productObject->getOriginal() ?? '11');
 		$datets = explode('-',$timestamp[0]);
 		$year = $datets[0];
 		//$day = $datets[2];

@@ -27,7 +27,8 @@ use PDO;
  *
  * @since 2.0
  */
-class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
+#class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
+class PDOConnection extends PDO implements  ServerInfoAwareConnection
 {
     /**
      * @param string      $dsn
@@ -51,6 +52,7 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function exec($statement)
     {
         try {
@@ -71,7 +73,8 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
-    public function prepare($prepareString, $driverOptions = array())
+    #[\ReturnTypeWillChange]
+    public function prepare($prepareString, $driverOptions = [])
     {
         try {
             return parent::prepare($prepareString, $driverOptions);
@@ -110,14 +113,22 @@ class PDOConnection extends PDO implements Connection, ServerInfoAwareConnection
     /**
      * {@inheritdoc}
      */
-    public function quote($input, $type = \PDO::PARAM_STR)
+    #[\ReturnTypeWillChange]
+/* EJW
+    public function quote($input, $type = ParameterType::STRING)
     {
         return parent::quote($input, $type);
+    }
+*/
+    public function quote($input, $type = ParameterType::STRING)
+    {
+        return parent::quote($input, $type ?? 1);
     }
 
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function lastInsertId($name = null)
     {
         return parent::lastInsertId($name);

@@ -461,7 +461,6 @@ class PictureController extends AbstractActionController
 	$full_path .= $subfolder_name;
 	$full_path .= "/";
 	$full_path .= $name;
-	print($full_path);
 	move_uploaded_file($tmp_name,$full_path);
 
 	$em = $this->getEntityManager();

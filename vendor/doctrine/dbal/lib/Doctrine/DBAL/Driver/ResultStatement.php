@@ -53,7 +53,7 @@ interface ResultStatement extends \Traversable
      *
      * @see PDO::FETCH_* constants.
      */
-    public function setFetchMode(int $mode, mixed ...$args);
+    public function setFetchMode($mode, mixed ...$args);
 
     /**
      * Returns the next row of a result set.

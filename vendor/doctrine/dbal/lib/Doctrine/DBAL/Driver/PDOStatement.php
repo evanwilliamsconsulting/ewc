@@ -37,8 +37,12 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode(int $mode, mixed ...$args)
+    public function setFetchMode($mode, mixed ...$args)
     {
+	$fetchMode = $mode;
+        // $fetchMode = $this->convertFetchMode($fetchMode);
+
+
         // This thin wrapper is necessary to shield against the weird signature
         // of PDOStatement::setFetchMode(): even if the second and third
         // parameters are optional, PHP will not let us remove it from this
@@ -61,7 +65,8 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = \PDO::PARAM_STR)
+    #[\ReturnTypeWillChange]
+    public function bindValue($param, $value, $type = ParameterType::STRING)
     {
         try {
             return parent::bindValue($param, $value, $type);
@@ -73,7 +78,8 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null)
+    #[\ReturnTypeWillChange]
+    public function bindParam($column, &$variable, $type = ParameterType::STRING, $length = null, $driverOptions = null)
     {
         try {
             return parent::bindParam($column, $variable, $type, $length, $driverOptions);
@@ -85,6 +91,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function closeCursor()
     {
         try {
@@ -99,6 +106,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function execute($params = null)
     {
         try {
@@ -111,7 +119,8 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null)
+    #[\ReturnTypeWillChange]
+    public function fetch($fetchMode = null, $cursorOrientation = \PDO::FETCH_ORI_NEXT, $cursorOffset = 0)
     {
         try {
             if ($fetchMode === null && $cursorOrientation === null && $cursorOffset === null) {
@@ -135,7 +144,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args)
+    public function fetchAll($fetchMode = null,mixed ...$args)
     {
         try {
             if ($fetchMode === null && $fetchArgument === null && $ctorArgs === null) {
@@ -159,6 +168,7 @@ class PDOStatement extends \PDOStatement implements Statement
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function fetchColumn($columnIndex = 0)
     {
         try {
