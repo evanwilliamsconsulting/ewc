@@ -193,8 +193,10 @@ Array ( [username] => testtest [email] => test@test.com [first_name] => Test [mi
 		    	$welcome = new Welcome();
                     	$redirect = 'correspondant';
                     	// Check if it has rememberMe
+/*
                     	$this->getSessionStorage()
                         	 ->setRememberMe(1);
+*/
                     	// set storage again
                 	$this->getAuthService()->getStorage()->write($request->getPost('username'));
 		   	// Set Logged In and Username attributes in helpers
