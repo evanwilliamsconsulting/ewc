@@ -19,7 +19,7 @@
     #main-bar
     {
 	background-repeat: repeat-x;
-        background-image: url("/img/ridgeline-1240.png");
+        background-image: url("/img/ridgeline-1240-ewc.png");
 	display:block;
 	width:1240px;
 	height:100px;
@@ -247,7 +247,7 @@
     #main-bar
     {
 	background-repeat: repeat-x;
-        background-image: url("/img/ridgeline-1024.png");
+        background-image: url("/img/ridgeline-1024-ewc.png");
 	display:block;
 	width:1024px;
 	height:100px;
@@ -460,7 +460,7 @@
 	color:black:
 }
 }
-@media only screen and (min-width: 120px) and (max-width: 639px) 
+@media only screen and (min-width: 360px) and (max-width: 639px) 
 {
     .body_class
     {
@@ -476,7 +476,209 @@
 	margin-left:auto;
 	margin-right:auto;
 	background-repeat: repeat-x;
-        background-image: url("/img/ridgeline-480.png");
+        background-image: url("/img/ridgeline-480-ewc.png");
+	display:block;
+	height:100px;
+	width:480px;
+    }
+    #action-bar
+    {
+	display:block;
+	width:480px;
+	height:50px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    #main-header
+    {
+	margin-left:auto;
+	margin-right:auto;
+    }
+    .userlist {
+        list-style:none;
+        float:left;
+    }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
+    .usertab 
+    {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+    }
+    .toolbar-list
+    {
+	list-style:none;
+	float:left;
+    }
+    .toolbar-tab
+    {
+	color:black;
+	font-size:18pt;
+    }
+    .sitelist {
+        list-style:none;
+        float:left;
+    }
+    .sitetab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        
+    }
+    .action_item {
+        list-style:none;
+        color:white;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+     }
+    .usertab {
+        list-style:none;
+        color:black;
+        font-size:18pt;
+        margin:10px;
+        padding:10px;
+        display:inline;
+        	
+    }
+    .sidebar {
+	
+	background-image: url("/images/home/u28.png")
+    }
+    #site_toolbar {
+	    float:left;
+	    width:40%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    position:relative;
+    }
+    #user_toolbar {
+	   float:right;
+	   width:40%;
+	   margin-left:auto;
+	   margin-right:auto;
+	   position:relative;
+    }
+    #topic-toolbar {
+	   float:right;
+	   width:10%;
+	   margin-left:auto;
+	   margin-right:auto;
+	   position:relative;
+    }
+    #menu-crumbs
+    {
+	    
+    }
+    #dialog_box
+    {
+    }
+    #signup_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    top:auto;
+	    left:auto;
+	    align-content:center;
+	    border: 1px solid black;
+    }
+    #login_box 
+    {
+	    opacity:0.8;
+	    background-color:white;
+	    width:350px;
+	    height:350px;
+	    position:absolute;
+	    padding:10px;
+	    margin:auto;
+	    top:auto;
+	    left:auto;
+	    align-content:center;
+	    border: 1px solid black;
+    }
+	#main-footer
+	{
+		width:auto;
+		margin-left:auto;
+		margin-right:auto;
+	}  
+
+.wordage-output
+{
+    background-color:white;
+    width: 300px;
+    left:30px;
+    position:relative;
+}
+.headline-output
+{
+    background-color:white;
+    width: 300px;
+    left:30px;
+    position:relative;
+}
+.product-output
+{
+    background-color:white;
+    width: 300px;
+    left:30px;
+    position:relative;
+}
+.picture-output
+{
+    background-color:white;
+    width:300px;
+    left:30px;
+    position:relative;
+}
+#action-bar
+{
+	padding:10px;
+}
+#binder
+{
+	background-color:white;
+	color:black:
+}
+@media only screen and (min-width: 120px) and (max-width: 360px) 
+{
+    .body_class
+    {
+		background-color:grey;
+    }
+    #content
+    {
+    }
+    #main-bar
+    {
+	display:block;
+	width:auto;
+	margin-left:auto;
+	margin-right:auto;
+	background-repeat: repeat-x;
+        background-image: url("/img/ridgeline-360-ewc.png");
 	display:block;
 	height:100px;
 	width:480px;
